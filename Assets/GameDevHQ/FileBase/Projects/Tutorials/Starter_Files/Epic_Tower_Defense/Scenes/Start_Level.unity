@@ -1321,16 +1321,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7441760851298805038, guid: b6f9eb08e9dcb484fbccc49d65f561ab,
-        type: 3}
-      propertyPath: m_Speed
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8911632596986881264, guid: b6f9eb08e9dcb484fbccc49d65f561ab,
+    - target: {fileID: 6198549944791207725, guid: b6f9eb08e9dcb484fbccc49d65f561ab,
         type: 3}
       propertyPath: _target
       value: 
       objectReference: {fileID: 1742290006}
+    - target: {fileID: 8161797428894606518, guid: b6f9eb08e9dcb484fbccc49d65f561ab,
+        type: 3}
+      propertyPath: _maxHealth
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
 --- !u!1001 &210789249
@@ -10646,10 +10646,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mech2
       objectReference: {fileID: 0}
-    - target: {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4628475265953764, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -10694,12 +10690,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6530639110175705178, guid: fed6fd85e4a83418485118c22ed9f184,
-        type: 3}
-      propertyPath: m_Speed
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9033477594108847260, guid: fed6fd85e4a83418485118c22ed9f184,
+    - target: {fileID: 3073522430974998743, guid: fed6fd85e4a83418485118c22ed9f184,
         type: 3}
       propertyPath: _target
       value: 
