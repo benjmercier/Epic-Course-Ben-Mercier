@@ -1277,6 +1277,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mech1
       objectReference: {fileID: 0}
+    - target: {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4505513421613776, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -1320,16 +1324,6 @@ PrefabInstance:
     - target: {fileID: 4505513421613776, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6198549944791207725, guid: b6f9eb08e9dcb484fbccc49d65f561ab,
-        type: 3}
-      propertyPath: _target
-      value: 
-      objectReference: {fileID: 1742290006}
-    - target: {fileID: 8161797428894606518, guid: b6f9eb08e9dcb484fbccc49d65f561ab,
-        type: 3}
-      propertyPath: _maxHealth
-      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
@@ -2114,6 +2108,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 412009220}
+  - component: {fileID: 412009221}
   m_Layer: 0
   m_Name: SpawnManager
   m_TagString: Untagged
@@ -2138,6 +2133,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &412009221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412009219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59e113e37bebf3446890fd8639b28198, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemiesToSpawn: 10
+  _enemyPrefabs:
+  - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
+  - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
+  _enemyContainer: {fileID: 1978773957}
+  _enemyPool: []
+  _spawnPos: {fileID: 373327951}
+  _targetPos: {fileID: 1742290007}
+  _waitTime: 5
 --- !u!1 &413855829
 GameObject:
   m_ObjectHideFlags: 0
@@ -8944,9 +8960,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1742290007}
+  - component: {fileID: 1742290008}
+  - component: {fileID: 1742290009}
   m_Layer: 0
   m_Name: TargetPos
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8965,6 +8983,35 @@ Transform:
   m_Father: {fileID: 412009220}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1742290008
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742290006}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 4, z: 3.5}
+  m_Center: {x: 0, y: 1.4926913, z: 0}
+--- !u!54 &1742290009
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742290006}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1760781457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10073,7 +10120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1978773958}
   m_Layer: 0
-  m_Name: EnemySpawnContainer
+  m_Name: EnemyContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10217,6 +10264,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3dac35fc7db3c4796b9a8d62cc0fa4a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 3dac35fc7db3c4796b9a8d62cc0fa4a0, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -10646,6 +10697,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mech2
       objectReference: {fileID: 0}
+    - target: {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4628475265953764, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -10690,10 +10745,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3073522430974998743, guid: fed6fd85e4a83418485118c22ed9f184,
-        type: 3}
-      propertyPath: _target
-      value: 
-      objectReference: {fileID: 1742290006}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}

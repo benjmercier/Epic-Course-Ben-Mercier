@@ -1505,6 +1505,7 @@ GameObject:
   - component: {fileID: 8161797428894606518}
   - component: {fileID: 95831276238310704}
   - component: {fileID: 7441760851298805038}
+  - component: {fileID: 7533397650252345436}
   m_Layer: 0
   m_Name: Mech1
   m_TagString: Untagged
@@ -1541,7 +1542,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 7441760851298805038}
-  _target: {fileID: 0}
 --- !u!114 &8161797428894606518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1554,11 +1554,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ee51afdaf50d043917f9a4fb57527b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0
-  _maxHealth: 0
+  _aI: {fileID: 6198549944791207725}
+  _speed: 5
+  _maxHealth: 50
   _attackStrength: 0
-  _armor: 0
-  _currencyToReward: 0
+  _maxArmor: 0
+  _currencyToReward: 15
 --- !u!95 &95831276238310704
 Animator:
   serializedVersion: 3
@@ -1600,6 +1601,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &7533397650252345436
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637921026644932}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 5.2, z: 0}
 --- !u!1 &1695296882317140
 GameObject:
   m_ObjectHideFlags: 0

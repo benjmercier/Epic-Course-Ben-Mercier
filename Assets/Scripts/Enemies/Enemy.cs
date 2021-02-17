@@ -5,6 +5,8 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour, IDamageable<float>
 {
     [SerializeField]
+    protected AI _aI;
+    [SerializeField]
     protected float _speed;
     [SerializeField]
     protected float _maxHealth;
@@ -25,6 +27,21 @@ public abstract class Enemy : MonoBehaviour, IDamageable<float>
     {
         Health = _maxHealth;
         Armor = _maxArmor;
+    }
+
+    protected void Start()
+    {
+        if (_aI == null)
+        {
+            _aI = GetComponent<AI>();
+        }
+
+        _aI._navMeshAgent.speed = UpdateSpeed(_speed);
+    }
+
+    protected virtual float UpdateSpeed(float speed)
+    {
+        return speed;
     }
 
     protected virtual void Attack(float attackStrength)

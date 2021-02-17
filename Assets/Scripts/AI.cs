@@ -5,13 +5,14 @@ using UnityEngine.AI;
 
 public class AI : MonoBehaviour
 {
-    [SerializeField]
-    private NavMeshAgent _navMeshAgent;
-    [SerializeField]
-    private NavMeshPath _navMeshPath;
+    public NavMeshAgent _navMeshAgent;
 
-    [SerializeField]
-    private GameObject _target;
+    private Vector3 _target;
+
+    private void OnEnable()
+    {
+        _target = SpawnManager.Instance.AssignTargetPos();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -20,11 +21,6 @@ public class AI : MonoBehaviour
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
         }
-
-        if (_target == null)
-        {
-            _target = GameObject.Find("TargetPos");
-        }
     }
 
     // Update is called once per frame
@@ -32,13 +28,20 @@ public class AI : MonoBehaviour
     {
         if (_navMeshAgent.enabled)
         {
-            MoveToTarget(_target.transform.position);
+            MoveToTarget(_target);
         }
     }
 
     private void MoveToTarget(Vector3 target)
     {
         _navMeshAgent.SetDestination(target);
-        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Target"))
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
