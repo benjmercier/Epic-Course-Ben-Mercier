@@ -357,14 +357,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4628475265953764}
-  - component: {fileID: 3073522430974998743}
   - component: {fileID: 5995512041657106269}
   - component: {fileID: 95460924271877448}
   - component: {fileID: 6530639110175705178}
   - component: {fileID: 3560165367374821938}
   m_Layer: 0
   m_Name: Mech2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -385,19 +384,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3073522430974998743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1079767520691416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fca82b2efb06de49abdd5ec22a39b5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _navMeshAgent: {fileID: 6530639110175705178}
 --- !u!114 &5995512041657106269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,7 +396,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69786046e9a810c4da18dae1fa5ce210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _aI: {fileID: 3073522430974998743}
+  _navMeshAgent: {fileID: 6530639110175705178}
+  _aI: {fileID: 0}
   _speed: 5
   _maxHealth: 100
   _attackStrength: 0

@@ -28,20 +28,12 @@ public class AI : MonoBehaviour
     {
         if (_navMeshAgent.enabled)
         {
-            MoveToTarget(_target);
+            MoveToTarget(_target); // doesn't have to be called each frame, set in start
         }
     }
 
     private void MoveToTarget(Vector3 target)
     {
         _navMeshAgent.SetDestination(target);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Target"))
-        {
-            gameObject.SetActive(false);
-        }
     }
 }

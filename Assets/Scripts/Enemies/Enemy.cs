@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class Enemy : MonoBehaviour, IDamageable<float>
 {
     [SerializeField]
-    protected AI _aI;
+    private NavMeshAgent _navMeshAgent;
+    private Vector3 _target;
+
     [SerializeField]
     protected float _speed;
     [SerializeField]
@@ -27,16 +30,25 @@ public abstract class Enemy : MonoBehaviour, IDamageable<float>
     {
         Health = _maxHealth;
         Armor = _maxArmor;
+
+        if (_navMeshAgent == null)
+        {
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+        }
+    }
+
+    protected void OnEnable()
+    {
+        _target = SpawnManager.Instance.AssignTargetPos();        
+
+        _navMeshAgent.SetDestination(_target);
+
+        _navMeshAgent.speed = UpdateSpeed(_speed);
     }
 
     protected void Start()
     {
-        if (_aI == null)
-        {
-            _aI = GetComponent<AI>();
-        }
-
-        _aI._navMeshAgent.speed = UpdateSpeed(_speed);
+        
     }
 
     protected virtual float UpdateSpeed(float speed)
