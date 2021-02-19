@@ -5,6 +5,9 @@ using UnityEngine;
 public class PoolManager : MonoSingleton<PoolManager>
 {
     [SerializeField]
+    private int _poolBuffer = 10;
+
+    [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
     private GameObject[] _enemyPrefabs;
@@ -15,7 +18,7 @@ public class PoolManager : MonoSingleton<PoolManager>
 
     private void Start()
     {
-        _enemyPool = GenerateObjectPool(SpawnManager.Instance.EnemySpawnCount(), _enemyPrefabs, _enemyContainer, _enemyPool);
+        _enemyPool = GenerateObjectPool(_poolBuffer, _enemyPrefabs, _enemyContainer, _enemyPool);
     }
 
     private List<GameObject> GenerateObjectPool(int amount, GameObject[] prefabs, GameObject container, List<GameObject> pool)

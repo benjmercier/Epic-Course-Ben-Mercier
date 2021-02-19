@@ -2143,6 +2143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ead8e018a31c5c4682be4ff2b8628a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _poolBuffer: 10
   _enemyContainer: {fileID: 1978773957}
   _enemyPrefabs:
   - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
@@ -2193,10 +2194,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e113e37bebf3446890fd8639b28198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemiesToSpawn: 10
   _spawnPos: {fileID: 373327951}
   _targetPos: {fileID: 1742290007}
-  _waitTime: 5
+  _initialSpawnCount: 10
+  _maxWaves: 5
+  _spawnWaitTime: 10
 --- !u!1 &413855829
 GameObject:
   m_ObjectHideFlags: 0

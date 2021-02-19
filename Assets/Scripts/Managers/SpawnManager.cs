@@ -6,14 +6,20 @@ using System.Linq;
 public class SpawnManager : MonoSingleton<SpawnManager>
 {
     [SerializeField]
-    private int _enemiesToSpawn = 10;
-    
-    [SerializeField]
     private Transform _spawnPos;
     [SerializeField]
     private Transform _targetPos;
 
-    private int _waveIndex;
+    private Vector3 _spawnLookPos;
+    private Quaternion _spawnRotation;
+
+    [SerializeField]
+    private int _initialSpawnCount = 10;
+    private int _currentSpawnCount;
+
+    [SerializeField]
+    private int _maxWaves = 5;
+    private int _waveIndex = 0;
     private int _activatedIndex = 0;
     private int _destroyedIndex = 0;
 
@@ -21,14 +27,16 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     private WaitForSeconds _spawnWait;
     [SerializeField]
-    private float _waitTime = 10f;
+    private float _spawnWaitTime = 5f;
 
     void Start()
     {
         if (_targetPos == null)
         {
-            Debug.LogError("TargetPos is NULL.");
+            Debug.LogError("Your TargetPos is NULL, please try again.");
         }
+
+        _currentSpawnCount = _initialSpawnCount;
 
         _canSpawn = true;
     }
@@ -39,7 +47,11 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                SpawnPrefabs(PoolManager.Instance.ReturnEnemyPool(), _enemiesToSpawn);
+                _waveIndex++;
+                
+                _currentSpawnCount *= _waveIndex;
+
+                SpawnPrefabs(PoolManager.Instance.ReturnEnemyPool(), _currentSpawnCount);
             }
         }
     }
@@ -56,7 +68,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     IEnumerator SpawnRoutine(List<GameObject> pool, int spawnTotal)
     {
-        _spawnWait = AssignWait(_waitTime);
+        _spawnWait = AssignWait(_spawnWaitTime);
 
         for (int i = 0; i < spawnTotal; i++)
         {
@@ -68,7 +80,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             yield return _spawnWait;
         }
 
-        while (_destroyedIndex != _activatedIndex)
+        while (_destroyedIndex < _activatedIndex)
         {
             ActivatePrefabFromPool(pool);
 
@@ -84,6 +96,13 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             {
                 prefab.transform.position = _spawnPos.position;
 
+                _spawnLookPos = _targetPos.position - prefab.transform.position;
+                _spawnLookPos.y = 0;
+
+                _spawnRotation = Quaternion.LookRotation(_spawnLookPos);
+
+                prefab.transform.rotation = _spawnRotation;
+
                 prefab.SetActive(true);
 
                 return;
@@ -91,9 +110,9 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         }
     }
 
-    public int EnemySpawnCount()
+    public int EnemySpawnCount() // may not need
     {
-        return _enemiesToSpawn;
+        return _initialSpawnCount;
     }
 
     public Vector3 AssignSpawnPos()
