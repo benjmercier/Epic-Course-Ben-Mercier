@@ -1541,7 +1541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 7441760851298805038}
-  _speed: 1.5
+  _speed: 5
   _maxHealth: 50
   _attackStrength: 0
   _maxArmor: 0
@@ -1574,7 +1574,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1637921026644932}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 4.5
   m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50

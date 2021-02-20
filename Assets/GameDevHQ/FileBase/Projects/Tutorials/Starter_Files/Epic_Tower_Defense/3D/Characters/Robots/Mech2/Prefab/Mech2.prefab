@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 6530639110175705178}
-  _speed: 1.5
+  _speed: 5
   _maxHealth: 100
   _attackStrength: 0
   _maxArmor: 0

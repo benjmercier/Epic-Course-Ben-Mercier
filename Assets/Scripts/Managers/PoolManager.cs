@@ -14,6 +14,12 @@ public class PoolManager : MonoSingleton<PoolManager>
     [SerializeField]
     private List<GameObject> _enemyPool;
 
+    /* Notes From 2/19/21 Coaching Call
+     * can use a dictionary to store lists of game objects
+     * dynamically create lists to then store in dictionary?
+     * scriptable objects for waves
+     */
+
     private int _randomIndex;
 
     private void Start()

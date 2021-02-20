@@ -17,9 +17,6 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     private int _initialSpawnCount = 10;
     private int _currentSpawnCount;
 
-    [SerializeField]
-    private int _maxWaves = 5;
-    private int _waveIndex = 0;
     private int _activatedIndex = 0;
     private int _destroyedIndex = 0;
 
@@ -47,9 +44,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                _waveIndex++;
-                
-                _currentSpawnCount *= _waveIndex;
+                _currentSpawnCount *= WaveManager.Instance.NextWave();
 
                 SpawnPrefabs(PoolManager.Instance.ReturnEnemyPool(), _currentSpawnCount);
             }
@@ -80,7 +75,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             yield return _spawnWait;
         }
 
-        while (_destroyedIndex < _activatedIndex)
+        while (_destroyedIndex < _activatedIndex) // need to get a list of enemies active in scene and total available to be activated
         {
             ActivatePrefabFromPool(pool);
 
@@ -94,7 +89,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         {
             if (!prefab.activeInHierarchy)
             {
-                prefab.transform.position = _spawnPos.position;
+                prefab.transform.position = _spawnPos.position; // can use navmeshagent.warp to avoid any issues
 
                 _spawnLookPos = _targetPos.position - prefab.transform.position;
                 _spawnLookPos.y = 0;
@@ -123,6 +118,13 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     public Vector3 AssignTargetPos()
     {
         return _targetPos.position;
+    }
+
+    public void EnemyDestroyed() // used for testing
+    {
+        _destroyedIndex++;
+
+        Debug.Log("Enemies destroyed: " + _destroyedIndex);
     }
 
     private WaitForSeconds AssignWait(float wait)

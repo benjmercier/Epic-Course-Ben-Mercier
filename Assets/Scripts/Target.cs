@@ -8,7 +8,9 @@ public class Target : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            other.gameObject.SetActive(false);
+            SpawnManager.Instance.EnemyDestroyed();
+
+            other.gameObject.SetActive(false); // change to event
         }
     }
 }

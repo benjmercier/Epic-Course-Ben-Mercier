@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+// can add [RequireTypeOf()] to require specific component
 public abstract class Enemy : MonoBehaviour, IDamageable<float>
 {
     [SerializeField]
@@ -31,7 +32,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable<float>
         Health = _maxHealth;
         Armor = _maxArmor;
 
-        if (_navMeshAgent == null)
+        if (_navMeshAgent == null) 
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
         }
