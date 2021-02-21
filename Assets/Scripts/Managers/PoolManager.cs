@@ -1,9 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PoolManager : MonoSingleton<PoolManager>
 {
+    private Dictionary<int, List<GameObject>> _poolDictionary = new Dictionary<int, List<GameObject>>();
+    private string _poolName;
+    private int _poolIndex;
+    private List<GameObject> _pool;
+
     [SerializeField]
     private int _poolBuffer = 10;
 
@@ -11,8 +17,6 @@ public class PoolManager : MonoSingleton<PoolManager>
     private GameObject _enemyContainer;
     [SerializeField]
     private GameObject[] _enemyPrefabs;
-    [SerializeField]
-    private List<GameObject> _enemyPool;
 
     /* Notes From 2/19/21 Coaching Call
      * can use a dictionary to store lists of game objects
@@ -24,32 +28,80 @@ public class PoolManager : MonoSingleton<PoolManager>
 
     private void Start()
     {
-        _enemyPool = GenerateObjectPool(_poolBuffer, _enemyPrefabs, _enemyContainer, _enemyPool);
+        _poolDictionary = GeneratePoolDictionary(_poolBuffer, _enemyPrefabs, _enemyContainer);
     }
 
-    private List<GameObject> GenerateObjectPool(int amount, GameObject[] prefabs, GameObject container, List<GameObject> pool)
+    private Dictionary<int, List<GameObject>> GeneratePoolDictionary(int buffer, GameObject[] prefabArray, GameObject container)
     {
-        for (int i = 0; i < amount; i++)
+        for (int i = 0; i < prefabArray.Length; i++)
         {
-            pool.Add(PrefabToAdd(prefabs, container));
+            //_poolName = GeneratePoolName(prefabArray[i].name);
+            _poolIndex = System.Array.IndexOf(prefabArray, prefabArray[i]);
+
+            _pool = new List<GameObject>();
+            _pool = GeneratePool(buffer, prefabArray[i], container, _pool);
+
+            //_poolDictionary.Add(_poolName, _pool);
+            _poolDictionary.Add(_poolIndex, _pool);
+        }
+
+        foreach (var item in _poolDictionary)
+        {
+            Debug.Log("Pool Index: " + item.Key);
+            Debug.Log("Pool Count: " + item.Value.Count);
+        }
+
+        return _poolDictionary;
+    }
+    
+    private string GeneratePoolName(string name)
+    {
+        return name + "Pool";
+    }
+
+    private List<GameObject> GeneratePool(int buffer, GameObject prefab, GameObject container, List<GameObject> pool)
+    {
+        for (int i = 0; i < buffer; i++)
+        {
+            pool.Add(PrefabToAdd(prefab, container));
         }
 
         return pool;
     }
 
-    private GameObject PrefabToAdd(GameObject[] prefabs, GameObject container)
+    private GameObject PrefabToAdd(GameObject prefab, GameObject container)
     {
-        _randomIndex = Random.Range(0, prefabs.Length);
+        GameObject obj = Instantiate(prefab);
+        obj.transform.parent = container.transform;
+        obj.SetActive(false);
 
-        GameObject prefab = Instantiate(prefabs[_randomIndex]);
-        prefab.transform.parent = container.transform;
-        prefab.SetActive(false);
-
-        return prefab;
+        return obj;
     }
 
-    public List<GameObject> ReturnEnemyPool()
+    public GameObject ReturnPrefabFromPool(bool isRandom)
     {
-        return _enemyPool;
+        GameObject enemy = new GameObject();
+
+        if (isRandom)
+        {
+            // select random pool in dictionary
+            // retrieve object in pool that isn't active
+            _randomIndex = Random.Range(0, _poolDictionary.Count);
+
+            if (_poolDictionary[_randomIndex].Any(a => a.activeInHierarchy == false))
+            {
+                enemy = _poolDictionary[_randomIndex].FirstOrDefault(f => f.activeInHierarchy == false);
+            }
+            else
+            {
+                // create object to return and add to pool in dictionary
+            }
+        }
+        else
+        {
+
+        }
+
+        return enemy;
     }
 }

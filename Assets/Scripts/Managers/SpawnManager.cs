@@ -46,63 +46,49 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             {
                 _currentSpawnCount *= WaveManager.Instance.NextWave();
 
-                SpawnPrefabs(PoolManager.Instance.ReturnEnemyPool(), _currentSpawnCount);
+                SpawnPrefabs();
             }
         }
     }
 
-    private void SpawnPrefabs(List<GameObject> pool, int spawnTotal)
+    private void SpawnPrefabs()
     {
         _canSpawn = false;
 
-        if (pool.Any())
-        {
-            StartCoroutine(SpawnRoutine(pool, spawnTotal));
-        }
+        StartCoroutine(SpawnRoutine(_currentSpawnCount));
     }
 
-    IEnumerator SpawnRoutine(List<GameObject> pool, int spawnTotal)
+    private IEnumerator SpawnRoutine(int spawnTotal)
     {
         _spawnWait = AssignWait(_spawnWaitTime);
 
         for (int i = 0; i < spawnTotal; i++)
         {
-            ActivatePrefabFromPool(pool);
-
-            _activatedIndex++;
-            Debug.Log("Enemies Activated: " + _activatedIndex);
+            ActivatePrefab(PoolManager.Instance.ReturnPrefabFromPool(true));
 
             yield return _spawnWait;
         }
 
-        while (_destroyedIndex < _activatedIndex) // need to get a list of enemies active in scene and total available to be activated
+        while (_destroyedIndex < _activatedIndex)
         {
-            ActivatePrefabFromPool(pool);
+            ActivatePrefab(PoolManager.Instance.ReturnPrefabFromPool(true));
 
             yield return _spawnWait;
         }
     }
-    
-    private void ActivatePrefabFromPool(List<GameObject> pool)
+
+    private void ActivatePrefab(GameObject prefab)
     {
-        foreach (var prefab in pool)
-        {
-            if (!prefab.activeInHierarchy)
-            {
-                prefab.transform.position = _spawnPos.position; // can use navmeshagent.warp to avoid any issues
+        prefab.transform.position = _spawnPos.position;
 
-                _spawnLookPos = _targetPos.position - prefab.transform.position;
-                _spawnLookPos.y = 0;
+        _spawnLookPos = _targetPos.position - prefab.transform.position;
+        _spawnLookPos.y = 0;
 
-                _spawnRotation = Quaternion.LookRotation(_spawnLookPos);
+        _spawnRotation = Quaternion.LookRotation(_spawnLookPos);
 
-                prefab.transform.rotation = _spawnRotation;
+        prefab.transform.rotation = _spawnRotation;
 
-                prefab.SetActive(true);
-
-                return;
-            }
-        }
+        prefab.SetActive(true);
     }
 
     public int EnemySpawnCount() // may not need
