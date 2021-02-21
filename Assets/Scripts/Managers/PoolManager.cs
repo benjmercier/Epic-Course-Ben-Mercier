@@ -63,13 +63,13 @@ public class PoolManager : MonoSingleton<PoolManager>
     {
         for (int i = 0; i < buffer; i++)
         {
-            pool.Add(PrefabToAdd(prefab, container));
+            pool.Add(GeneratePrefab(prefab, container));
         }
 
         return pool;
     }
 
-    private GameObject PrefabToAdd(GameObject prefab, GameObject container)
+    private GameObject GeneratePrefab(GameObject prefab, GameObject container)
     {
         GameObject obj = Instantiate(prefab);
         obj.transform.parent = container.transform;
@@ -88,13 +88,16 @@ public class PoolManager : MonoSingleton<PoolManager>
             // retrieve object in pool that isn't active
             _randomIndex = Random.Range(0, _poolDictionary.Count);
 
-            if (_poolDictionary[_randomIndex].Any(a => a.activeInHierarchy == false))
+            if (_poolDictionary[_randomIndex].Any(a => !a.activeInHierarchy))
             {
-                enemy = _poolDictionary[_randomIndex].FirstOrDefault(f => f.activeInHierarchy == false);
+                enemy = _poolDictionary[_randomIndex].FirstOrDefault(f => !f.activeInHierarchy);
             }
             else
             {
                 // create object to return and add to pool in dictionary
+                enemy = GeneratePrefab(_enemyPrefabs[_randomIndex], _enemyContainer);
+
+                _poolDictionary[_randomIndex].Add(enemy);
             }
         }
         else
