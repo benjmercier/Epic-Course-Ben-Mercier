@@ -7,14 +7,14 @@ public class BlockWave
 {
     public string objName;
     public GameObject objPrefab;
-    public int prefabID;
+    public int prefabKey;
     public int spawnAmount;
 
     public BlockWave(string name, GameObject obj, int iD, int amount)
     {
         this.objName = name;
         this.objPrefab = obj;
-        this.prefabID = iD;
+        this.prefabKey = iD;
         this.spawnAmount = amount;
     }
 }

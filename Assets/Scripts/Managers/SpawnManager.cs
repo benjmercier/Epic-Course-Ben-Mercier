@@ -44,14 +44,22 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                _currentSpawnCount *= WaveManager.Instance.NextWave();
+                //_currentSpawnCount *= WaveManager.Instance.NextWave();
 
-                SpawnPrefabs();
+                //SpawnPrefabs();
+                StartWaveRoutine();
             }
         }
     }
 
-    private IEnumerator WaveSpawnRoutine()
+    private void StartWaveRoutine()
+    {
+        _canSpawn = false;
+
+        StartCoroutine(WaveRoutine());
+    }
+
+    private IEnumerator WaveRoutine()
     {
         // get current wave
         // assign spawn wait to current wave spawn delay
@@ -68,18 +76,71 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             // match prefabs to poolPrefabs 
             // retrieve prefab from pool 
             // amount to retrieve = spawn amount
+
+            foreach (var obj in activeWave.blockWaveList)
+            {
+                for (int i = 0; i < obj.spawnAmount; i++)
+                {
+                    ActivatePrefab(PoolManager.Instance.ReturnPrefabFromPool(false, obj.prefabKey));
+
+                    yield return _spawnWait;
+                }
+            }
         }
         else if (activeWave.useCustomSequence && !activeWave.useBlockSequence && !activeWave.useRandomSequence)
         {
             // using custom sequence
             // retrieve specific prefab from pool based on custom list prefabs
-            // amount to retrieve = customWaveList.Length
+            // amount to retrieve = customWaveList.Count
+
+            for (int i = 0; i < activeWave.customWaveList.Count; i++)
+            {
+                // access pool dictionary<int, list<gameobjects>>
+                // compare activeWave.customWaveList[i] to pool
+                // find matching gameobject by name within dictionary list
+                // return key for that list
+
+                int key = 0;
+
+                foreach (var item in PoolManager.Instance.ReturnPoolDictionary())
+                {
+                    foreach (var obj in item.Value)
+                    {
+                        Debug.Log("Obj name: " + obj.name);
+                        Debug.Log("Wave name: " + activeWave.customWaveList[i].name);
+                        var clone = activeWave.customWaveList[i].name + "(Clone)";
+
+                        if (clone == obj.name)
+                        {
+                            key = item.Key;
+                            Debug.Log("Key: " + key);
+                        }
+                        else
+                        {
+                            Debug.LogError("No Key found");
+                        }
+                    }
+                }
+
+                //var key = PoolManager.Instance.ReturnPoolDictionary().FirstOrDefault(a => a.Value.Any(b => b.name == activeWave.customWaveList[i].name)).Key;
+
+                ActivatePrefab(PoolManager.Instance.ReturnPrefabFromPool(false, key));
+
+                yield return _spawnWait;
+            }
         }
         else if (activeWave.useRandomSequence && !activeWave.useBlockSequence && !activeWave.useCustomSequence)
         {
             // using random sequence
             // retrieve random prefab from bool manager to set active
             // amount to retrieve = random wave total
+
+            for (int i = 0; i < activeWave.randomWaveTotal; i++)
+            {
+                ActivatePrefab(PoolManager.Instance.ReturnPrefabFromPool(true, 0));
+
+                yield return _spawnWait;
+            }
         }
         else
         {
@@ -104,14 +165,14 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
         for (int i = 0; i < spawnTotal; i++)
         {
-            ActivatePrefab(PoolManager.Instance.ReturnPrefabFromPool(true));
+            ActivatePrefab(PoolManager.Instance.ReturnPrefabFromPool(true, 0));
 
             yield return _spawnWait;
         }
 
         while (_destroyedIndex < _activatedIndex)
         {
-            ActivatePrefab(PoolManager.Instance.ReturnPrefabFromPool(true));
+            ActivatePrefab(PoolManager.Instance.ReturnPrefabFromPool(true, 0));
 
             yield return _spawnWait;
         }

@@ -12,16 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5338f8c5900f8449b1907e4acd3eb08, type: 3}
   m_Name: Wave_1
   m_EditorClassIdentifier: 
-  enemiesInWave:
+  useBlockSequence: 0
+  blockWaveList:
   - objName: Mech1
     objPrefab: {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab,
       type: 3}
-    sequenceID: 0
+    prefabKey: 0
     spawnAmount: 5
   - objName: Mech2
     objPrefab: {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184,
       type: 3}
-    sequenceID: 1
+    prefabKey: 1
     spawnAmount: 5
-  spawnWait: 10
-  spawnRandomly: 0
+  useCustomSequence: 1
+  customWaveList:
+  - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
+  - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
+  - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
+  - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
+  - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
+  - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
+  - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
+  - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
+  - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
+  - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
+  useRandomSequence: 0
+  randomWaveTotal: 10
+  spawnWaitTime: 10

@@ -78,9 +78,9 @@ public class PoolManager : MonoSingleton<PoolManager>
         return obj;
     }
 
-    public GameObject ReturnPrefabFromPool(bool isRandom)
+    public GameObject ReturnPrefabFromPool(bool isRandom, int dictionaryKey)
     {
-        GameObject enemy = new GameObject();
+        GameObject enemy;
 
         if (isRandom)
         {
@@ -102,9 +102,23 @@ public class PoolManager : MonoSingleton<PoolManager>
         }
         else
         {
+            if (_poolDictionary[dictionaryKey].Any(async => !async.activeInHierarchy))
+            {
+                enemy = _poolDictionary[dictionaryKey].FirstOrDefault(f => !f.activeInHierarchy);
+            }
+            else
+            {
+                enemy = GeneratePrefab(_enemyPrefabs[dictionaryKey], _enemyContainer);
 
+                _poolDictionary[dictionaryKey].Add(enemy);
+            }
         }
 
         return enemy;
+    }
+
+    public Dictionary<int, List<GameObject>> ReturnPoolDictionary()
+    {
+        return _poolDictionary;
     }
 }
