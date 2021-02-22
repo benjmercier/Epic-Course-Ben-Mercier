@@ -396,6 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69786046e9a810c4da18dae1fa5ce210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iD: 1
   _navMeshAgent: {fileID: 6530639110175705178}
   _speed: 5
   _maxHealth: 100

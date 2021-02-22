@@ -6,6 +6,8 @@ using UnityEngine.AI;
 // can add [RequireTypeOf()] to require specific component
 public abstract class Enemy : MonoBehaviour, IDamageable<float>
 {
+    public int iD;
+
     [SerializeField]
     private NavMeshAgent _navMeshAgent;
     private Vector3 _target;
