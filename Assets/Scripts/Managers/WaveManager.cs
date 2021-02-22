@@ -76,23 +76,11 @@ public class WaveManager : MonoSingleton<WaveManager>
         }
     }
 
-    private IEnumerator CustomWaveSequence(List<GameObject> sequenceList, WaitForSeconds waitTime)
+    private IEnumerator CustomWaveSequence(List<int> sequenceList, WaitForSeconds waitTime)
     {
-        int key = 0;
-
         for (int i = 0; i < sequenceList.Count; i++)
         {
-            foreach (var obj in PoolManager.Instance.ReturnPoolDictionary())
-            {
-                if (obj.Key == sequenceList[i].GetComponent<Enemy>().iD)
-                {
-                    key = obj.Key;
-
-                    break;
-                }
-            }
-
-            SpawnManager.Instance.ActivatePrefab(false, key);
+            SpawnManager.Instance.ActivatePrefab(false, sequenceList[i]);
 
             yield return waitTime;
         }

@@ -5,15 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public class BlockWave
 {
-    public string objName;
-    public GameObject objPrefab;
+    public string prefabName;
     public int prefabKey;
     public int spawnAmount;
 
-    public BlockWave(string name, GameObject obj, int iD, int amount)
+    public BlockWave(string name, int iD, int amount)
     {
-        this.objName = name;
-        this.objPrefab = obj;
+        this.prefabName = name;
         this.prefabKey = iD;
         this.spawnAmount = amount;
     }

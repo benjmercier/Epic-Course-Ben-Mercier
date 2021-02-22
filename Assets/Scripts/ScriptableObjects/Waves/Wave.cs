@@ -9,7 +9,7 @@ public class Wave : ScriptableObject
     public List<BlockWave> blockWaveSequence = new List<BlockWave>();
 
     public bool useCustomWave;
-    public List<GameObject> customWaveSequence = new List<GameObject>();
+    public List<int> customWaveSequence = new List<int>();
 
     public bool useRandomWave;
     public int randomWaveTotal;

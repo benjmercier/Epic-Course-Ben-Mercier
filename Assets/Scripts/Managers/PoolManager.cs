@@ -102,9 +102,9 @@ public class PoolManager : MonoSingleton<PoolManager>
         }
         else
         {
-            if (_poolDictionary[dictionaryKey].Any(async => !async.activeInHierarchy))
+            if (_poolDictionary[dictionaryKey].Any(a => !a.activeInHierarchy))
             {
-                enemy = _poolDictionary[dictionaryKey].FirstOrDefault(f => !f.activeInHierarchy);
+                enemy = _poolDictionary[dictionaryKey].FirstOrDefault(b => !b.activeInHierarchy);
             }
             else
             {

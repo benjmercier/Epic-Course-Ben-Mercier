@@ -10,6 +10,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     [SerializeField]
     private Transform _targetPos;
 
+    private GameObject _spawnPrefab;
     private Vector3 _spawnLookPos;
     private Quaternion _spawnRotation;
 
@@ -47,18 +48,18 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     public void ActivatePrefab(bool isRandom, int dictionaryKey)
     {
-        GameObject prefab = PoolManager.Instance.ReturnPrefabFromPool(isRandom, dictionaryKey);
+        _spawnPrefab = PoolManager.Instance.ReturnPrefabFromPool(isRandom, dictionaryKey);
 
-        prefab.transform.position = _spawnPos.position;
+        _spawnPrefab.transform.position = _spawnPos.position;
 
-        _spawnLookPos = _targetPos.position - prefab.transform.position;
+        _spawnLookPos = _targetPos.position - _spawnPrefab.transform.position;
         _spawnLookPos.y = 0;
 
         _spawnRotation = Quaternion.LookRotation(_spawnLookPos);
 
-        prefab.transform.rotation = _spawnRotation;
+        _spawnPrefab.transform.rotation = _spawnRotation;
 
-        prefab.SetActive(true);
+        _spawnPrefab.SetActive(true);
     }
 
     public Vector3 AssignSpawnPos()
