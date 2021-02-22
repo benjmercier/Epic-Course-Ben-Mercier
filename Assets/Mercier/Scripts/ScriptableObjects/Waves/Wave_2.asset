@@ -10,18 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5338f8c5900f8449b1907e4acd3eb08, type: 3}
-  m_Name: Wave_1
+  m_Name: Wave_2
   m_EditorClassIdentifier: 
   useBlockWave: 0
-  blockWaveSequence:
-  - prefabName: Mech1
-    prefabKey: 0
-    spawnAmount: 5
-  - prefabName: Mech2
-    prefabKey: 1
-    spawnAmount: 5
+  blockWaveSequence: []
   useCustomWave: 1
-  customWaveSequence: 00000000000000000100000001000000000000000100000000000000010000000000000001000000
+  customWaveSequence: 00000000010000000000000001000000
   useRandomWave: 0
-  randomWaveTotal: 10
-  spawnWaitTime: 10
+  randomWaveTotal: 0
+  spawnWaitTime: 5

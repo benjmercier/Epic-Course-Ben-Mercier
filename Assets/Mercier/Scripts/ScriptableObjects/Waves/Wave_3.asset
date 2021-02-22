@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5338f8c5900f8449b1907e4acd3eb08, type: 3}
-  m_Name: Wave_2
+  m_Name: Wave_3
   m_EditorClassIdentifier: 
-  useBlockSequence: 0
-  blockWaveList: []
-  useCustomSequence: 0
-  customWaveList: []
-  useRandomSequence: 0
-  randomWaveTotal: 0
-  spawnWaitTime: 0
+  useBlockWave: 0
+  blockWaveSequence: []
+  useCustomWave: 0
+  customWaveSequence: 
+  useRandomWave: 1
+  randomWaveTotal: 4
+  spawnWaitTime: 5
