@@ -5,13 +5,24 @@ using UnityEngine;
 public class WaveManager : MonoSingleton<WaveManager>
 {
     [SerializeField]
-    private int _maxWaves = 5;
+    private List<Wave> _waves = new List<Wave>();
+
     private int _waveIndex = 0;
+
+    public int CurrentWave()
+    {
+        return _waveIndex;
+    }
 
     public int NextWave()
     {
         _waveIndex++;
 
         return _waveIndex;
+    }
+
+    public List<Wave> WaveList()
+    {
+        return _waves;
     }
 }

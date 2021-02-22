@@ -2148,7 +2148,6 @@ MonoBehaviour:
   _enemyPrefabs:
   - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
   - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
-  _enemyPool: []
 --- !u!1 &412009219
 GameObject:
   m_ObjectHideFlags: 0
@@ -5481,7 +5480,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fe44c21927eae4e9e2b3013f3a237a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxWaves: 5
+  _waves:
+  - {fileID: 11400000, guid: ee1bfb89f2d018445bc6183cfd608896, type: 2}
+  - {fileID: 11400000, guid: 8a5260c5d1347424d955d1fcc3a9f142, type: 2}
+  - {fileID: 11400000, guid: 5439a8a8bdf30c34aab55d06cbe46d79, type: 2}
 --- !u!1001 &1220650254
 PrefabInstance:
   m_ObjectHideFlags: 0

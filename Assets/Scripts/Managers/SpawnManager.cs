@@ -30,7 +30,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     {
         if (_targetPos == null)
         {
-            Debug.LogError("Your TargetPos is NULL, please try again.");
+            Debug.LogError("SpawnManager::Start()::Your TargetPos is NULL.");
         }
 
         _currentSpawnCount = _initialSpawnCount;
@@ -50,6 +50,46 @@ public class SpawnManager : MonoSingleton<SpawnManager>
             }
         }
     }
+
+    private IEnumerator WaveSpawnRoutine()
+    {
+        // get current wave
+        // assign spawn wait to current wave spawn delay
+        // check which sequence being used
+
+
+        var activeWave = WaveManager.Instance.WaveList()[WaveManager.Instance.CurrentWave()];
+
+        _spawnWait = AssignWait(activeWave.spawnWaitTime);
+
+        if (activeWave.useBlockSequence && !activeWave.useCustomSequence && !activeWave.useRandomSequence)
+        {
+            // using block sequence
+            // match prefabs to poolPrefabs 
+            // retrieve prefab from pool 
+            // amount to retrieve = spawn amount
+        }
+        else if (activeWave.useCustomSequence && !activeWave.useBlockSequence && !activeWave.useRandomSequence)
+        {
+            // using custom sequence
+            // retrieve specific prefab from pool based on custom list prefabs
+            // amount to retrieve = customWaveList.Length
+        }
+        else if (activeWave.useRandomSequence && !activeWave.useBlockSequence && !activeWave.useCustomSequence)
+        {
+            // using random sequence
+            // retrieve random prefab from bool manager to set active
+            // amount to retrieve = random wave total
+        }
+        else
+        {
+            Debug.LogError("SpawnManager::WaveSpawnRoutine()::Assign single sequence to Wave " + WaveManager.Instance.CurrentWave());
+        }
+
+
+        yield return _spawnWait; //
+    }
+
 
     private void SpawnPrefabs()
     {
