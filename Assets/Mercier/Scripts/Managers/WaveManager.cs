@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Mercier.Scripts.ScriptableObjects.Waves;
+using Mercier.Scripts.Classes;
 
 namespace Mercier.Scripts.Managers
 {
@@ -20,7 +21,7 @@ namespace Mercier.Scripts.Managers
         {
             wave.waveBoolDictionary = wave.GenerateBoolDictionary();
 
-            _spawnWait = AssignWait(wave.spawnWaitTime);
+            _spawnWait = UtilityHelper.AssignWaitForSeconds(wave.spawnWaitTime);
 
             for (int i = 0; i < wave.waveBoolDictionary.Count; i++)
             {
@@ -123,11 +124,6 @@ namespace Mercier.Scripts.Managers
             var waveList = _waves;
 
             return waveList;
-        }
-
-        private WaitForSeconds AssignWait(float wait) // change to helper?
-        {
-            return new WaitForSeconds(wait);
         }
     }
 }

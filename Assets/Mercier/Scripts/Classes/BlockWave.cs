@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Mercier.Scripts
+namespace Mercier.Scripts.Classes
 {
     [System.Serializable]
     public class BlockWave

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using Mercier.Scripts.Interfaces;
 using Mercier.Scripts.Managers;
 
-namespace Mercier.Scripts.Enemies
+namespace Mercier.Scripts.Classes
 {
     // can add [RequireTypeOf()] to require specific component
     public abstract class Enemy : MonoBehaviour, IDamageable<float>
