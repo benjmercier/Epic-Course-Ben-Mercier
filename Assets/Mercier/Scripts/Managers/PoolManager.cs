@@ -18,6 +18,7 @@ namespace Mercier.Scripts.Managers
         private GameObject _enemyContainer;
         [SerializeField]
         private GameObject[] _enemyPrefabs;
+        private GameObject _enemy;
 
         private int _randomIndex;
 
@@ -62,38 +63,36 @@ namespace Mercier.Scripts.Managers
 
         public GameObject ReturnPrefabFromPool(bool isRandom, int dictionaryKey)
         {
-            GameObject enemy;
-
             if (isRandom)
             {
                 _randomIndex = Random.Range(0, _poolDictionary.Count);
 
                 if (_poolDictionary[_randomIndex].Any(a => !a.activeInHierarchy))
                 {
-                    enemy = _poolDictionary[_randomIndex].FirstOrDefault(f => !f.activeInHierarchy);
+                    _enemy = _poolDictionary[_randomIndex].FirstOrDefault(f => !f.activeInHierarchy);
                 }
                 else
                 {
-                    enemy = GeneratePrefab(_enemyPrefabs[_randomIndex], _enemyContainer);
+                    _enemy = GeneratePrefab(_enemyPrefabs[_randomIndex], _enemyContainer);
 
-                    _poolDictionary[_randomIndex].Add(enemy);
+                    _poolDictionary[_randomIndex].Add(_enemy);
                 }
             }
             else
             {
                 if (_poolDictionary[dictionaryKey].Any(a => !a.activeInHierarchy))
                 {
-                    enemy = _poolDictionary[dictionaryKey].FirstOrDefault(b => !b.activeInHierarchy);
+                    _enemy = _poolDictionary[dictionaryKey].FirstOrDefault(b => !b.activeInHierarchy);
                 }
                 else
                 {
-                    enemy = GeneratePrefab(_enemyPrefabs[dictionaryKey], _enemyContainer);
+                    _enemy = GeneratePrefab(_enemyPrefabs[dictionaryKey], _enemyContainer);
 
-                    _poolDictionary[dictionaryKey].Add(enemy);
+                    _poolDictionary[dictionaryKey].Add(_enemy);
                 }
             }
 
-            return enemy;
+            return _enemy;
         }
 
         public Dictionary<int, List<GameObject>> ReturnPoolDictionary()
