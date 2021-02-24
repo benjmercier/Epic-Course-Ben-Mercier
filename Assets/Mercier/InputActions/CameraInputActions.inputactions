@@ -20,14 +20,6 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
-                },
-                {
-                    "name": "New action",
-                    "type": "Value",
-                    "id": "26a41b3f-1bdc-41d5-8549-75a352194006",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -149,17 +141,6 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Zoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fcedc1b6-472b-4a56-a668-7dbd0a3d5f01",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

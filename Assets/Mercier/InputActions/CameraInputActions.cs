@@ -35,14 +35,6 @@ namespace Mercier.InputActions
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
-                },
-                {
-                    ""name"": ""New action"",
-                    ""type"": ""Value"",
-                    ""id"": ""26a41b3f-1bdc-41d5-8549-75a352194006"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -166,17 +158,6 @@ namespace Mercier.InputActions
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fcedc1b6-472b-4a56-a668-7dbd0a3d5f01"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""New action"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -248,7 +229,6 @@ namespace Mercier.InputActions
             m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
             m_Camera_Move = m_Camera.FindAction("Move", throwIfNotFound: true);
             m_Camera_Zoom = m_Camera.FindAction("Zoom", throwIfNotFound: true);
-            m_Camera_Newaction = m_Camera.FindAction("New action", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -300,14 +280,12 @@ namespace Mercier.InputActions
         private ICameraActions m_CameraActionsCallbackInterface;
         private readonly InputAction m_Camera_Move;
         private readonly InputAction m_Camera_Zoom;
-        private readonly InputAction m_Camera_Newaction;
         public struct CameraActions
         {
             private @CameraInputActions m_Wrapper;
             public CameraActions(@CameraInputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Camera_Move;
             public InputAction @Zoom => m_Wrapper.m_Camera_Zoom;
-            public InputAction @Newaction => m_Wrapper.m_Camera_Newaction;
             public InputActionMap Get() { return m_Wrapper.m_Camera; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -323,9 +301,6 @@ namespace Mercier.InputActions
                     @Zoom.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnZoom;
                     @Zoom.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnZoom;
                     @Zoom.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnZoom;
-                    @Newaction.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnNewaction;
-                    @Newaction.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnNewaction;
-                    @Newaction.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnNewaction;
                 }
                 m_Wrapper.m_CameraActionsCallbackInterface = instance;
                 if (instance != null)
@@ -336,9 +311,6 @@ namespace Mercier.InputActions
                     @Zoom.started += instance.OnZoom;
                     @Zoom.performed += instance.OnZoom;
                     @Zoom.canceled += instance.OnZoom;
-                    @Newaction.started += instance.OnNewaction;
-                    @Newaction.performed += instance.OnNewaction;
-                    @Newaction.canceled += instance.OnNewaction;
                 }
             }
         }
@@ -392,7 +364,6 @@ namespace Mercier.InputActions
         {
             void OnMove(InputAction.CallbackContext context);
             void OnZoom(InputAction.CallbackContext context);
-            void OnNewaction(InputAction.CallbackContext context);
         }
     }
 }

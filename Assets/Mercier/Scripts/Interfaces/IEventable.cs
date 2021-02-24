@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEnableable
+public interface IEventable
 {
     void OnEnable();
     void OnDisable();
-    
 }
