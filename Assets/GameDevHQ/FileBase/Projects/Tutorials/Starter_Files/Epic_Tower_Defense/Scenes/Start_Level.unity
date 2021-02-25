@@ -1517,7 +1517,7 @@ GameObject:
   - component: {fileID: 238432288}
   - component: {fileID: 238432290}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: CameraContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1536,16 +1536,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 534669904}
-  _lookOffset: 0
-  _cameraAngle: 0
-  _defaultZoom: 0
-  _minZoom: 0
-  _maxZoom: 0
-  _cameraMoveSpeed: 5
-  _cameraTargetSpeed: 10
-  _cameraRotationSpeed: 5
+  _lookOffset: 1
+  _angle: 45
+  _minMaxXPos: {x: -38, y: -5}
+  _minMaxYPos: {x: -7, y: 20}
+  _xMoveLimit: {x: 10, y: 15}
+  _yMoveLimit: {x: 5, y: 10}
+  _moveSpeed: 5
+  _defaultZoom: 30
+  _maxZoomIn: 2
+  _maxZoomOut: 40
+  _zoomSpeed: 4
+  _rotationSpeed: 5
   _screenBorderPercent: 10
-  _screenBoundary: {x: 8, y: 15}
 --- !u!4 &238432289
 Transform:
   m_ObjectHideFlags: 0
@@ -1603,17 +1606,50 @@ MonoBehaviour:
     m_ActionId: 76c73194-6acf-4ced-97dc-0e8ed7d522aa
     m_ActionName: Camera/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 238432288}
+        m_MethodName: OnZoom
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: ce244ea2-976a-490f-acea-9c9de2b4d79f
     m_ActionName: Camera/Zoom[/Mouse/scroll]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1d9654ce-054a-4ce9-850c-a71214adb76f
-    m_ActionName: Camera/Rotate[/Mouse/delta]
-  - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 238432288}
+        m_MethodName: OnToggleRotate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: c7ecc5b5-9be9-4cf8-bacb-976f32f4c94e
     m_ActionName: Camera/ToggleRotate[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 238432288}
+        m_MethodName: OnRotate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1d9654ce-054a-4ce9-850c-a71214adb76f
+    m_ActionName: Camera/Rotate[/Mouse/delta]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Camera
@@ -2830,13 +2866,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: -25, y: 30, z: -25}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 238432289}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &534669906
 MonoBehaviour:
   m_ObjectHideFlags: 0

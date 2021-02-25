@@ -17,14 +17,6 @@
                     "name": "Zoom",
                     "type": "Value",
                     "id": "ce244ea2-976a-490f-acea-9c9de2b4d79f",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Rotate",
-                    "type": "Value",
-                    "id": "1d9654ce-054a-4ce9-850c-a71214adb76f",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
@@ -34,6 +26,14 @@
                     "type": "Button",
                     "id": "c7ecc5b5-9be9-4cf8-bacb-976f32f4c94e",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Rotate",
+                    "type": "Value",
+                    "id": "1d9654ce-054a-4ce9-850c-a71214adb76f",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
                 }
@@ -154,7 +154,7 @@
                     "id": "ec8f0104-c930-4b1c-a874-380f204cddc8",
                     "path": "<Mouse>/scroll",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "NormalizeVector2",
                     "groups": "Keyboard&Mouse",
                     "action": "Zoom",
                     "isComposite": false,

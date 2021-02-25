@@ -9,7 +9,7 @@ using Mercier.Scripts.Classes;
 
 namespace Mercier.Scripts
 {
-    public class CameraController : MonoSingleton<CameraController>, IEventable, CameraInputActions.ICameraActions
+    public class CameraController : MonoSingleton<CameraController>,/* IEventable,*/ CameraInputActions.ICameraActions
     {
         private CameraInputActions _cameraIA;
 
@@ -19,26 +19,65 @@ namespace Mercier.Scripts
         private InputAction _rotateAction;
         private InputAction _toggleRotateAction;
 
-        private Vector2 _moveInput, _zoomInput, _rotationInput;
-        private Vector3 _moveDirection, _moveTarget;
+        private Vector2 _moveInput, 
+            _zoomInput, 
+            _rotationInput;
 
+        [Header("Camera Settings")]
         [SerializeField]
         private Camera _camera;
-
-        //private Vector3 _defaultPosition = new Vector3(-25f, 30f, -25f);
-        //private Vector3 _defaultRotation = new Vector3(50f, 0f, 0f);
-
+        private Vector3 _cameraTargetPos;
         [SerializeField]
-        private float _minXAxis = -8f, _maxXAxis = 8f, _minZAxis = -5f, _maxZAxis = 10f;
+        private float _lookOffset;
         [SerializeField]
-        private float _defaultZoom, _minZoom, _maxZoom;
-
+        private float _angle;
         [SerializeField]
-        private float _moveSpeed = 5f, _targetSpeed = 10f, _rotationSpeed = 5f;
+        private Vector2 _minMaxXPos = new Vector2(-38f, -5f);
+        [SerializeField]
+        private Vector2 _minMaxYPos = new Vector2(-7f, 20f);
+        private Vector3 _levelMidpoint;
+        private float _xMidpoint,
+            _yMidpoint;
+        private Vector3 _moveDirection,
+            _moveTarget;
+        [SerializeField]
+        private float _moveSpeed = 5f;
+        private float _targetSpeed = 10f;
 
+        private Vector3 _defaultPosition = new Vector3(-25f, 30f, -25f);
+
+        [Header("Zoom Settings")]
+        [SerializeField]
+        private float _defaultZoom;
+        [SerializeField]
+        private float _maxZoomIn = 2f;
+        [SerializeField]
+        private float _maxZoomOut = 40f;
+        private float _currentZoom;
+        public float CurrentZoom
+        {
+            get => _currentZoom;
+            private set
+            {
+                _currentZoom = value;
+                CalculateCameraTarget();
+            }
+        }
+        [SerializeField]
+        private float _zoomSpeed = 10f;
+
+        [Header("Rotation Settings")]
+        [SerializeField]
+        private float _rotationSpeed = 5f;
+        private float _rotationSlerp = 4f;
+        private bool _canRotate = false;
+        private Quaternion _rotationTarget;
+
+        [Space(15)]
         [SerializeField]
         private float _screenBorderPercent = 10f;
 
+        /*
         public void OnEnable()
         {
             if (_cameraIA == null)
@@ -65,54 +104,99 @@ namespace Mercier.Scripts
             _activeInputActions.ToList().ForEach(a => a.ReturnActiveAction().Disable());
 
             _cameraIA.Camera.Disable();
+        }*/
+
+        private void Start()
+        {
+            if (_camera == null)
+            {
+                Debug.LogError("CameraController::Start()::Camera is NULL.");
+            }
+
+            _xMidpoint = (_minMaxXPos.x + _minMaxXPos.y) / 2;
+            _yMidpoint = (_minMaxYPos.x + _minMaxYPos.y) / 2;
+            _levelMidpoint = new Vector3(_xMidpoint, 0f, _yMidpoint);
+            _moveTarget = _levelMidpoint;
+
+            _camera.transform.rotation = Quaternion.AngleAxis(_angle, Vector3.right);
+
+            CurrentZoom = _defaultZoom;
+
+            _rotationTarget = transform.rotation;
         }
 
         private void FixedUpdate()
         {
-            CalculateMovement(_moveInput);
-            //CalculateZoom(_zoomInput);
-            //CalculateRotation(_rotationInput);
+            CalculateMovement(_moveDirection);
+            CalculateZoom(_zoomInput);
         }
 
-        public void OnMove(InputAction.CallbackContext context)
+        private void LateUpdate()
+        {
+            CalculateRotation(_rotationInput); // moved to LateUpdate() to prevent unnecessary calls
+        }
+
+        private void CalculateCameraTarget()
+        {
+            //sets camera position based on look offset, angle, and zoom
+            _cameraTargetPos = (Vector3.up * _lookOffset) + (Quaternion.AngleAxis(_angle, Vector3.right) * Vector3.back) * _currentZoom;
+        }
+
+        public void OnMove(InputAction.CallbackContext context) // if using Invoke Unity Events on Player Input component, do we need to worry about unsubscribing?
         {
             _moveInput = context.ReadValue<Vector2>();
+
+            _moveDirection = new Vector3(_moveInput.x, 0, _moveInput.y);
         }
 
-        private void CalculateMovement(Vector2 input)
+        private void CalculateMovement(Vector3 direction)
         {
-            _moveDirection = new Vector3(input.x, 0, input.y);
-
             _moveTarget += (transform.forward * _moveDirection.z + transform.right * _moveDirection.x) * _targetSpeed * Time.fixedDeltaTime;
-            _moveTarget.x = Mathf.Clamp(_moveTarget.x, _minXAxis, _maxXAxis);
-            _moveTarget.z = Mathf.Clamp(_moveTarget.z, _minZAxis, _maxZAxis);
+            _moveTarget.x = Mathf.Clamp(_moveTarget.x, _minMaxXPos.x, _minMaxXPos.y);
+            _moveTarget.z = Mathf.Clamp(_moveTarget.z, _minMaxYPos.x, _minMaxYPos.y);
 
             transform.position = Vector3.Lerp(transform.position, _moveTarget, _moveSpeed * Time.deltaTime);
         }
 
         public void OnZoom(InputAction.CallbackContext context)
         {
+            if (context.phase != InputActionPhase.Performed)
+            {
+                return;
+            }
+
             _zoomInput = context.ReadValue<Vector2>();
+
+            CurrentZoom = Mathf.Clamp(_currentZoom - _zoomInput.y, _maxZoomIn, _maxZoomOut);
         }
 
         private void CalculateZoom(Vector2 input)
         {
-            
-        }
-
-        public void OnRotate(InputAction.CallbackContext context)
-        {
-            
-        }
-
-        private void CalculateRotation(Vector2 input)
-        {
-
+            _camera.transform.localPosition = Vector3.Lerp(_camera.transform.localPosition, _cameraTargetPos, _zoomSpeed * Time.deltaTime);
         }
 
         public void OnToggleRotate(InputAction.CallbackContext context)
         {
-            
+            _canRotate = context.ReadValue<float>() == 1;
+        }
+
+        public void OnRotate(InputAction.CallbackContext context)
+        {
+            if (_canRotate)
+            {
+                _rotationInput = context.ReadValue<Vector2>();
+            }
+            else
+            {
+                _rotationInput = Vector2.zero;
+            }
+        }
+
+        private void CalculateRotation(Vector2 input)
+        {
+            _rotationTarget *= Quaternion.AngleAxis(input.x * _rotationSpeed * Time.deltaTime, Vector3.up);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, _rotationTarget, _rotationSlerp * Time.deltaTime);
         }
 
         public void OnNewaction(InputAction.CallbackContext context)
