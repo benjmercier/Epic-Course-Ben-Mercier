@@ -35,6 +35,22 @@ namespace Mercier.InputActions
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""1d9654ce-054a-4ce9-850c-a71214adb76f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ToggleRotate"",
+                    ""type"": ""Button"",
+                    ""id"": ""c7ecc5b5-9be9-4cf8-bacb-976f32f4c94e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -158,6 +174,28 @@ namespace Mercier.InputActions
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95b34d6b-7e27-47b7-b562-48ff3f6f46fb"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f249281a-b470-424f-93b0-5d88a63a39f0"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ToggleRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -229,6 +267,8 @@ namespace Mercier.InputActions
             m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
             m_Camera_Move = m_Camera.FindAction("Move", throwIfNotFound: true);
             m_Camera_Zoom = m_Camera.FindAction("Zoom", throwIfNotFound: true);
+            m_Camera_Rotate = m_Camera.FindAction("Rotate", throwIfNotFound: true);
+            m_Camera_ToggleRotate = m_Camera.FindAction("ToggleRotate", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -280,12 +320,16 @@ namespace Mercier.InputActions
         private ICameraActions m_CameraActionsCallbackInterface;
         private readonly InputAction m_Camera_Move;
         private readonly InputAction m_Camera_Zoom;
+        private readonly InputAction m_Camera_Rotate;
+        private readonly InputAction m_Camera_ToggleRotate;
         public struct CameraActions
         {
             private @CameraInputActions m_Wrapper;
             public CameraActions(@CameraInputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Camera_Move;
             public InputAction @Zoom => m_Wrapper.m_Camera_Zoom;
+            public InputAction @Rotate => m_Wrapper.m_Camera_Rotate;
+            public InputAction @ToggleRotate => m_Wrapper.m_Camera_ToggleRotate;
             public InputActionMap Get() { return m_Wrapper.m_Camera; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -301,6 +345,12 @@ namespace Mercier.InputActions
                     @Zoom.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnZoom;
                     @Zoom.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnZoom;
                     @Zoom.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnZoom;
+                    @Rotate.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotate;
+                    @Rotate.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotate;
+                    @Rotate.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotate;
+                    @ToggleRotate.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnToggleRotate;
+                    @ToggleRotate.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnToggleRotate;
+                    @ToggleRotate.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnToggleRotate;
                 }
                 m_Wrapper.m_CameraActionsCallbackInterface = instance;
                 if (instance != null)
@@ -311,6 +361,12 @@ namespace Mercier.InputActions
                     @Zoom.started += instance.OnZoom;
                     @Zoom.performed += instance.OnZoom;
                     @Zoom.canceled += instance.OnZoom;
+                    @Rotate.started += instance.OnRotate;
+                    @Rotate.performed += instance.OnRotate;
+                    @Rotate.canceled += instance.OnRotate;
+                    @ToggleRotate.started += instance.OnToggleRotate;
+                    @ToggleRotate.performed += instance.OnToggleRotate;
+                    @ToggleRotate.canceled += instance.OnToggleRotate;
                 }
             }
         }
@@ -364,6 +420,8 @@ namespace Mercier.InputActions
         {
             void OnMove(InputAction.CallbackContext context);
             void OnZoom(InputAction.CallbackContext context);
+            void OnRotate(InputAction.CallbackContext context);
+            void OnToggleRotate(InputAction.CallbackContext context);
         }
     }
 }

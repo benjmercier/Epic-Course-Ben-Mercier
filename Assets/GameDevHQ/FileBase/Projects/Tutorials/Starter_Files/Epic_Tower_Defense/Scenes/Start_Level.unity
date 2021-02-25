@@ -1535,12 +1535,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 475d70d3eb54eb5409b4298e484b31c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 534669904}
-  _speed: 5
-  _borderThicknessPercent: 10
-  _levelMoveLimit: {x: 0, y: 0}
+  _camera: {fileID: 534669904}
+  _lookOffset: 0
+  _cameraAngle: 0
+  _defaultZoom: 0
   _minZoom: 0
   _maxZoom: 0
+  _cameraMoveSpeed: 5
+  _cameraTargetSpeed: 10
+  _cameraRotationSpeed: 5
+  _screenBorderPercent: 10
+  _screenBoundary: {x: 8, y: 15}
 --- !u!4 &238432289
 Transform:
   m_ObjectHideFlags: 0
@@ -1549,7 +1554,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 238432287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25, y: 0, z: -25}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 534669905}
@@ -1563,12 +1568,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 238432287}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: 0}
+  m_Actions: {fileID: -944628639613478452, guid: 1ad9c42c861f108468cc2b78400f84e5,
+    type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -1597,20 +1603,17 @@ MonoBehaviour:
     m_ActionId: 76c73194-6acf-4ced-97dc-0e8ed7d522aa
     m_ActionName: Camera/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 238432288}
-        m_MethodName: OnZoom
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: ce244ea2-976a-490f-acea-9c9de2b4d79f
     m_ActionName: Camera/Zoom[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1d9654ce-054a-4ce9-850c-a71214adb76f
+    m_ActionName: Camera/Rotate[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c7ecc5b5-9be9-4cf8-bacb-976f32f4c94e
+    m_ActionName: Camera/ToggleRotate[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Camera
@@ -2828,7 +2831,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
   m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: 0, y: 30, z: 0}
+  m_LocalPosition: {x: -25, y: 30, z: -25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 238432289}
