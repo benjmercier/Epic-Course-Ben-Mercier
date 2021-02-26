@@ -145,6 +145,24 @@ namespace Mercier.Scripts
         public void OnMove(InputAction.CallbackContext context) // if using Invoke Unity Events on Player Input component, do we need to worry about unsubscribing?
         {
             _moveInput = context.ReadValue<Vector2>();
+            //Debug.Log("MoveInput: " + _moveInput);
+            /*
+            Debug.Log("Current context.control: " + context.control.name);
+            Vector2 a = context.ReadValue<Vector2>();
+            Debug.Log("Context value: " + a);
+
+            if (context.control.name == "delta") // may change to "position"
+            {
+                if (a.x >= Screen.width - (Screen.width * _screenBorderPercent))
+                {
+                    a = context.ReadValue<Vector2>();
+                    _moveInput = a;
+                }
+            }
+            else
+            {
+                _moveInput = context.ReadValue<Vector2>();
+            }*/
 
             _moveDirection = new Vector3(_moveInput.x, 0, _moveInput.y);
         }
