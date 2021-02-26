@@ -7,10 +7,18 @@ namespace Mercier.Scripts.Classes
     public class TowerPosition : MonoBehaviour
     {
         [SerializeField]
-        private GameObject _towerPos;
+        private GameObject _turretPos;
 
         [SerializeField]
         private bool _isActive;
+
+        private void Start()
+        {
+            if (_turretPos == null)
+            {
+                Debug.Log("TowerPosition::Start()::" + gameObject.name + " _turretPos is NULL");
+            }
+        }
 
         public bool ReturnActiveState()
         {

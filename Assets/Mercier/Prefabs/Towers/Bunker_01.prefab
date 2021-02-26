@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 499910526812307551}
-  - component: {fileID: 3580629356301216858}
+  - component: {fileID: 927969718824598272}
   - component: {fileID: 3411709071111353223}
   - component: {fileID: 8838474993943840671}
   m_Layer: 0
@@ -28,13 +28,13 @@ Transform:
   m_GameObject: {fileID: 1306300766996539281}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_LocalScale: {x: 40, y: 40, z: 40}
   m_Children:
   - {fileID: 3327046840591888628}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3580629356301216858
+--- !u!114 &927969718824598272
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f3bb841159f52047a0613e937d10bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _towerPos: {fileID: 5610461909860947774}
+  _turretPos: {fileID: 5610461909860947774}
   _isActive: 0
 --- !u!33 &3411709071111353223
 MeshFilter:
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 7981546561275051123}
   - component: {fileID: 179354028109184378}
   m_Layer: 0
-  m_Name: TowerPos
+  m_Name: TurretPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

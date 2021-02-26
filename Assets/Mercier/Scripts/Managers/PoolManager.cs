@@ -7,39 +7,54 @@ namespace Mercier.Scripts.Managers
 {
     public class PoolManager : MonoSingleton<PoolManager>
     {
-        private Dictionary<int, List<GameObject>> _poolDictionary = new Dictionary<int, List<GameObject>>();
-        private int _poolIndex;
-        private List<GameObject> _pool;
-
+        [Header("Enemy Pool")]
         [SerializeField]
-        private int _poolBuffer = 10;
-
+        private int _enemyBuffer = 10;
         [SerializeField]
         private GameObject _enemyContainer;
         [SerializeField]
         private GameObject[] _enemyPrefabs;
-        private GameObject _enemy;
+        private Dictionary<int, List<GameObject>> _enemyPoolDictionary = new Dictionary<int, List<GameObject>>();
+        private List<GameObject> _enemyPool;
 
+        [Header("TurretPool")]
+        [SerializeField]
+        private int _turretBuffer = 20;
+        [SerializeField]
+        private GameObject _turretContainer;
+        [SerializeField]
+        private GameObject[] _turretPrefabs;
+        private Dictionary<int, List<GameObject>> _turretPoolDictionary = new Dictionary<int, List<GameObject>>();
+        private List<GameObject> _turretPool;
+
+        private Dictionary<int, List<GameObject>> _activePoolDictionary;
+
+        private GameObject _prefabFromPool;
+        private int _poolIndex;
         private int _randomIndex;
 
         private void Start()
         {
-            _poolDictionary = GeneratePoolDictionary(_poolBuffer, _enemyPrefabs, _enemyContainer);
+            _enemyPoolDictionary = GeneratePoolDictionary(_enemyBuffer, _enemyPrefabs, _enemyContainer, _enemyPool);
+            _turretPoolDictionary = GeneratePoolDictionary(_turretBuffer, _turretPrefabs, _turretContainer, _turretPool);
         }
 
-        private Dictionary<int, List<GameObject>> GeneratePoolDictionary(int buffer, GameObject[] prefabArray, GameObject container)
+        #region Generate GameObject Pool
+        private Dictionary<int, List<GameObject>> GeneratePoolDictionary(int buffer, GameObject[] prefabArray, GameObject container, List<GameObject> pool)
         {
+            _activePoolDictionary = new Dictionary<int, List<GameObject>>();
+
             for (int i = 0; i < prefabArray.Length; i++)
             {
                 _poolIndex = System.Array.IndexOf(prefabArray, prefabArray[i]);
 
-                _pool = new List<GameObject>();
-                _pool = GeneratePool(buffer, prefabArray[i], container, _pool);
+                pool = new List<GameObject>();
+                pool = GeneratePool(buffer, prefabArray[i], container, pool);
 
-                _poolDictionary.Add(_poolIndex, _pool);
+                _activePoolDictionary.Add(_poolIndex, pool);
             }
 
-            return _poolDictionary;
+            return _activePoolDictionary;
         }
 
         private List<GameObject> GeneratePool(int buffer, GameObject prefab, GameObject container, List<GameObject> pool)
@@ -60,47 +75,49 @@ namespace Mercier.Scripts.Managers
 
             return obj;
         }
+        #endregion
 
-        public GameObject ReturnPrefabFromPool(bool isRandom, int dictionaryKey)
+        #region Return GameObject from Pool
+        public GameObject ReturnEnemyFromPool(bool isRandom, int dictionaryKey)
+        {
+            return ReturnPrefabFromPool(isRandom, _enemyPoolDictionary, dictionaryKey, _enemyPrefabs, _enemyContainer);
+        }
+
+        public GameObject ReturnTurretFromPool(bool isRandom, int dictionaryKey)
+        {
+            return ReturnPrefabFromPool(isRandom, _turretPoolDictionary, dictionaryKey, _turretPrefabs, _turretContainer);
+        }
+
+        private GameObject ReturnPrefabFromPool(bool isRandom, Dictionary<int, List<GameObject>> dictionary, int dictionaryKey, GameObject[] prefabs, GameObject container)
         {
             if (isRandom)
             {
-                _randomIndex = Random.Range(0, _poolDictionary.Count);
+                _randomIndex = Random.Range(0, dictionary.Count);
 
-                if (_poolDictionary[_randomIndex].Any(a => !a.activeInHierarchy))
-                {
-                    _enemy = _poolDictionary[_randomIndex].FirstOrDefault(f => !f.activeInHierarchy);
-                }
-                else
-                {
-                    _enemy = GeneratePrefab(_enemyPrefabs[_randomIndex], _enemyContainer);
-
-                    _poolDictionary[_randomIndex].Add(_enemy);
-                }
+                CheckIfActive(dictionary, _randomIndex, prefabs, container);
             }
             else
             {
-                if (_poolDictionary[dictionaryKey].Any(a => !a.activeInHierarchy))
-                {
-                    _enemy = _poolDictionary[dictionaryKey].FirstOrDefault(b => !b.activeInHierarchy);
-                }
-                else
-                {
-                    _enemy = GeneratePrefab(_enemyPrefabs[dictionaryKey], _enemyContainer);
-
-                    _poolDictionary[dictionaryKey].Add(_enemy);
-                }
+                CheckIfActive(dictionary, dictionaryKey, prefabs, container);
             }
 
-            return _enemy;
+            return _prefabFromPool;
         }
 
-        public Dictionary<int, List<GameObject>> ReturnPoolDictionary()
+        private void CheckIfActive(Dictionary<int, List<GameObject>> dictionary, int dictionaryKey, GameObject[] prefabs, GameObject container)
         {
-            var dictionary = _poolDictionary;
+            if (dictionary[dictionaryKey].Any(a => !a.activeInHierarchy))
+            {
+                _prefabFromPool = dictionary[dictionaryKey].FirstOrDefault(f => !f.activeInHierarchy);
+            }
+            else
+            {
+                _prefabFromPool = GeneratePrefab(prefabs[dictionaryKey], container);
 
-            return dictionary;
+                dictionary[dictionaryKey].Add(_prefabFromPool);
+            }
         }
+        #endregion
     }
 }
 
