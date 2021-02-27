@@ -17,17 +17,17 @@ namespace Mercier.Scripts.Classes
         [SerializeField]
         private bool _canActivateTurret = false;
 
-        public static event Action<bool> onTowerAvailable;
-        public static event Action onActivateTurret;
+        //public static event Action<bool> onTowerAvailable;
+        //public static event Action onActivateTurret;
 
         public void OnEnable()
         {
-            TowerManager.onTurretSelection += CheckTowerAvailability;
+            //TowerManager.onTurretSelection += CheckTowerAvailability;
         }
 
         public void OnDisable()
         {
-            TowerManager.onTurretSelection -= CheckTowerAvailability;
+            //TowerManager.onTurretSelection -= CheckTowerAvailability;
         }
 
         private void Start()
@@ -39,6 +39,8 @@ namespace Mercier.Scripts.Classes
 
             _canActivateTurret = true;
         }
+
+        /*
 
         private void CheckTowerAvailability(bool isSelected, int decoyIndex)
         {
@@ -85,7 +87,7 @@ namespace Mercier.Scripts.Classes
         private void OnMouseExit()
         {
             OnTowerAvailable(false);
-        }
+        }*/
     }
 }
 

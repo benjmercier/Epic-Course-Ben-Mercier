@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9180584b8979ac44daffe1451d386352, type: 3}
+  m_Name: TurretPool
+  m_EditorClassIdentifier: 
+  name: Turret Pool
+  index: 1
+  buffer: 20
+  prefabs:
+  - {fileID: 5361602506161335635, guid: 6f8e16e316707ab498d2a7fde36f6cdf, type: 3}
+  - {fileID: 7809918525972281956, guid: 174cb0a363c56914d8be9eeed857e6e7, type: 3}
+  - {fileID: 4919045958501377848, guid: 1beac53d5aa4696408a78d30afc8d2e3, type: 3}
+  list: []

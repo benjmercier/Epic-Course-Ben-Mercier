@@ -46,7 +46,7 @@ namespace Mercier.Scripts.Managers
 
         public void ActivateEnemyPrefab(bool isRandom, int dictionaryKey)
         {
-            _spawnPrefab = PoolManager.Instance.ReturnEnemyFromPool(isRandom, dictionaryKey);
+            _spawnPrefab = PoolManager.Instance.ReturnPrefabFromPool(isRandom, 0, dictionaryKey);
 
             _spawnPrefab.transform.position = _spawnPos.position;
 

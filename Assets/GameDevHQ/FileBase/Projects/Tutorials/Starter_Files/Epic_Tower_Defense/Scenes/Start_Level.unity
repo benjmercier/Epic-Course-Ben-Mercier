@@ -3138,23 +3138,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ead8e018a31c5c4682be4ff2b8628a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyBuffer: 10
-  _enemyContainer: {fileID: 1978773957}
-  _enemyPrefabs:
-  - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
-  - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
-  _turretBuffer: 20
-  _turretContainer: {fileID: 1611822516}
-  _turretPrefabs:
-  - {fileID: 5361602506161335635, guid: 6f8e16e316707ab498d2a7fde36f6cdf, type: 3}
-  - {fileID: 7809918525972281956, guid: 174cb0a363c56914d8be9eeed857e6e7, type: 3}
-  - {fileID: 4919045958501377848, guid: 1beac53d5aa4696408a78d30afc8d2e3, type: 3}
-  _decoyTurretBuffer: 2
-  _decoyTurretContainer: {fileID: 1796771456}
-  _decoyTurretPrefabs:
-  - {fileID: 4842751245509533830, guid: 19eb74e4153a35445a20233a430c848a, type: 3}
-  - {fileID: 2430159803144526013, guid: d2f4fb0e859038b419399f6b755bb262, type: 3}
-  - {fileID: 2003420045198756308, guid: 1fea1fd7ce38ca64b8c3a59356fabdc0, type: 3}
+  _activePools:
+  - {fileID: 11400000, guid: e835d6570ed9f384db577551b780bc21, type: 2}
+  - {fileID: 11400000, guid: 8d07d203425f1494bad9113e758e5250, type: 2}
+  - {fileID: 11400000, guid: f843bd3fa81d397419930a30edde30be, type: 2}
+  _poolContainers:
+  - {fileID: 1978773957}
+  - {fileID: 1611822516}
+  - {fileID: 1796771456}
 --- !u!1 &412009219
 GameObject:
   m_ObjectHideFlags: 0
@@ -13711,14 +13702,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5898b379c95284984514b6b626b9e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 534669904}
-  _decoyTurretContainer: {fileID: 1796771456}
-  _decoyTurretPrefabs:
-  - {fileID: 4842751245509533830, guid: 19eb74e4153a35445a20233a430c848a, type: 3}
-  - {fileID: 2430159803144526013, guid: d2f4fb0e859038b419399f6b755bb262, type: 3}
-  - {fileID: 2003420045198756308, guid: 1fea1fd7ce38ca64b8c3a59356fabdc0, type: 3}
-  _yOffset: 0.5
-  _canCastRay: 0
+  _isTurretSelected: 0
+  _isTowerAvailable: 0
+  _yPosOffset: 0.5
 --- !u!1001 &1886142276
 PrefabInstance:
   m_ObjectHideFlags: 0

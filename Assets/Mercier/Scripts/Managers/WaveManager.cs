@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Mercier.Scripts.ScriptableObjects.Waves;
+using Mercier.Scripts.ScriptableObjects;
 using Mercier.Scripts.Classes;
 
 namespace Mercier.Scripts.Managers

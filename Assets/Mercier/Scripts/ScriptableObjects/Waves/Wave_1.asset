@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5338f8c5900f8449b1907e4acd3eb08, type: 3}
+  m_Script: {fileID: 11500000, guid: 93d4980431ef1b2499393927df0e5599, type: 3}
   m_Name: Wave_1
   m_EditorClassIdentifier: 
   useBlockWave: 1
@@ -21,7 +21,7 @@ MonoBehaviour:
     prefabKey: 1
     spawnAmount: 2
   useCustomWave: 0
-  customWaveSequence: 00000000000000000100000001000000000000000100000000000000010000000000000001000000
+  customWaveSequence: 
   useRandomWave: 0
-  randomWaveTotal: 10
+  randomWaveTotal: 0
   spawnWaitTime: 5

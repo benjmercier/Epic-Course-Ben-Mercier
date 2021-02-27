@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mercier.Scripts.Classes;
 
-namespace Mercier.Scripts.ScriptableObjects.Waves
+namespace Mercier.Scripts.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "NewWave.asset", menuName = "Scriptable Objects/New Wave")]
     public class Wave : ScriptableObject

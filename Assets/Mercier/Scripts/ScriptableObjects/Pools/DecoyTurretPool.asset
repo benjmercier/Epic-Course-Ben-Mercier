@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9180584b8979ac44daffe1451d386352, type: 3}
+  m_Name: DecoyTurretPool
+  m_EditorClassIdentifier: 
+  name: Decoy Turret Pool
+  index: 2
+  buffer: 2
+  prefabs:
+  - {fileID: 4842751245509533830, guid: 19eb74e4153a35445a20233a430c848a, type: 3}
+  - {fileID: 2430159803144526013, guid: d2f4fb0e859038b419399f6b755bb262, type: 3}
+  - {fileID: 2003420045198756308, guid: 1fea1fd7ce38ca64b8c3a59356fabdc0, type: 3}
+  list: []
