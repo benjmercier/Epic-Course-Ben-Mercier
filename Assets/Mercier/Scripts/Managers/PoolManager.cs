@@ -27,6 +27,16 @@ namespace Mercier.Scripts.Managers
         private Dictionary<int, List<GameObject>> _turretPoolDictionary = new Dictionary<int, List<GameObject>>();
         private List<GameObject> _turretPool;
 
+        [Header("Decoy Turret Pool")]
+        [SerializeField]
+        private int _decoyTurretBuffer = 2;
+        [SerializeField]
+        private GameObject _decoyTurretContainer;
+        [SerializeField]
+        private GameObject[] _decoyTurretPrefabs;
+        private Dictionary<int, List<GameObject>> _decoyTurretPoolDictionary = new Dictionary<int, List<GameObject>>();
+        private List<GameObject> _decoyTurretPool;
+
         private Dictionary<int, List<GameObject>> _activePoolDictionary;
 
         private GameObject _prefabFromPool;
@@ -37,6 +47,7 @@ namespace Mercier.Scripts.Managers
         {
             _enemyPoolDictionary = GeneratePoolDictionary(_enemyBuffer, _enemyPrefabs, _enemyContainer, _enemyPool);
             _turretPoolDictionary = GeneratePoolDictionary(_turretBuffer, _turretPrefabs, _turretContainer, _turretPool);
+            _decoyTurretPoolDictionary = GeneratePoolDictionary(_decoyTurretBuffer, _decoyTurretPrefabs, _decoyTurretContainer, _decoyTurretPool);
         }
 
         #region Generate GameObject Pool
@@ -86,6 +97,11 @@ namespace Mercier.Scripts.Managers
         public GameObject ReturnTurretFromPool(bool isRandom, int dictionaryKey)
         {
             return ReturnPrefabFromPool(isRandom, _turretPoolDictionary, dictionaryKey, _turretPrefabs, _turretContainer);
+        }
+
+        public GameObject ReturnDecoyTurretFromPool(bool isRandom, int dictionaryKey)
+        {
+            return ReturnPrefabFromPool(isRandom, _decoyTurretPoolDictionary, dictionaryKey, _decoyTurretPrefabs, _decoyTurretContainer);
         }
 
         private GameObject ReturnPrefabFromPool(bool isRandom, Dictionary<int, List<GameObject>> dictionary, int dictionaryKey, GameObject[] prefabs, GameObject container)

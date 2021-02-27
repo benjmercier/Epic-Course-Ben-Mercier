@@ -11,6 +11,7 @@ namespace Mercier.Scripts
 {
     public class CameraController : MonoSingleton<CameraController>,/* IEventable,*/ CameraInputActions.ICameraActions
     {
+        #region Variables for InputAction
         private CameraInputActions _cameraIA;
 
         private List<ActiveAction<InputAction>> _activeInputActions = new List<ActiveAction<InputAction>>();
@@ -18,6 +19,7 @@ namespace Mercier.Scripts
         private InputAction _zoomAction;
         private InputAction _rotateAction;
         private InputAction _toggleRotateAction;
+        #endregion
 
         private Vector2 _moveInput, 
             _zoomInput, 
@@ -77,6 +79,7 @@ namespace Mercier.Scripts
         [SerializeField]
         private float _screenBorderPercent = 10f;
 
+        #region OnEnable/Disable for InputActions/Events
         /*
         public void OnEnable()
         {
@@ -105,6 +108,7 @@ namespace Mercier.Scripts
 
             _cameraIA.Camera.Disable();
         }*/
+        #endregion
 
         private void Start()
         {

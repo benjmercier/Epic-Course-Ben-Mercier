@@ -16,59 +16,87 @@ namespace Mercier.Scripts.Managers
         [SerializeField]
         private GameObject[] _decoyTurretPrefabs;
 
-        private int _decoyIndex = 0;
-        private string _inputString;
+        private GameObject _activeDecoy;
+        private Vector3 _currentPos;
         [SerializeField]
-        private bool _canRaycast = false;
+        private float _yOffset = 0.5f;
+
+        private int _decoyIndex = 0;
+        [SerializeField]
+        private bool _canCastRay = false;
 
         private Ray _rayOrigin;
-        private RaycastHit _hit;
+        private RaycastHit _rayHit;
 
         // Start is called before the first frame update
         void Start()
         {
-            _decoyTurretPrefabs.ToList().ForEach(d => d.SetActive(false));
+            _decoyTurretPrefabs.ToList().ForEach(t => t.SetActive(false));
         }
 
         // Update is called once per frame
         void Update()
         {
-            CheckInput();
-
-            if (_canRaycast)
+            if (_canCastRay)
             {
-                
+                CastRay();
             }
-
-            Ray rayOrigin = _mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(rayOrigin, out hit))
+            else
             {
-                _decoyTurretPrefabs[_decoyIndex].transform.position = hit.point;
+                CheckSelectionInput();
             }
         }
 
-        private void CheckInput()
+        private void CheckSelectionInput()
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                _canRaycast = true;
-                _decoyIndex = 0;
-                _decoyTurretPrefabs[_decoyIndex].SetActive(true);
+                ActivateDecoy(0);
+                
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                _canRaycast = true;
-                _decoyIndex = 1;
-                _decoyTurretPrefabs[_decoyIndex].SetActive(true);
+                ActivateDecoy(1);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                _canRaycast = true;
-                _decoyIndex = 2;
-                _decoyTurretPrefabs[_decoyIndex].SetActive(true);
+                ActivateDecoy(2);
             }
+        }
+
+        private void CastRay()
+        {
+            _rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(_rayOrigin, out _rayHit))
+            {
+                _currentPos = _rayHit.point;
+                _currentPos.y += _yOffset;
+
+                _activeDecoy.transform.position = _currentPos;
+
+                if (Input.GetMouseButton(1))
+                {
+                    DeactivateDecoy();
+                }
+            }
+        }
+
+        private void ActivateDecoy(int index)
+        {
+            _decoyIndex = index;
+
+            _activeDecoy = PoolManager.Instance.ReturnDecoyTurretFromPool(false, index); // Instantiate(_decoyTurretPrefabs[index], _decoyTurretContainer.transform);
+            _activeDecoy.SetActive(true);
+
+            _canCastRay = true;
+        }
+
+        private void DeactivateDecoy()
+        {
+            _activeDecoy.SetActive(false);
+
+            _canCastRay = false;
         }
 
     }

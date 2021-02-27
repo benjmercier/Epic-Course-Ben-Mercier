@@ -188,8 +188,8 @@ namespace Mercier.InputActions
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f249281a-b470-424f-93b0-5d88a63a39f0"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""id"": ""2eb6f01c-3007-4c16-8586-1ab6bdb15086"",
+                    ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",

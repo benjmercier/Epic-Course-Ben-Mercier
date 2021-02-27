@@ -3122,6 +3122,7 @@ Transform:
   m_Children:
   - {fileID: 1978773958}
   - {fileID: 1611822517}
+  - {fileID: 1796771457}
   m_Father: {fileID: 917291711}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3148,6 +3149,12 @@ MonoBehaviour:
   - {fileID: 5361602506161335635, guid: 6f8e16e316707ab498d2a7fde36f6cdf, type: 3}
   - {fileID: 7809918525972281956, guid: 174cb0a363c56914d8be9eeed857e6e7, type: 3}
   - {fileID: 4919045958501377848, guid: 1beac53d5aa4696408a78d30afc8d2e3, type: 3}
+  _decoyTurretBuffer: 2
+  _decoyTurretContainer: {fileID: 1796771456}
+  _decoyTurretPrefabs:
+  - {fileID: 4842751245509533830, guid: 19eb74e4153a35445a20233a430c848a, type: 3}
+  - {fileID: 2430159803144526013, guid: d2f4fb0e859038b419399f6b755bb262, type: 3}
+  - {fileID: 2003420045198756308, guid: 1fea1fd7ce38ca64b8c3a59356fabdc0, type: 3}
 --- !u!1 &412009219
 GameObject:
   m_ObjectHideFlags: 0
@@ -3779,7 +3786,7 @@ GameObject:
   - component: {fileID: 534669907}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13210,12 +13217,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1796771456}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1882655605}
-  m_RootOrder: 1
+  m_Father: {fileID: 410019302}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1810690651
 GameObject:
@@ -13689,7 +13696,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 175742535}
-  - {fileID: 1796771457}
   m_Father: {fileID: 917291711}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13711,7 +13717,8 @@ MonoBehaviour:
   - {fileID: 4842751245509533830, guid: 19eb74e4153a35445a20233a430c848a, type: 3}
   - {fileID: 2430159803144526013, guid: d2f4fb0e859038b419399f6b755bb262, type: 3}
   - {fileID: 2003420045198756308, guid: 1fea1fd7ce38ca64b8c3a59356fabdc0, type: 3}
-  _canRaycast: 0
+  _yOffset: 0.5
+  _canCastRay: 0
 --- !u!1001 &1886142276
 PrefabInstance:
   m_ObjectHideFlags: 0

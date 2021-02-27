@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2427712188116675203}
   - component: {fileID: 2434441391647914717}
   - component: {fileID: 2443838821196725649}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Barrel_Tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2427537981855443141}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Barrel_to_Spin_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2427698341194722893}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Rot_Y
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2427396040748993889}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 2427243599406189845}
   - component: {fileID: 2433914414427777205}
   - component: {fileID: 2444831696781391033}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Turret_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2427541187108904305}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Dual_Gatling_Gun_Decoy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,6 +282,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 2427612929335787917}
+  - {fileID: 2648584365058796759}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -296,7 +297,7 @@ GameObject:
   - component: {fileID: 2427085671160903531}
   - component: {fileID: 2435021804408691693}
   - component: {fileID: 2444412708502248191}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mini_Gun_Braces_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +374,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2427286218519544781}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Right_Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +407,7 @@ GameObject:
   - component: {fileID: 2427790561752578029}
   - component: {fileID: 2434427111194300275}
   - component: {fileID: 2444221727660607559}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Barrels_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2427939546944479319}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Rot_X
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +517,7 @@ GameObject:
   - component: {fileID: 2427841490084374355}
   - component: {fileID: 2434248327330234625}
   - component: {fileID: 2444064985506059451}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Barrel_Tip_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -593,7 +594,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2427612929335787917}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Dual_barrel_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -626,7 +627,7 @@ GameObject:
   - component: {fileID: 2427396780570568059}
   - component: {fileID: 2434532372561869041}
   - component: {fileID: 2443766045835951261}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Turret_Support
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -706,7 +707,7 @@ GameObject:
   - component: {fileID: 2427239023145132639}
   - component: {fileID: 2434505775522659945}
   - component: {fileID: 2444857315772832941}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Barrels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -785,7 +786,7 @@ GameObject:
   - component: {fileID: 2426892874920373619}
   - component: {fileID: 2434722457863579141}
   - component: {fileID: 2443790668980105457}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Turret_Main_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -864,7 +865,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2427246801746303049}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Barrel_to_Spin_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -899,7 +900,7 @@ GameObject:
   - component: {fileID: 2426994093718530951}
   - component: {fileID: 2434685966961213229}
   - component: {fileID: 2444549620418655067}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mini_Gun_Braces
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -967,3 +968,96 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &5371810331550577798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2648584365058796759}
+  - component: {fileID: 5967813249217514512}
+  - component: {fileID: 3231754895944446892}
+  - component: {fileID: 5773026715560617321}
+  m_Layer: 2
+  m_Name: AttackRadius
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2648584365058796759
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5371810331550577798}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 25, y: 1, z: 25}
+  m_Children: []
+  m_Father: {fileID: 2427541187108904305}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &5967813249217514512
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5371810331550577798}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &3231754895944446892
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5371810331550577798}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: caf2a50a1a88eb44792b624908c54e61, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!135 &5773026715560617321
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5371810331550577798}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
