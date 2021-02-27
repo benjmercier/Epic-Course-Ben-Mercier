@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _towerRenderer: {fileID: 8838474993943840671}
-  _towerAvailablePS: {fileID: 8502683255319172797}
+  _towerParticleSystem: {fileID: 8502683255319172797}
   _isSearchingForPos: 0
   _isPosAvailable: 0
 --- !u!33 &8325142857950009082
@@ -208,7 +208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7136782994138877576
 Transform:
   m_ObjectHideFlags: 0
@@ -239,7 +239,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 1
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1

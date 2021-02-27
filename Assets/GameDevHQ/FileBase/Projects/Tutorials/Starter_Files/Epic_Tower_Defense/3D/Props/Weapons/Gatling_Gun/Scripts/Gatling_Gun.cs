@@ -43,6 +43,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
         // Update is called once per frame
         void Update()
         {
+            /*
             if (Input.GetMouseButton(0)) //Check for left click (held) user input
             { 
                 RotateBarrel(); //Call the rotation function responsible for rotating our gun barrel
@@ -61,7 +62,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
                 Muzzle_Flash.SetActive(false); //turn off muzzle flash particle effect
                 _audioSource.Stop(); //stop the sound effect from playing
                 _startWeaponNoise = true; //set the start weapon noise value to true
-            }
+            }*/
         }
 
         // Method to rotate gun barrel 

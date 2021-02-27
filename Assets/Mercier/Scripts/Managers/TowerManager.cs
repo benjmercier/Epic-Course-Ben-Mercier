@@ -25,7 +25,7 @@ namespace Mercier.Scripts.Managers
         private Ray _rayOrigin;
         private RaycastHit _rayHit;
 
-        public static event Action<bool, int> onTurretSelection;
+        public static event Action<bool, int> onDecoyTurretSelected;
 
         public void OnEnable()
         {
@@ -81,9 +81,9 @@ namespace Mercier.Scripts.Managers
             _isTurretSelected = isSelected;
             _activeDecoyIndex = decoyIndex;
 
-            if (onTurretSelection != null)
+            if (onDecoyTurretSelected != null)
             {
-                onTurretSelection(isSelected, decoyIndex);
+                onDecoyTurretSelected(isSelected, decoyIndex);
 
                 if (isSelected)
                 {   // 2 = decoy dictionary

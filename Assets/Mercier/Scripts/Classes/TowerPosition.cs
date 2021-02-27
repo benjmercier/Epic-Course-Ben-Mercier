@@ -12,7 +12,7 @@ namespace Mercier.Scripts.Classes
         [SerializeField]
         private Renderer _towerRenderer;
         [SerializeField]
-        private ParticleSystem _towerAvailablePS;
+        private ParticleSystem _towerParticleSystem;
 
         [SerializeField]
         private bool _isSearchingForPos = false;
@@ -26,12 +26,12 @@ namespace Mercier.Scripts.Classes
 
         public void OnEnable()
         {
-            TowerManager.onTurretSelection += CheckTowerAvailability;
+            TowerManager.onDecoyTurretSelected += CheckTowerAvailability;
         }
 
         public void OnDisable()
         {
-            TowerManager.onTurretSelection -= CheckTowerAvailability;
+            TowerManager.onDecoyTurretSelected -= CheckTowerAvailability;
         }
 
         private void Start()
@@ -40,7 +40,7 @@ namespace Mercier.Scripts.Classes
             {
                 Debug.Log("TowerPosition::Start()::" + gameObject.name + " _towerRenderer is NULL");
             }
-            if (_towerAvailablePS == null)
+            if (_towerParticleSystem == null)
             {
                 Debug.Log("TowerPosition::Start()::" + gameObject.name + " _towerAvailablePS is NULL");
             }
@@ -52,14 +52,13 @@ namespace Mercier.Scripts.Classes
         {
             _isSearchingForPos = isSelected;
 
-            if (_isSearchingForPos && _isPosAvailable)
+            if (!_isPosAvailable)
             {
-                // can activate particles
-                _towerAvailablePS.Play();
+                _towerParticleSystem.gameObject.SetActive(_isPosAvailable);
             }
             else
             {
-                _towerAvailablePS.Clear();
+                _towerParticleSystem.gameObject.SetActive(isSelected);
             }
         }
 
@@ -92,8 +91,6 @@ namespace Mercier.Scripts.Classes
             if (_isSearchingForPos && _isPosAvailable)
             {
                 _isPosAvailable = false;
-
-                _towerAvailablePS.Clear();
 
                 _towerRenderer.enabled = true;
 
