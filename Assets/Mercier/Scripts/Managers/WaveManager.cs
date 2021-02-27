@@ -52,7 +52,7 @@ namespace Mercier.Scripts.Managers
             {
                 for (int i = 0; i < obj.spawnAmount; i++)
                 {
-                    SpawnManager.Instance.ActivatePrefab(false, obj.prefabKey);
+                    SpawnManager.Instance.ActivateEnemyPrefab(false, obj.prefabKey);
 
                     SpawnManager.Instance.EnemyActivated();
 
@@ -67,7 +67,7 @@ namespace Mercier.Scripts.Managers
         {
             for (int i = 0; i < sequenceList.Count; i++)
             {
-                SpawnManager.Instance.ActivatePrefab(false, sequenceList[i]);
+                SpawnManager.Instance.ActivateEnemyPrefab(false, sequenceList[i]);
 
                 SpawnManager.Instance.EnemyActivated();
 
@@ -81,7 +81,7 @@ namespace Mercier.Scripts.Managers
         {
             for (int i = 0; i < sequenceTotal; i++)
             {
-                SpawnManager.Instance.ActivatePrefab(true, 0);
+                SpawnManager.Instance.ActivateEnemyPrefab(true, 0);
 
                 SpawnManager.Instance.EnemyActivated();
 

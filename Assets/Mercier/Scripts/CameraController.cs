@@ -11,7 +11,7 @@ namespace Mercier.Scripts
 {
     public class CameraController : MonoSingleton<CameraController>,/* IEventable,*/ CameraInputActions.ICameraActions
     {
-        #region Variables for InputAction
+        #region Variables for InputAction (Not Currently Used)
         private CameraInputActions _cameraIA;
 
         private List<ActiveAction<InputAction>> _activeInputActions = new List<ActiveAction<InputAction>>();
@@ -79,7 +79,7 @@ namespace Mercier.Scripts
         [SerializeField]
         private float _screenBorderPercent = 10f;
 
-        #region OnEnable/Disable for InputActions/Events
+        #region OnEnable/Disable for InputActions/Events (Not Currently Used)
         /*
         public void OnEnable()
         {

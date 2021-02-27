@@ -44,7 +44,7 @@ namespace Mercier.Scripts.Managers
             }
         }
 
-        public void ActivatePrefab(bool isRandom, int dictionaryKey)
+        public void ActivateEnemyPrefab(bool isRandom, int dictionaryKey)
         {
             _spawnPrefab = PoolManager.Instance.ReturnEnemyFromPool(isRandom, dictionaryKey);
 

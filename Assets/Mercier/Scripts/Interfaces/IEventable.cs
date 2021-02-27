@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEventable
+namespace Mercier.Scripts.Interfaces
 {
-    void OnEnable();
-    void OnDisable();
+    public interface IEventable
+    {
+        void OnEnable();
+        void OnDisable();
+    }
 }
+

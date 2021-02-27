@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1627450842}
   - component: {fileID: 1627450841}
   - component: {fileID: 1627450840}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AttackRadius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 5367543961060994439}
   - component: {fileID: 5474698699604471377}
   - component: {fileID: 5425548964770882401}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Gatling_Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 5359855041975950233}
   - component: {fileID: 5339756064561027831}
   - component: {fileID: 5349856088674677685}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Turret_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5367225569468980809}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Barrel_to_Spin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 5367250200379196243}
   - component: {fileID: 5339226475890170879}
   - component: {fileID: 5349885814082196797}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mini_Gun_Braces
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 5360408502801987317}
   - component: {fileID: 5339771576289054419}
   - component: {fileID: 5350184214049439201}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Barrel_Tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -520,7 +520,7 @@ GameObject:
   - component: {fileID: 5359943370417540167}
   - component: {fileID: 5339243733182474275}
   - component: {fileID: 5350001619301710777}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Barrels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,7 +597,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5360099516443899659}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Rotate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +631,7 @@ GameObject:
   - component: {fileID: 5360060924682897711}
   - component: {fileID: 5340118226987666255}
   - component: {fileID: 5349728340410785227}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mini_Gun_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 5360063739229609035}
   - component: {fileID: 5237408786518245873}
   - component: {fileID: 5237152210334813859}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Tracer_Round
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5466,7 +5466,7 @@ GameObject:
   - component: {fileID: 5360114571573058141}
   - component: {fileID: 5247356803583632765}
   - component: {fileID: 5236411064746468871}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Muzzle_Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10221,7 +10221,7 @@ GameObject:
   - component: {fileID: 5360089347325010011}
   - component: {fileID: 5236955255733019063}
   - component: {fileID: 5235936738712674881}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bullet_Casing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14975,7 +14975,7 @@ GameObject:
   - component: {fileID: 5359887241727047299}
   - component: {fileID: 5339173780977163173}
   - component: {fileID: 5350165997527021479}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Turret_Bottom_Of_Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}

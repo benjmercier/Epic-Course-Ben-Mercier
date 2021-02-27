@@ -7,7 +7,7 @@ namespace Mercier.Scripts.Managers
 {
     public class PoolManager : MonoSingleton<PoolManager>
     {
-        [Header("Enemy Pool")]
+        [Header("Enemy Pool")] // change pools to scriptable objects
         [SerializeField]
         private int _enemyBuffer = 10;
         [SerializeField]
