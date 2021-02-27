@@ -2227,21 +2227,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 499910526812307551, guid: 4494527f09a8a2f47b66a0103613c025,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 499910526812307551, guid: 4494527f09a8a2f47b66a0103613c025,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 499910526812307551, guid: 4494527f09a8a2f47b66a0103613c025,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 499910526812307551, guid: 4494527f09a8a2f47b66a0103613c025,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.853
       objectReference: {fileID: 0}
@@ -4130,30 +4115,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bunker_02
       objectReference: {fileID: 0}
-    - target: {fileID: 6229054980798622722, guid: b116ad8cc5d360c4083c2ce9e809028c,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8652966659401050829, guid: b116ad8cc5d360c4083c2ce9e809028c,
         type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8652966659401050829, guid: b116ad8cc5d360c4083c2ce9e809028c,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 8652966659401050829, guid: b116ad8cc5d360c4083c2ce9e809028c,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 8652966659401050829, guid: b116ad8cc5d360c4083c2ce9e809028c,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8652966659401050829, guid: b116ad8cc5d360c4083c2ce9e809028c,
         type: 3}
@@ -9990,21 +9955,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 499910526812307551, guid: 4494527f09a8a2f47b66a0103613c025,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 499910526812307551, guid: 4494527f09a8a2f47b66a0103613c025,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 499910526812307551, guid: 4494527f09a8a2f47b66a0103613c025,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 499910526812307551, guid: 4494527f09a8a2f47b66a0103613c025,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.863
       objectReference: {fileID: 0}
@@ -10057,11 +10007,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bunker_01
-      objectReference: {fileID: 0}
-    - target: {fileID: 8838474993943840671, guid: 4494527f09a8a2f47b66a0103613c025,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4494527f09a8a2f47b66a0103613c025, type: 3}
@@ -13703,7 +13648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isTurretSelected: 0
-  _isTowerAvailable: 0
+  _canActivateTurret: 0
   _yPosOffset: 0.5
 --- !u!1001 &1886142276
 PrefabInstance:
@@ -15495,7 +15440,7 @@ PrefabInstance:
     - target: {fileID: 2102077560264066453, guid: 2d1b2ba123a611c48ad1e0f9ad764926,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.5
+      value: 2.65
       objectReference: {fileID: 0}
     - target: {fileID: 2102077560264066453, guid: 2d1b2ba123a611c48ad1e0f9ad764926,
         type: 3}
@@ -15505,7 +15450,7 @@ PrefabInstance:
     - target: {fileID: 2102077560264066453, guid: 2d1b2ba123a611c48ad1e0f9ad764926,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -8.77
       objectReference: {fileID: 0}
     - target: {fileID: 2102077560264066453, guid: 2d1b2ba123a611c48ad1e0f9ad764926,
         type: 3}

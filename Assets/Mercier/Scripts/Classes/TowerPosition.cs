@@ -11,23 +11,27 @@ namespace Mercier.Scripts.Classes
     {
         [SerializeField]
         private Renderer _towerRenderer;
+        [SerializeField]
+        private ParticleSystem _towerAvailablePS;
 
         [SerializeField]
-        private bool _detectTowerStatus = false;
+        private bool _isSearchingForPos = false;
         [SerializeField]
-        private bool _canActivateTurret = false;
+        private bool _isPosAvailable = false;
 
-        //public static event Action<bool> onTowerAvailable;
-        //public static event Action onActivateTurret;
+        private GameObject _currentActiveTurret = null;
+
+        public static event Action<bool> onTowerAvailable;
+        public static event Action onSetTurretPos;
 
         public void OnEnable()
         {
-            //TowerManager.onTurretSelection += CheckTowerAvailability;
+            TowerManager.onTurretSelection += CheckTowerAvailability;
         }
 
         public void OnDisable()
         {
-            //TowerManager.onTurretSelection -= CheckTowerAvailability;
+            TowerManager.onTurretSelection -= CheckTowerAvailability;
         }
 
         private void Start()
@@ -36,19 +40,26 @@ namespace Mercier.Scripts.Classes
             {
                 Debug.Log("TowerPosition::Start()::" + gameObject.name + " _towerRenderer is NULL");
             }
+            if (_towerAvailablePS == null)
+            {
+                Debug.Log("TowerPosition::Start()::" + gameObject.name + " _towerAvailablePS is NULL");
+            }
 
-            _canActivateTurret = true;
+            _isPosAvailable = true;
         }
-
-        /*
 
         private void CheckTowerAvailability(bool isSelected, int decoyIndex)
         {
-            _detectTowerStatus = isSelected;
+            _isSearchingForPos = isSelected;
 
-            if (_detectTowerStatus && _canActivateTurret)
+            if (_isSearchingForPos && _isPosAvailable)
             {
-                // can set event to change color and activate particles
+                // can activate particles
+                _towerAvailablePS.Play();
+            }
+            else
+            {
+                _towerAvailablePS.Clear();
             }
         }
 
@@ -60,17 +71,17 @@ namespace Mercier.Scripts.Classes
             }
         }
 
-        private void OnActivateTurret()
+        private void OnSetTurretPos()
         {
-            if (onActivateTurret != null)
+            if (onSetTurretPos != null)
             {
-                onActivateTurret();
+                onSetTurretPos();
             }
         }
 
         private void OnMouseEnter()
         {
-            if (_detectTowerStatus && _canActivateTurret)
+            if (_isSearchingForPos && _isPosAvailable)
             {
                 OnTowerAvailable(true);
             }
@@ -78,16 +89,22 @@ namespace Mercier.Scripts.Classes
 
         private void OnMouseDown()
         {
-            if (_detectTowerStatus && _canActivateTurret)
+            if (_isSearchingForPos && _isPosAvailable)
             {
-                OnActivateTurret();
+                _isPosAvailable = false;
+
+                _towerAvailablePS.Clear();
+
+                _towerRenderer.enabled = true;
+
+                OnSetTurretPos();
             }
         }
 
         private void OnMouseExit()
         {
             OnTowerAvailable(false);
-        }*/
+        }
     }
 }
 
