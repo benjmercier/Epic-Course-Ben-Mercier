@@ -57,10 +57,6 @@ namespace Mercier.Scripts.Managers
 
         private void Start()
         {
-            //_enemyPoolDictionary = GeneratePoolDictionary(_enemyBuffer, _enemyPrefabs, _enemyContainer, _enemyPool);
-            //_turretPoolDictionary = GeneratePoolDictionary(_turretBuffer, _turretPrefabs, _turretContainer, _turretPool);
-            //_decoyTurretPoolDictionary = GeneratePoolDictionary(_decoyTurretBuffer, _decoyTurretPrefabs, _decoyTurretContainer, _decoyTurretPool);
-
             _activeDictionaryList = GeneratePoolDictionaries(_activePools);
         }
 
@@ -107,50 +103,10 @@ namespace Mercier.Scripts.Managers
             return obj;
         }
 
-
-        #region Generate GameObject Pool
-        /*
-        public Dictionary<int, List<GameObject>> GeneratePoolDictionary(int buffer, GameObject[] prefabArray, GameObject container, List<GameObject> pool)
-        {
-            _activePoolDictionary = new Dictionary<int, List<GameObject>>();
-
-            for (int i = 0; i < prefabArray.Length; i++)
-            {
-                _poolIndex = System.Array.IndexOf(prefabArray, prefabArray[i]);
-
-                pool = new List<GameObject>();
-                pool = GeneratePool(buffer, prefabArray[i], container, pool);
-
-                _activePoolDictionary.Add(_poolIndex, pool);
-            }
-
-            return _activePoolDictionary;
-        }*/
-
         public GameObject ReturnPrefabFromPool(bool isRandom, int dictionaryID, int dictionaryKey)
         {
             return PrefabToReturn(isRandom, _activeDictionaryList[dictionaryID], dictionaryKey, _activePools[dictionaryID].prefabs, _poolContainers[dictionaryID]);
         }
-
-
-        #endregion
-
-        #region Return GameObject from Pool
-        /*
-        public GameObject ReturnEnemyFromPool(bool isRandom, int dictionaryKey)
-        {
-            return ReturnPrefabFromPool(isRandom, _enemyPoolDictionary, dictionaryKey, _enemyPrefabs, _enemyContainer);
-        }
-
-        public GameObject ReturnTurretFromPool(bool isRandom, int dictionaryKey)
-        {
-            return ReturnPrefabFromPool(isRandom, _turretPoolDictionary, dictionaryKey, _turretPrefabs, _turretContainer);
-        }
-
-        public GameObject ReturnDecoyTurretFromPool(bool isRandom, int dictionaryKey)
-        {
-            return ReturnPrefabFromPool(isRandom, _decoyTurretPoolDictionary, dictionaryKey, _decoyTurretPrefabs, _decoyTurretContainer);
-        }*/
 
         private GameObject PrefabToReturn(bool isRandom, Dictionary<int, List<GameObject>> dictionary, int dictionaryKey, GameObject[] prefabs, GameObject container)
         {
@@ -181,6 +137,48 @@ namespace Mercier.Scripts.Managers
                 dictionary[dictionaryKey].Add(_prefabFromPool);
             }
         }
+
+        #region Generate & Return Code W/O Using Scriptable Objects (Not In Use)
+        /*
+        private void Start()
+        {
+            //_enemyPoolDictionary = GeneratePoolDictionary(_enemyBuffer, _enemyPrefabs, _enemyContainer, _enemyPool);
+            //_turretPoolDictionary = GeneratePoolDictionary(_turretBuffer, _turretPrefabs, _turretContainer, _turretPool);
+            //_decoyTurretPoolDictionary = GeneratePoolDictionary(_decoyTurretBuffer, _decoyTurretPrefabs, _decoyTurretContainer, _decoyTurretPool);
+        }         
+        
+        ***Generate GameObject***
+        public Dictionary<int, List<GameObject>> GeneratePoolDictionary(int buffer, GameObject[] prefabArray, GameObject container, List<GameObject> pool)
+        {
+            _activePoolDictionary = new Dictionary<int, List<GameObject>>();
+
+            for (int i = 0; i < prefabArray.Length; i++)
+            {
+                _poolIndex = System.Array.IndexOf(prefabArray, prefabArray[i]);
+
+                pool = new List<GameObject>();
+                pool = GeneratePool(buffer, prefabArray[i], container, pool);
+
+                _activePoolDictionary.Add(_poolIndex, pool);
+            }
+
+            return _activePoolDictionary;
+        
+        ***Return GameObject***
+        public GameObject ReturnEnemyFromPool(bool isRandom, int dictionaryKey)
+        {
+            return ReturnPrefabFromPool(isRandom, _enemyPoolDictionary, dictionaryKey, _enemyPrefabs, _enemyContainer);
+        }
+
+        public GameObject ReturnTurretFromPool(bool isRandom, int dictionaryKey)
+        {
+            return ReturnPrefabFromPool(isRandom, _turretPoolDictionary, dictionaryKey, _turretPrefabs, _turretContainer);
+        }
+
+        public GameObject ReturnDecoyTurretFromPool(bool isRandom, int dictionaryKey)
+        {
+            return ReturnPrefabFromPool(isRandom, _decoyTurretPoolDictionary, dictionaryKey, _decoyTurretPrefabs, _decoyTurretContainer);
+        }*/
         #endregion
     }
 }
