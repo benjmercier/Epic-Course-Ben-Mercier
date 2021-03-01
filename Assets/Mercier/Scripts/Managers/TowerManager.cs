@@ -30,8 +30,11 @@ namespace Mercier.Scripts.Managers
         private Color32 _enablePlacementColor = new Color32(35, 255, 0, 20); // green
         private Color32 _disablePlacementColor = new Color32(255, 35, 0, 20); // red
 
+        public static event Action<int> onTurretEnabled;
+
         private int _availableFunds;
         private int _turretCost;
+        private bool _enoughFunds;
 
         public void OnEnable()
         {
@@ -61,24 +64,15 @@ namespace Mercier.Scripts.Managers
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
-                    if (OnCheckingWarFunds(0))
-                    {
-                        OnDecoyTurretSelected(true, _activeDecoyIndex);
-                    }
+                    OnDecoyTurretSelected(true, 0);
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha2))
                 {
-                    if (OnCheckingWarFunds(1))
-                    {
-                        OnDecoyTurretSelected(true, _activeDecoyIndex);
-                    }
+                    OnDecoyTurretSelected(true, 1);
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha3))
                 {
-                    if (OnCheckingWarFunds(2))
-                    {
-                        OnDecoyTurretSelected(true, _activeDecoyIndex);
-                    }
+                    OnDecoyTurretSelected(true, 2);
                 }
             }
             else
@@ -90,32 +84,40 @@ namespace Mercier.Scripts.Managers
             }
         }
 
-        private bool OnCheckingWarFunds(int selectedIndex)
+        private void OnDecoyTurretSelected(bool isSelected, int selectedIndex)
         {
-            _activeDecoyIndex = selectedIndex;
+            if (CalculateFundsAvailable(selectedIndex))
+            {
+                _activeDecoyIndex = selectedIndex;
+                _isDecoySelected = isSelected;
 
-            _availableFunds = GameManager.Instance._currentWarFunds;
-            _turretCost = InventoryManager.Instance._turretInventory.turretInventory[selectedIndex].turretCost;
+                if (onDecoyTurretSelected != null)
+                {
+                    onDecoyTurretSelected(isSelected, selectedIndex);
 
-            return _availableFunds >= _turretCost;
+                    if (isSelected)
+                    {   // 2 = decoy dictionary
+                        _activeDecoy = PoolManager.Instance.ReturnPrefabFromPool(!isSelected, 2, selectedIndex); // set event for PoolManager
+                    }
+
+                    _activeDecoy.SetActive(isSelected);
+                }
+            }
         }
 
-
-        private void OnDecoyTurretSelected(bool isSelected, int decoyIndex)
+        private bool CalculateFundsAvailable(int selectedIndex)
         {
-            _isDecoySelected = isSelected;
+            _availableFunds = GameManager.Instance._warFundsAvailable;
+            _turretCost = InventoryManager.Instance._turretInventory.turretInventory[selectedIndex].turretCost;
 
-            if (onDecoyTurretSelected != null)
+            _enoughFunds = _availableFunds >= _turretCost;
+
+            if (!_enoughFunds)
             {
-                onDecoyTurretSelected(isSelected, decoyIndex);
-
-                if (isSelected)
-                {   // 2 = decoy dictionary
-                    _activeDecoy = PoolManager.Instance.ReturnPrefabFromPool(!isSelected, 2, decoyIndex); // set event for PoolManager
-                }
-
-                _activeDecoy.SetActive(isSelected);
+                Debug.Log("Not enough War Funds. Amount Available: " + _availableFunds);
             }
+
+            return _enoughFunds;
         }
 
         private void CastRayToMousePos()
@@ -159,7 +161,6 @@ namespace Mercier.Scripts.Managers
             onTurretPlacementColor?.Invoke(color);
         }
 
-
         private void EnableTurret()
         {
             _newTurret = PoolManager.Instance.ReturnPrefabFromPool(false, 1, _activeDecoyIndex);
@@ -167,7 +168,7 @@ namespace Mercier.Scripts.Managers
             OnDecoyTurretSelected(false, _activeDecoyIndex);
             _newTurret.SetActive(true);
 
-            GameManager.Instance.Purchased(_turretCost);
+            onTurretEnabled?.Invoke(_turretCost);
         }
     }
 }

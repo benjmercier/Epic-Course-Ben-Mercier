@@ -3,17 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mercier.Scripts.ScriptableObjects;
+using Mercier.Scripts.Interfaces;
 
 namespace Mercier.Scripts.Managers
 {
-    public class GameManager : MonoSingleton<GameManager>
+    public class GameManager : MonoSingleton<GameManager>, IEventable
     {
-        private static int warFunds;
-        public int _currentWarFunds;
+        public int _warFundsAvailable;        
 
-        public void Purchased(int cost)
+        public void OnEnable()
         {
-            _currentWarFunds -= cost;
+            TowerManager.onTurretEnabled += ItemPurchased;
+        }
+
+        public void OnDisable()
+        {
+            TowerManager.onTurretEnabled -= ItemPurchased;
+        }
+
+        public void ItemPurchased(int cost)
+        {
+            _warFundsAvailable -= cost;
         }
     }
 }

@@ -6370,8 +6370,8 @@ Transform:
   - {fileID: 412009220}
   - {fileID: 410019302}
   - {fileID: 1182450936}
-  - {fileID: 1882655605}
   - {fileID: 1580226531}
+  - {fileID: 1882655605}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6387,7 +6387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6681b458a5552dc4ab7060b58e47981f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentWarFunds: 300
+  _warFundsAvailable: 550
 --- !u!1001 &922941816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11198,7 +11198,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 917291711}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1580226532
 MonoBehaviour:
@@ -13677,7 +13677,7 @@ Transform:
   m_Children:
   - {fileID: 175742535}
   m_Father: {fileID: 917291711}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1882655606
 MonoBehaviour:
