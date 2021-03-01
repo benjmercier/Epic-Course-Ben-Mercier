@@ -49,7 +49,7 @@ namespace Mercier.Scripts.Managers
 
         private List<Dictionary<int, List<GameObject>>> _activeDictionaryList = new List<Dictionary<int, List<GameObject>>>();
 
-        private Dictionary<int, List<GameObject>> _poolDictionary;
+        private Dictionary<int, List<GameObject>> _tempPoolDictionary;
 
         private GameObject _prefabFromPool;
         private int _poolIndex;
@@ -66,7 +66,7 @@ namespace Mercier.Scripts.Managers
 
             for (int a = 0; a < poolList.Count; a++)
             {
-                _poolDictionary = new Dictionary<int, List<GameObject>>();
+                _tempPoolDictionary = new Dictionary<int, List<GameObject>>();
 
                 for (int b = 0; b < poolList[a].prefabs.Length; b++)
                 {
@@ -75,10 +75,10 @@ namespace Mercier.Scripts.Managers
                     poolList[a].list = new List<GameObject>();
                     poolList[a].list = GeneratePool(poolList[a].buffer, poolList[a].prefabs[b], _poolContainers[a], poolList[a].list);
 
-                    _poolDictionary.Add(_poolIndex, poolList[a].list);
+                    _tempPoolDictionary.Add(_poolIndex, poolList[a].list);
                 }
 
-                _activeDictionaryList.Add(_poolDictionary);
+                _activeDictionaryList.Add(_tempPoolDictionary);
             }
 
             return _activeDictionaryList;

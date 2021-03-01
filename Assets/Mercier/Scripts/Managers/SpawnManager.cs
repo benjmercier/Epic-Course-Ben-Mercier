@@ -58,6 +58,8 @@ namespace Mercier.Scripts.Managers
             _spawnPrefab.transform.rotation = _spawnRotation;
 
             _spawnPrefab.SetActive(true);
+
+            EnemyActivated();
         }
 
         public Vector3 AssignSpawnPos()

@@ -6348,6 +6348,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 917291711}
+  - component: {fileID: 917291712}
   m_Layer: 0
   m_Name: ManagerContainer
   m_TagString: Untagged
@@ -6370,9 +6371,23 @@ Transform:
   - {fileID: 410019302}
   - {fileID: 1182450936}
   - {fileID: 1882655605}
+  - {fileID: 1580226531}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &917291712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917291710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6681b458a5552dc4ab7060b58e47981f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentWarFunds: 300
 --- !u!1001 &922941816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11154,6 +11169,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1579537532}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1580226530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1580226531}
+  - component: {fileID: 1580226532}
+  m_Layer: 0
+  m_Name: InventoryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1580226531
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580226530}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 917291711}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1580226532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580226530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c8ca53b91a4ee04290a3c536d195b8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turretInventory: {fileID: 11400000, guid: 7c2f02be62618f84ea13fba8fd572750, type: 2}
 --- !u!1001 &1584802540
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13632,9 +13691,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5898b379c95284984514b6b626b9e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isTurretSelected: 0
-  _canActivateTurret: 0
   _yPosOffset: 0.5
+  _isDecoySelected: 0
+  _canActivateTurret: 0
 --- !u!1001 &1886142276
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -19,10 +19,8 @@ namespace Mercier.Scripts.Classes
         [SerializeField]
         private bool _isPosAvailable = false;
 
-        private GameObject _currentActiveTurret = null;
-
         public static event Action<bool> onTowerAvailable;
-        public static event Action onSetTurretPos;
+        public static event Action onEnableTurret;
 
         public void OnEnable()
         {
@@ -62,22 +60,6 @@ namespace Mercier.Scripts.Classes
             }
         }
 
-        private void OnTowerAvailable(bool isAvailable)
-        {
-            if (onTowerAvailable != null)
-            {
-                onTowerAvailable(isAvailable);
-            }
-        }
-
-        private void OnSetTurretPos()
-        {
-            if (onSetTurretPos != null)
-            {
-                onSetTurretPos();
-            }
-        }
-
         private void OnMouseEnter()
         {
             if (_isSearchingForPos && _isPosAvailable)
@@ -90,11 +72,7 @@ namespace Mercier.Scripts.Classes
         {
             if (_isSearchingForPos && _isPosAvailable)
             {
-                _isPosAvailable = false;
-
-                _towerRenderer.enabled = true;
-
-                OnSetTurretPos();
+                OnEnableTurret();
             }
         }
 
@@ -102,6 +80,40 @@ namespace Mercier.Scripts.Classes
         {
             OnTowerAvailable(false);
         }
+
+        private void OnTowerAvailable(bool isAvailable)
+        {
+            onTowerAvailable?.Invoke(isAvailable);
+        }
+
+        private void OnEnableTurret()
+        {            
+            if (onEnableTurret != null)
+            {
+                onEnableTurret();
+                TurretEnabled();
+            }
+        }
+
+        private void TurretEnabled()
+        {
+            _isPosAvailable = false;
+
+            _towerRenderer.enabled = true;
+        }
+
+        /// <summary>
+        /// on mouse down if isSearching && isAvailable
+        /// broadcast event that trying to place tower == OnTryEnableTurret()
+        /// tower manager needs to listen to if trying to place
+        /// tell TM trying to place
+        /// TM checks with InventoryManager for cost of _activeDecoy
+        /// TM checks cost with war funds from GameManager
+        /// tower manager needs to return bool to this position 
+        /// if war funds >= cost, TM return true
+        /// if true, TurretEnabled()
+        /// TM activates turret from PoolManager
+        /// </summary>
     }
 }
 

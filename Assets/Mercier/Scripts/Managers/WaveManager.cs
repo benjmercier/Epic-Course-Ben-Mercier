@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -54,8 +55,6 @@ namespace Mercier.Scripts.Managers
                 {
                     SpawnManager.Instance.ActivateEnemyPrefab(false, obj.prefabKey);
 
-                    SpawnManager.Instance.EnemyActivated();
-
                     yield return waitTime;
                 }
             }
@@ -69,8 +68,6 @@ namespace Mercier.Scripts.Managers
             {
                 SpawnManager.Instance.ActivateEnemyPrefab(false, sequenceList[i]);
 
-                SpawnManager.Instance.EnemyActivated();
-
                 yield return waitTime;
             }
 
@@ -82,8 +79,6 @@ namespace Mercier.Scripts.Managers
             for (int i = 0; i < sequenceTotal; i++)
             {
                 SpawnManager.Instance.ActivateEnemyPrefab(true, 0);
-
-                SpawnManager.Instance.EnemyActivated();
 
                 yield return waitTime;
             }

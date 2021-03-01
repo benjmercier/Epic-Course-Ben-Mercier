@@ -9,16 +9,11 @@ namespace Mercier.Scripts.Managers
 {
     public class TowerManager : MonoSingleton<TowerManager>, IEventable
     {
-        [SerializeField]
-        private bool _isTurretSelected = false;
-        [SerializeField]
-        private bool _canActivateTurret = false;
-
         private GameObject _activeDecoy;
         private int _activeDecoyIndex = 0;
         private Vector3 _activeDecoyPos;
         [SerializeField]
-        private float _yPosOffset = 0.5f;
+        private float _yPosOffset = 0.5f;        
 
         private GameObject _newTurret;
 
@@ -26,60 +21,89 @@ namespace Mercier.Scripts.Managers
         private RaycastHit _rayHit;
 
         public static event Action<bool, int> onDecoyTurretSelected;
+        [SerializeField]
+        private bool _isDecoySelected = false;
+        [SerializeField]
+        private bool _canActivateTurret = false;
+
+        public static event Action<Color32> onTurretPlacementColor;
+        private Color32 _enablePlacementColor = new Color32(35, 255, 0, 20); // green
+        private Color32 _disablePlacementColor = new Color32(255, 35, 0, 20); // red
+
+        private int _availableFunds;
+        private int _turretCost;
 
         public void OnEnable()
         {
             TowerPosition.onTowerAvailable += CanActivateTurret;
-            TowerPosition.onSetTurretPos += AttemptTurretActivation;
+            TowerPosition.onEnableTurret += EnableTurret;
         }
 
         public void OnDisable()
         {
             TowerPosition.onTowerAvailable -= CanActivateTurret;
-            TowerPosition.onSetTurretPos -= AttemptTurretActivation;
+            TowerPosition.onEnableTurret -= EnableTurret;
         }
 
         void Update()
         {
             CheckSelectionInput();
 
-            if (_isTurretSelected)
+            if (_isDecoySelected)
             {
-                CastRay();
+                CastRayToMousePos();
             }
         }
 
         private void CheckSelectionInput()
         {
-            if (!_isTurretSelected)
+            if (!_isDecoySelected)
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
-                    TurretSelected(true, 0);
+                    if (OnCheckingWarFunds(0))
+                    {
+                        OnDecoyTurretSelected(true, _activeDecoyIndex);
+                    }
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha2))
                 {
-                    TurretSelected(true, 1);
+                    if (OnCheckingWarFunds(1))
+                    {
+                        OnDecoyTurretSelected(true, _activeDecoyIndex);
+                    }
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha3))
                 {
-                    TurretSelected(true, 2);
+                    if (OnCheckingWarFunds(2))
+                    {
+                        OnDecoyTurretSelected(true, _activeDecoyIndex);
+                    }
                 }
             }
             else
             {
                 if (Input.GetMouseButton(1))
                 {
-                    TurretSelected(false, _activeDecoyIndex);
+                    OnDecoyTurretSelected(false, _activeDecoyIndex);
                 }
             }
         }
 
-        
-        private void TurretSelected(bool isSelected, int decoyIndex)
+        private bool OnCheckingWarFunds(int selectedIndex)
         {
-            _isTurretSelected = isSelected;
-            _activeDecoyIndex = decoyIndex;
+            _activeDecoyIndex = selectedIndex;
+
+            _availableFunds = GameManager.Instance._currentWarFunds;
+            _turretCost = InventoryManager.Instance._turretInventory.turretInventory[selectedIndex].turretCost;
+
+            return _availableFunds >= _turretCost;
+        }
+
+
+        private void OnDecoyTurretSelected(bool isSelected, int decoyIndex)
+        {
+            _isDecoySelected = isSelected;
 
             if (onDecoyTurretSelected != null)
             {
@@ -94,7 +118,7 @@ namespace Mercier.Scripts.Managers
             }
         }
 
-        private void CastRay()
+        private void CastRayToMousePos()
         {
             _rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -119,14 +143,31 @@ namespace Mercier.Scripts.Managers
         private void CanActivateTurret(bool isActive)
         {
             _canActivateTurret = isActive;
+
+            if (isActive)
+            {
+                OnTurretPlacementColor(_enablePlacementColor);
+            }
+            else
+            {
+                OnTurretPlacementColor(_disablePlacementColor);
+            }
         }
 
-        private void AttemptTurretActivation()
+        private void OnTurretPlacementColor(Color32 color)
         {
-            _newTurret = PoolManager.Instance.ReturnPrefabFromPool(false, 1, _activeDecoyIndex);// ReturnTurretFromPool(false, _activeDecoyIndex);
+            onTurretPlacementColor?.Invoke(color);
+        }
+
+
+        private void EnableTurret()
+        {
+            _newTurret = PoolManager.Instance.ReturnPrefabFromPool(false, 1, _activeDecoyIndex);
             _newTurret.transform.position = _activeDecoyPos;
-            TurretSelected(false, _activeDecoyIndex);
+            OnDecoyTurretSelected(false, _activeDecoyIndex);
             _newTurret.SetActive(true);
+
+            GameManager.Instance.Purchased(_turretCost);
         }
     }
 }
