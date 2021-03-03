@@ -6,7 +6,7 @@ using Mercier.Scripts.Managers;
 
 namespace Mercier.Scripts.Classes
 {
-    public class AttackRadius : MonoBehaviour, IEventable
+    public class DecoyAttackRadius : MonoBehaviour, IEventable
     {
         private Material _material;
 
