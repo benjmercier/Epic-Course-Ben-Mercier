@@ -48,25 +48,33 @@ namespace Mercier.Scripts.Classes
             {
                 _targetDirection = _activeTarget.transform.position - _rotationObj.transform.position;
 
-                _movement = _rotationSpeed * Time.deltaTime;
-
-                _rotateTowards = Vector3.RotateTowards(_rotationObj.transform.forward, _targetDirection, _movement, 0f);
-                _lookRotation = Quaternion.LookRotation(_rotateTowards);
-                Debug.Log("lookRotation: " + _lookRotation.eulerAngles.y);
-                _xClamped = Mathf.Clamp(_lookRotation.eulerAngles.x, _minMaxX.x, _minMaxX.y);
-                _yClamped = Mathf.Clamp(_lookRotation.eulerAngles.y, _minMaxY.x + 180, _minMaxY.y + 180);
+                _movement = _rotationSpeed * Time.deltaTime;                
 
                 float angle = Vector3.Angle(_targetDirection, _rotationObj.transform.forward);
+
                 if (angle <= _minMaxY.y && angle >= _minMaxY.x)
                 {
+                    _rotateTowards = Vector3.RotateTowards(_rotationObj.transform.forward, _targetDirection, _movement, 0f);
+                    _lookRotation = Quaternion.LookRotation(_rotateTowards);
+
+                    _xClamped = Mathf.Clamp(_lookRotation.eulerAngles.x, _minMaxX.x, _minMaxX.y);
+                    _yClamped = Mathf.Clamp(_lookRotation.eulerAngles.y, _minMaxY.x + 180, _minMaxY.y + 180);
+
                     _rotationObj.transform.rotation = Quaternion.Euler(_xClamped, _yClamped, _lookRotation.eulerAngles.z);
                 }
                 else
                 {
-                    _rotationObj.transform.rotation = Quaternion.Slerp(_rotationObj.transform.rotation, _initialRotation, _movement);
+                    _activeTarget = null;
+                }
+            }
+            else
+            {
+                if (_attackQueue.Count >= 1)
+                {
+                    _activeTarget = _attackQueue.Peek();
                 }
 
-                
+                _rotationObj.transform.rotation = Quaternion.Slerp(_rotationObj.transform.rotation, _initialRotation, _rotationSpeed * Time.deltaTime);
             }
         }
 
