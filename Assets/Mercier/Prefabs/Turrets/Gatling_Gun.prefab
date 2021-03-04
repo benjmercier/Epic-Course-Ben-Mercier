@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1627450839}
-  - component: {fileID: 1322629292676158462}
+  - component: {fileID: 2952412481083948608}
   - component: {fileID: 1627450842}
   - component: {fileID: 1627450841}
   - component: {fileID: 1627450840}
@@ -35,7 +35,7 @@ Transform:
   m_Father: {fileID: 5367543961060994439}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1322629292676158462
+--- !u!114 &2952412481083948608
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,10 +44,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1627450838}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a76d69f3273abbe4493b2e42a1c9086d, type: 3}
+  m_Script: {fileID: 11500000, guid: 269fb9b6f176bb148a9758baff7fe80f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationObj: {fileID: 5361822165856839883}
+  _rotationObj: {fileID: 5361924355100483969}
+  _rotationSpeed: 5
+  _minMaxX: {x: -25, y: 35}
+  _minMaxY: {x: -45, y: 45}
+  _maxAngle: 65
+  _attackList: []
+  _activeTarget: {fileID: 0}
 --- !u!33 &1627450842
 MeshFilter:
   m_ObjectHideFlags: 0

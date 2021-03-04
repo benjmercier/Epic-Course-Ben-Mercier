@@ -8322,6 +8322,21 @@ PrefabInstance:
       propertyPath: _rotationSpeed
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1799857137788847386, guid: 6f8e16e316707ab498d2a7fde36f6cdf,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2910912937637307669, guid: 6f8e16e316707ab498d2a7fde36f6cdf,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3423868015439358275, guid: 6f8e16e316707ab498d2a7fde36f6cdf,
+        type: 3}
+      propertyPath: _maxAngle
+      value: 65
+      objectReference: {fileID: 0}
     - target: {fileID: 5360060924682897711, guid: 6f8e16e316707ab498d2a7fde36f6cdf,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -8396,6 +8411,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5448207175977017461, guid: 6f8e16e316707ab498d2a7fde36f6cdf,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5474698699604471377, guid: 6f8e16e316707ab498d2a7fde36f6cdf,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f8e16e316707ab498d2a7fde36f6cdf, type: 3}

@@ -5,19 +5,6 @@ using UnityEngine;
 
 namespace GameDevHQ.FileBase.Gatling_Gun
 {
-    /// <summary>
-    /// This script will allow you to view the presentation of the Turret and use it within your project.
-    /// Please feel free to extend this script however you'd like. To access this script from another script
-    /// (Script Communication using GetComponent) -- You must include the namespace (using statements) at the top. 
-    /// "using GameDevHQ.FileBase.Gatling_Gun" without the quotes. 
-    /// 
-    /// For more, visit GameDevHQ.com
-    /// 
-    /// @authors
-    /// Al Heck
-    /// Jonathan Weinberger
-    /// </summary>
-
     [RequireComponent(typeof(AudioSource))] //Require Audio Source component
     public class Gatling_Gun : MonoBehaviour
     {
