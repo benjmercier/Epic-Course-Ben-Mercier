@@ -108,7 +108,7 @@ namespace Mercier.Scripts.Managers
         private bool CalculateFundsAvailable(int selectedIndex)
         {
             _availableFunds = GameManager.Instance._warFundsAvailable;
-            _turretCost = InventoryManager.Instance._turretInventory.turretInventory[selectedIndex].turretCost;
+            _turretCost = InventoryManager.Instance._turretInventory.turretInventory[selectedIndex].cost;
 
             _enoughFunds = _availableFunds >= _turretCost;
 

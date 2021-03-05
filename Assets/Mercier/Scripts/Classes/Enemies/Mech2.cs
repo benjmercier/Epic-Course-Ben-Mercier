@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mercier.Scripts.Classes;
 
-namespace Mercier.Scripts.Enemies
+namespace Mercier.Scripts.Classes
 {
     public class Mech2 : Enemy
     {

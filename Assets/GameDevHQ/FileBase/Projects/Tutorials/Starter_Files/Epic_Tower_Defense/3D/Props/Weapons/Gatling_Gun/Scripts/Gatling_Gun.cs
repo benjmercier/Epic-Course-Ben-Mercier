@@ -16,6 +16,8 @@ namespace GameDevHQ.FileBase.Gatling_Gun
         private AudioSource _audioSource; //reference to the audio source component
         private bool _startWeaponNoise = true;
 
+        private bool _canFire;
+
         // Use this for initialization
         void Start()
         {
@@ -30,6 +32,11 @@ namespace GameDevHQ.FileBase.Gatling_Gun
         // Update is called once per frame
         void Update()
         {
+            if (_canFire)
+            {
+                EngageTarget();
+            }
+
             /*
             if (Input.GetMouseButton(0)) //Check for left click (held) user input
             { 
@@ -50,6 +57,36 @@ namespace GameDevHQ.FileBase.Gatling_Gun
                 _audioSource.Stop(); //stop the sound effect from playing
                 _startWeaponNoise = true; //set the start weapon noise value to true
             }*/
+        }
+
+        public void ActivateTurret(bool activate)
+        {
+            _canFire = activate;
+
+            if (!activate)
+            {
+                DisengageTarget();
+            }
+        }
+
+        private void EngageTarget()
+        {
+            RotateBarrel();
+            Muzzle_Flash.SetActive(true);
+            bulletCasings.Emit(1);
+
+            if (_startWeaponNoise)
+            {
+                _audioSource.Play();
+                _startWeaponNoise = false;
+            }
+        }
+
+        private void DisengageTarget()
+        {
+            Muzzle_Flash.SetActive(false);
+            _audioSource.Stop();
+            _startWeaponNoise = true;
         }
 
         // Method to rotate gun barrel 

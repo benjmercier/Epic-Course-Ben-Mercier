@@ -13,23 +13,23 @@ MonoBehaviour:
   m_Name: TurretInventory
   m_EditorClassIdentifier: 
   turretInventory:
-  - turretName: Gatling Gun
-    turretID: 0
-    turretPrefab: {fileID: 5361602506161335635, guid: 6f8e16e316707ab498d2a7fde36f6cdf,
+  - name: Gatling Gun
+    iD: 0
+    prefab: {fileID: 5361602506161335635, guid: 6f8e16e316707ab498d2a7fde36f6cdf,
       type: 3}
-    turretCost: 150
-  - turretName: Dual Gatling Gun
-    turretID: 1
-    turretPrefab: {fileID: 7809918525972281956, guid: 174cb0a363c56914d8be9eeed857e6e7,
+    cost: 150
+  - name: Dual Gatling Gun
+    iD: 1
+    prefab: {fileID: 7809918525972281956, guid: 174cb0a363c56914d8be9eeed857e6e7,
       type: 3}
-    turretCost: 300
-  - turretName: Missle Launcher
-    turretID: 2
-    turretPrefab: {fileID: 4919045958501377848, guid: 1beac53d5aa4696408a78d30afc8d2e3,
+    cost: 300
+  - name: Missle Launcher
+    iD: 2
+    prefab: {fileID: 4919045958501377848, guid: 1beac53d5aa4696408a78d30afc8d2e3,
       type: 3}
-    turretCost: 250
-  - turretName: Dual Missle Launcher
-    turretID: 3
-    turretPrefab: {fileID: 5777195751627667988, guid: 80318d6158736f14981e3fdb02a2af03,
+    cost: 250
+  - name: Dual Missle Launcher
+    iD: 3
+    prefab: {fileID: 5777195751627667988, guid: 80318d6158736f14981e3fdb02a2af03,
       type: 3}
-    turretCost: 500
+    cost: 500

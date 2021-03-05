@@ -47,13 +47,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 269fb9b6f176bb148a9758baff7fe80f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationObj: {fileID: 5361924355100483969}
+  _gatlingGun: {fileID: 5474698699604471377}
+  _objToRotate: {fileID: 5360060924682897711}
   _rotationSpeed: 5
   _minMaxX: {x: -25, y: 35}
   _minMaxY: {x: -45, y: 45}
   _maxAngle: 65
   _attackList: []
   _activeTarget: {fileID: 0}
+  currentState: 0
 --- !u!33 &1627450842
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -653,7 +655,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5359887241727047299}
-  - {fileID: 5360114571573058141}
   m_Father: {fileID: 5367543961060994439}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -688,6 +689,7 @@ Transform:
   m_Children:
   - {fileID: 5367225569468980809}
   - {fileID: 5360089347325010011}
+  - {fileID: 5360114571573058141}
   m_Father: {fileID: 5359887241727047299}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5518,12 +5520,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5362636839733481909}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.14400001, y: 0.78152764, z: 2.7986846}
+  m_LocalPosition: {x: 0.1474909, y: 0.11914596, z: 3.0052435}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5360063739229609035}
-  m_Father: {fileID: 5360099516443899659}
-  m_RootOrder: 1
+  m_Father: {fileID: 5360060924682897711}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!198 &5247356803583632765
 ParticleSystem:
@@ -5541,7 +5543,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -5777,7 +5779,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2.28
+      scalar: 1.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -14956,7 +14958,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: e452c20f0c1a04e4bb39908ed6686f98, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

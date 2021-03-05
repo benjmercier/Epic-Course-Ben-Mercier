@@ -8,7 +8,7 @@ namespace Mercier.Scripts.ScriptableObjects
     [CreateAssetMenu(fileName = "NewInventory.asset", menuName = "Scriptable Objects/New Inventory/Turret")]
     public class Inventory_Turret : ScriptableObject
     {
-        public List<Turret> turretInventory = new List<Turret>();
+        public List<TurretInventory> turretInventory = new List<TurretInventory>();
     }
 }
 
