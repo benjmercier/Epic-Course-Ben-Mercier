@@ -7,7 +7,7 @@ using Mercier.Scripts.Interfaces;
 
 namespace Mercier.Scripts.Classes
 {
-    public class TurretAttack : MonoBehaviour
+    public class TurretAttackController : MonoBehaviour
     {
         [SerializeField]
         private Gatling_Gun _gatlingGun;
@@ -42,7 +42,7 @@ namespace Mercier.Scripts.Classes
         private float _movement;
 
         private float _fireRate = 0.5f;
-        private float _canFire;
+        private float _lastTimeFired;
 
         private bool _hasFired = false;
 
@@ -94,7 +94,7 @@ namespace Mercier.Scripts.Classes
                 if (ReturnWithinLineOfSight())
                 {
                     _hasFired = true;
-                    _gatlingGun.ActivateTurret(true);
+                    //_gatlingGun.ActivateTurret(true);
                     RotateToTarget(_activeTarget.transform.position);
 
                     AttackTarget();
@@ -104,7 +104,7 @@ namespace Mercier.Scripts.Classes
                     if (_hasFired)
                     {
                         _hasFired = false;
-                        _gatlingGun.ActivateTurret(false);
+                        //_gatlingGun.ActivateTurret(false);
                         AssignNewTarget();
                     }
 
@@ -134,9 +134,9 @@ namespace Mercier.Scripts.Classes
 
         private void AttackTarget()
         {
-            if (Time.time > _canFire)
+            if (Time.time > _lastTimeFired)
             {
-                _canFire = Time.time + _fireRate;
+                _lastTimeFired = Time.time + _fireRate;
 
                 //_damageable.Damage(5f);
 

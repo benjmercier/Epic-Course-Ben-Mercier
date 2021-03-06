@@ -1,37 +1,70 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Mercier.Scripts.Classes;
 
 namespace GameDevHQ.FileBase.Gatling_Gun
 {
     [RequireComponent(typeof(AudioSource))] //Require Audio Source component
-    public class Gatling_Gun : MonoBehaviour
+    public class Gatling_Gun : Turret
     {
+        [Header("Gatling Gun Settings")]
+        [SerializeField]
         private Transform _gunBarrel; //Reference to hold the gun barrel
-        public GameObject Muzzle_Flash; //reference to the muzzle flash effect to play when firing
-        public ParticleSystem bulletCasings; //reference to the bullet casing effect to play when firing
-        public AudioClip fireSound; //Reference to the audio clip
-
+        [SerializeField]
+        private GameObject _muzzleFlash; //reference to the muzzle flash effect to play when firing
+        [SerializeField]
+        private ParticleSystem _bulletCasings; //reference to the bullet casing effect to play when firing
+        [SerializeField]
+        private AudioClip _fireSound; //Reference to the audio clip
+        [SerializeField]
         private AudioSource _audioSource; //reference to the audio source component
         private bool _startWeaponNoise = true;
 
-        private bool _canFire;
+        protected override void Awake()
+        {
+            base.Awake();
+
+            if (_gunBarrel == null)
+            {
+                Debug.LogError("Gatling_Gun::Awake()::" + _gunBarrel.ToString() + " is null.");
+            }
+
+            if (_muzzleFlash == null)
+            {
+                Debug.LogError("Gatling_Gun::Awake()::" + _muzzleFlash.ToString() + " is null.");
+            }
+
+            if (_bulletCasings == null)
+            {
+                Debug.LogError("Gatling_Gun::Awake()::" + _bulletCasings.ToString() + " is null.");
+            }
+
+            if (_fireSound == null)
+            {
+                Debug.LogError("Gatling_Gun::Awake()::" + _fireSound.ToString() + " is null.");
+            }
+
+            if (_audioSource == null)
+            {
+                Debug.LogError("Gatling_Gun::Awake()::" + _audioSource.ToString() + " is null.");
+            }
+        }
 
         // Use this for initialization
         void Start()
         {
-            _gunBarrel = GameObject.Find("Barrel_to_Spin").GetComponent<Transform>(); //assigning the transform of the gun barrel to the variable
-            Muzzle_Flash.SetActive(false); //setting the initial state of the muzzle flash effect to off
-            _audioSource = GetComponent<AudioSource>(); //ssign the Audio Source to the reference variable
+            _muzzleFlash.SetActive(false); //setting the initial state of the muzzle flash effect to off
             _audioSource.playOnAwake = false; //disabling play on awake
             _audioSource.loop = true; //making sure our sound effect loops
-            _audioSource.clip = fireSound; //assign the clip to play
+            _audioSource.clip = _fireSound; //assign the clip to play
         }
 
         // Update is called once per frame
-        void Update()
+        protected override void Update()
         {
+            base.Update();
+
             if (_canFire)
             {
                 EngageTarget();
@@ -59,21 +92,11 @@ namespace GameDevHQ.FileBase.Gatling_Gun
             }*/
         }
 
-        public void ActivateTurret(bool activate)
-        {
-            _canFire = activate;
-
-            if (!activate)
-            {
-                DisengageTarget();
-            }
-        }
-
-        private void EngageTarget()
+        protected override void EngageTarget()
         {
             RotateBarrel();
-            Muzzle_Flash.SetActive(true);
-            bulletCasings.Emit(1);
+            _muzzleFlash.SetActive(true);
+            _bulletCasings.Emit(1);
 
             if (_startWeaponNoise)
             {
@@ -82,17 +105,16 @@ namespace GameDevHQ.FileBase.Gatling_Gun
             }
         }
 
-        private void DisengageTarget()
+        protected override void DisengageTarget()
         {
-            Muzzle_Flash.SetActive(false);
+            _muzzleFlash.SetActive(false);
             _audioSource.Stop();
             _startWeaponNoise = true;
         }
 
-        // Method to rotate gun barrel 
         void RotateBarrel() 
         {
-            _gunBarrel.transform.Rotate(Vector3.forward * Time.deltaTime * -500.0f); //rotate the gun barrel along the "forward" (z) axis at 500 meters per second
+            _gunBarrel.transform.Rotate(Vector3.forward * Time.deltaTime * -500.0f);
 
         }
     }
