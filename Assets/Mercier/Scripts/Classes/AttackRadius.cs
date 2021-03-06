@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,17 +7,29 @@ namespace Mercier.Scripts.Classes
 {
     public class AttackRadius : MonoBehaviour
     {
+        [SerializeField]
+        private GameObject _parentTurret;
+
+        public static event Action<GameObject, GameObject, bool> onAttackRadiusTriggered;
+
+        private void Awake()
+        {
+            if (_parentTurret == null)
+            {
+                _parentTurret = this.transform.parent.gameObject;
+            }
+        }
+        
+        private void OnAttackRadiusTriggered(GameObject parentTurret, GameObject activeTarget, bool isEntering)
+        {
+            onAttackRadiusTriggered?.Invoke(parentTurret, activeTarget, isEntering);
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Enemy"))
             {
-                /*
-                _attackList.Add(other.gameObject);
-
-                if (_attackList.Count <= 1)
-                {
-                    _activeTarget = _attackList.FirstOrDefault();
-                }*/
+                OnAttackRadiusTriggered(_parentTurret, other.gameObject, true);
             }
         }
 
@@ -24,7 +37,7 @@ namespace Mercier.Scripts.Classes
         {
             if (other.CompareTag("Enemy"))
             {
-                //_attackList.Remove(other.gameObject);
+                OnAttackRadiusTriggered(_parentTurret, other.gameObject, false);
             }
         }
     }

@@ -1354,8 +1354,10 @@ MonoBehaviour:
   _speed: 2.5
   _maxHealth: 50
   _attackStrength: 0
-  _maxArmor: 0
+  _maxArmor: 25
   _currencyToReward: 15
+  _currentHealth: 0
+  _currentArmor: 0
 --- !u!95 &1640634097325754351
 Animator:
   serializedVersion: 3

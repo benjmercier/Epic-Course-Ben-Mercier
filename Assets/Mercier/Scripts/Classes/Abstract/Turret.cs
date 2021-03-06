@@ -1,11 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Mercier.Scripts.Interfaces;
 
 namespace Mercier.Scripts.Classes
 {
-    public abstract class Turret : MonoBehaviour
+    public abstract class Turret : MonoBehaviour, IEventable
     {
         [Header("Rotation Settings")]
         [SerializeField]
@@ -38,13 +40,15 @@ namespace Mercier.Scripts.Classes
         [SerializeField]
         protected GameObject _activeTarget;
         [SerializeField]
+        protected float _attackStrength = 5f;
+        [SerializeField]
         protected float _fireRate = 0.5f;
         private float _lastFire;
         private bool _hasFired;
         protected bool _canFire;
 
         // set event system to communicate with active target
-        // set event system to communicate with attack radius
+        public static event Action<GameObject, float> onTurretAttack;
 
         protected virtual void Awake()
         {
@@ -54,6 +58,16 @@ namespace Mercier.Scripts.Classes
             }
 
             _initialRotation = _objToRotate.rotation;
+        }
+
+        public void OnEnable()
+        {
+            AttackRadius.onAttackRadiusTriggered += UpdateAttackList;
+        }
+
+        public void OnDisable()
+        {
+            AttackRadius.onAttackRadiusTriggered -= UpdateAttackList;
         }
 
         protected virtual void Update()
@@ -71,7 +85,8 @@ namespace Mercier.Scripts.Classes
                     ActivateTurret(true);
                     RotateToTarget(_activeTarget.transform.position);
 
-                    AttackTarget();
+                    //AttackTarget();
+                    OnTurretAttack(_activeTarget, _attackStrength);
                 }
                 else
                 {
@@ -138,7 +153,7 @@ namespace Mercier.Scripts.Classes
 
         protected abstract void DisengageTarget();
 
-
+        /*
         protected virtual void AttackTarget()
         {
             if (Time.time > _lastFire)
@@ -149,7 +164,7 @@ namespace Mercier.Scripts.Classes
 
                 Debug.Log("Causing Damage");
             }
-        }
+        }*/
 
         private void AssignNewTarget()
         {
@@ -162,6 +177,41 @@ namespace Mercier.Scripts.Classes
                 if (_activeList.Any())
                 {
                     _activeTarget = _activeList.FirstOrDefault();
+                }
+            }
+        }
+
+        protected virtual void OnTurretAttack(GameObject activeTarget, float damageAmount)
+        {
+            if (Time.time > _lastFire)
+            {
+                _lastFire = Time.time + _fireRate;
+
+                onTurretAttack?.Invoke(activeTarget, damageAmount);
+
+                Debug.Log("Causing Damage");
+            }
+        }   
+        
+        protected virtual void UpdateAttackList(GameObject turret, GameObject activeTarget, bool addTo)
+        {
+            if (this.gameObject == turret)
+            {
+                if (addTo)
+                {
+                    _activeList.Add(activeTarget);
+
+                    if (_activeList.Count <= 1)
+                    {
+                        _activeTarget = _activeList.FirstOrDefault();
+                    }
+                }
+                else
+                {
+                    if (_activeList.Contains(activeTarget))
+                    {
+                        _activeList.Remove(activeTarget);
+                    }
                 }
             }
         }

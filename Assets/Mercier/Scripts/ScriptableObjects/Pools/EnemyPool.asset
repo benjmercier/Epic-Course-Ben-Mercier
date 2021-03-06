@@ -16,6 +16,16 @@ MonoBehaviour:
   index: 0
   buffer: 10
   prefabs:
-  - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
-  - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
-  list: []
+  - {fileID: 1699286027065544987, guid: cbf5a24d16c3f8747b19b0caee9def9d, type: 3}
+  - {fileID: 3230445893702710185, guid: f256c2302d2e5b1469fb5d85644a34cd, type: 3}
+  list:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

@@ -51,7 +51,6 @@ namespace GameDevHQ.FileBase.Gatling_Gun
             }
         }
 
-        // Use this for initialization
         void Start()
         {
             _muzzleFlash.SetActive(false); //setting the initial state of the muzzle flash effect to off
@@ -60,7 +59,6 @@ namespace GameDevHQ.FileBase.Gatling_Gun
             _audioSource.clip = _fireSound; //assign the clip to play
         }
 
-        // Update is called once per frame
         protected override void Update()
         {
             base.Update();

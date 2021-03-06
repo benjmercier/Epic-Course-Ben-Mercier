@@ -8,7 +8,7 @@ using Mercier.Scripts.Managers;
 namespace Mercier.Scripts.Classes
 {
     // can add [RequireTypeOf()] to require specific component
-    public abstract class Enemy : MonoBehaviour, IDamageable<float>
+    public abstract class Enemy : MonoBehaviour, IDamageable<float>, IEventable
     {
         public int iD;
 
@@ -30,8 +30,34 @@ namespace Mercier.Scripts.Classes
         private float _delta;
         private float _zero = 0f;
 
-        public float Health { get; set; }
-        public float Armor { get; set; }
+        [SerializeField]
+        private float _currentHealth;
+        [SerializeField]
+        private float _currentArmor;
+
+        public float Health
+        {
+            get
+            {
+                return _currentHealth;
+            }
+            set
+            {
+                _currentHealth = value;
+            }
+        }
+                
+        public float Armor
+        {
+            get
+            {
+                return _currentArmor;
+            }
+            set
+            {
+                _currentArmor = value;
+            }
+        }
 
         protected void Awake()
         {
@@ -44,18 +70,25 @@ namespace Mercier.Scripts.Classes
             }
         }
 
-        protected void OnEnable()
+        public void OnEnable()
         {
             _target = SpawnManager.Instance.AssignTargetPos();
 
             _navMeshAgent.SetDestination(_target);
 
             _navMeshAgent.speed = UpdateSpeed(_speed);
+
+            Turret.onTurretAttack += ReceiveDamage;
+        }
+
+        public void OnDisable()
+        {
+            Turret.onTurretAttack -= ReceiveDamage;
         }
 
         protected void Start()
         {
-
+            
         }
 
         protected virtual float UpdateSpeed(float speed)
@@ -67,6 +100,14 @@ namespace Mercier.Scripts.Classes
         {
 
         }
+
+        private void ReceiveDamage(GameObject target, float damageAmount)
+        {
+            if (this.gameObject == target)
+            {
+                OnDamage(Health, Armor, damageAmount, out _currentHealth, out _currentArmor);
+            }
+        }
         
         public virtual void OnDamage(float health, float armor, float damageAmount, out float curHealth, out float curArmor)
         {
@@ -75,7 +116,7 @@ namespace Mercier.Scripts.Classes
                 armor -= damageAmount;
 
                 _delta = health - armor;
-
+                Debug.Log("Current Armor: " + _currentArmor);
                 if (armor < _zero)
                 {
                     armor = _zero;
@@ -96,8 +137,10 @@ namespace Mercier.Scripts.Classes
             }
 
             health -= (_delta / _maxHealth) * damageAmount;
-
+            
             curHealth = health;
+            Debug.Log("Current Health: " + _currentHealth);
+            
         }
 
         protected virtual void OnDeath(int reward)
