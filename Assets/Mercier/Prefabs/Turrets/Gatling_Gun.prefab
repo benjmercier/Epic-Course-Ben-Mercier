@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4928fcbb36b8514791f3e564bee967b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentTurret: {fileID: 0}
 --- !u!114 &2952412481083948608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +200,7 @@ MonoBehaviour:
   _minRotationAngle: {x: -25, y: -45}
   _activeList: []
   _activeTarget: {fileID: 0}
+  _attackStrength: 12
   _fireRate: 0.5
   _gunBarrel: {fileID: 5367225569468980809}
   _muzzleFlash: {fileID: 5362636839733481909}

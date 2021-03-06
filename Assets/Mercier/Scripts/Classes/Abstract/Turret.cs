@@ -63,11 +63,13 @@ namespace Mercier.Scripts.Classes
         public void OnEnable()
         {
             AttackRadius.onAttackRadiusTriggered += UpdateAttackList;
+            Enemy.onEnemyDeath += AssignNewTarget;
         }
 
         public void OnDisable()
         {
             AttackRadius.onAttackRadiusTriggered -= UpdateAttackList;
+            Enemy.onEnemyDeath -= AssignNewTarget;
         }
 
         protected virtual void Update()
@@ -94,7 +96,7 @@ namespace Mercier.Scripts.Classes
                     {
                         _hasFired = false;
                         ActivateTurret(false);
-                        AssignNewTarget();
+                        AssignNewTarget(_activeTarget, 0);
                     }
 
                     RotateToStart();
@@ -166,11 +168,11 @@ namespace Mercier.Scripts.Classes
             }
         }*/
 
-        private void AssignNewTarget()
+        private void AssignNewTarget(GameObject currentTarget, int reward)
         {
-            if (_activeList.Contains(_activeTarget))
+            if (_activeList.Contains(currentTarget))
             {
-                _activeList.Remove(_activeTarget);
+                _activeList.Remove(currentTarget);
 
                 _activeTarget = null;
 

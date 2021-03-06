@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -59,11 +60,10 @@ namespace Mercier.Scripts.Classes
             }
         }
 
+        public static event Action<GameObject, int> onEnemyDeath;
+
         protected void Awake()
         {
-            Health = _maxHealth;
-            Armor = _maxArmor;
-
             if (_navMeshAgent == null)
             {
                 _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -72,6 +72,9 @@ namespace Mercier.Scripts.Classes
 
         public void OnEnable()
         {
+            Health = _maxHealth;
+            Armor = _maxArmor;
+
             _target = SpawnManager.Instance.AssignTargetPos();
 
             _navMeshAgent.SetDestination(_target);
@@ -141,13 +144,22 @@ namespace Mercier.Scripts.Classes
             curHealth = health;
             Debug.Log("Current Health: " + _currentHealth);
             
+            // check if dead
+            if (curHealth <= 0)
+            {
+                curHealth = 0;
+
+                OnDeath(this.gameObject, _currencyToReward);
+            }
         }
 
-        protected virtual void OnDeath(int reward)
+        protected virtual void OnDeath(GameObject enemy, int reward)
         {
             // add reward to player currency
 
-            Destroy(this.gameObject);
+            onEnemyDeath?.Invoke(enemy, reward);
+
+            gameObject.SetActive(false);
         }
     }
 }
