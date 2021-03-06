@@ -6,13 +6,17 @@ using Mercier.Scripts.Managers;
 
 namespace Mercier.Scripts.Classes
 {
-    public class DecoyAttackRadius : MonoBehaviour, IEventable
+    public class DecoyRadius : MonoBehaviour, IEventable
     {
         private Material _material;
 
-        public void OnEnable()
+        private void Awake()
         {
             _material = GetComponent<Renderer>().material;
+        }
+
+        public void OnEnable()
+        {            
             TowerManager.onTurretPlacementColor += StatusColor;
         }
 

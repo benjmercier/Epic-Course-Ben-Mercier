@@ -67,7 +67,7 @@ namespace Mercier.Scripts.Classes
         {
 
         }
-
+        
         public virtual void OnDamage(float health, float armor, float damageAmount, out float curHealth, out float curArmor)
         {
             if (armor > _zero)

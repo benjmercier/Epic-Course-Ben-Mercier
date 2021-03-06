@@ -52,7 +52,7 @@ MonoBehaviour:
   _rotationSpeed: 5
   _minMaxX: {x: -25, y: 35}
   _minMaxY: {x: -45, y: 45}
-  _maxAngle: 65
+  _maxLineOfSight: 65
   _attackList: []
   _activeTarget: {fileID: 0}
   currentState: 0

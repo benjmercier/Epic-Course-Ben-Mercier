@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using GameDevHQ.FileBase.Gatling_Gun;
+using Mercier.Scripts.Interfaces;
 
 namespace Mercier.Scripts.Classes
 {
-    public class TurretAttackRadius : MonoBehaviour
+    public class TurretAttack : MonoBehaviour
     {
         [SerializeField]
         private Gatling_Gun _gatlingGun;
@@ -23,7 +24,7 @@ namespace Mercier.Scripts.Classes
         private float _yClamped;
 
         [SerializeField]
-        private float _maxAngle = 45f;
+        private float _maxLineOfSight = 45f;
         private float _cosAngle;
         private float _angle;
 
@@ -31,6 +32,7 @@ namespace Mercier.Scripts.Classes
         private List<GameObject> _attackList = new List<GameObject>();
         [SerializeField]
         private GameObject _activeTarget;
+        private IDamageable<float> _damageable;
 
         private Quaternion _initialRotation;
         private Vector3 _castDirection;
@@ -38,6 +40,9 @@ namespace Mercier.Scripts.Classes
         private Vector3 _rotateTowards;
         private Quaternion _lookRotation;
         private float _movement;
+
+        private float _fireRate = 0.5f;
+        private float _canFire;
 
         private bool _hasFired = false;
 
@@ -79,7 +84,7 @@ namespace Mercier.Scripts.Classes
 
             _angle = Mathf.Acos(_cosAngle) * Mathf.Rad2Deg;
 
-            return _angle <= _maxAngle;
+            return _angle <= _maxLineOfSight;
         }
 
         private void CalculateRotation()
@@ -90,7 +95,9 @@ namespace Mercier.Scripts.Classes
                 {
                     _hasFired = true;
                     _gatlingGun.ActivateTurret(true);
-                    RotateToTargetPos();
+                    RotateToTarget(_activeTarget.transform.position);
+
+                    AttackTarget();
                 }
                 else
                 {
@@ -101,18 +108,18 @@ namespace Mercier.Scripts.Classes
                         AssignNewTarget();
                     }
 
-                    RotateToDefaultPos();
+                    RotateToStart();
                 }
             }
             else
             {
-                RotateToDefaultPos();
+                RotateToStart();
             }
         }
 
-        private void RotateToTargetPos()
+        private void RotateToTarget(Vector3 target)
         {
-            _targetDirection = _activeTarget.transform.position - _objToRotate.position;
+            _targetDirection = target - _objToRotate.position;
 
             _movement = _rotationSpeed * Time.deltaTime;
 
@@ -125,7 +132,19 @@ namespace Mercier.Scripts.Classes
             _objToRotate.rotation = Quaternion.Euler(_xClamped, _yClamped, _lookRotation.eulerAngles.z);
         }
 
-        private void RotateToDefaultPos()
+        private void AttackTarget()
+        {
+            if (Time.time > _canFire)
+            {
+                _canFire = Time.time + _fireRate;
+
+                //_damageable.Damage(5f);
+
+                Debug.Log("Causing Damage");
+            }
+        }
+
+        private void RotateToStart()
         {
             _movement = _rotationSpeed * Time.deltaTime;
 
@@ -139,10 +158,12 @@ namespace Mercier.Scripts.Classes
                 _attackList.Remove(_activeTarget);
 
                 _activeTarget = null;
+                _damageable = null;
 
                 if (_attackList.Any())
                 {
                     _activeTarget = _attackList.FirstOrDefault();
+                    _damageable = _activeTarget.GetComponent<IDamageable<float>>();
                 }
             }
         }
@@ -156,6 +177,14 @@ namespace Mercier.Scripts.Classes
                 if (_attackList.Count <= 1)
                 {
                     _activeTarget = _attackList.FirstOrDefault();
+
+                    _damageable = _activeTarget.GetComponent<IDamageable<float>>();
+
+                    if (_damageable == null)
+                    {
+                        Debug.Log("No Damageable");
+                    }
+
                 }
             }
         }

@@ -8332,6 +8332,16 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2952412481083948608, guid: 6f8e16e316707ab498d2a7fde36f6cdf,
+        type: 3}
+      propertyPath: _rotationSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2952412481083948608, guid: 6f8e16e316707ab498d2a7fde36f6cdf,
+        type: 3}
+      propertyPath: _maxLineOfSight
+      value: 65
+      objectReference: {fileID: 0}
     - target: {fileID: 3423868015439358275, guid: 6f8e16e316707ab498d2a7fde36f6cdf,
         type: 3}
       propertyPath: _maxAngle
