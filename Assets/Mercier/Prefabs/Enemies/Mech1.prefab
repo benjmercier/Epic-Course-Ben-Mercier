@@ -1349,14 +1349,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ee51afdaf50d043917f9a4fb57527b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iD: 0
   _navMeshAgent: {fileID: 8130879818932858865}
+  _enemyAnim: {fileID: 1640634097325754351}
   _speed: 1.5
-  _maxHealth: 50
   _attackStrength: 0
-  _maxArmor: 25
   _currencyToReward: 15
+  _maxHealth: 50
   _currentHealth: 0
+  _maxArmor: 25
   _currentArmor: 0
 --- !u!95 &1640634097325754351
 Animator:

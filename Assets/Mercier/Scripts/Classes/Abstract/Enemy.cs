@@ -5,34 +5,37 @@ using UnityEngine;
 using UnityEngine.AI;
 using Mercier.Scripts.Interfaces;
 using Mercier.Scripts.Managers;
+using Mercier.Scripts.AnimBehaviors;
 
 namespace Mercier.Scripts.Classes
 {
     // can add [RequireTypeOf()] to require specific component
     public abstract class Enemy : MonoBehaviour, IDamageable<float>, IEventable
     {
-        public int iD;
-
         [SerializeField]
         private NavMeshAgent _navMeshAgent;
+        [SerializeField]
+        private Animator _enemyAnim; // anim.WriteDefaultValues() set before deactivation
         private Vector3 _target;
 
         [SerializeField]
-        protected float _speed;
+        protected float _speed;        
         [SerializeField]
-        protected float _maxHealth;
-        [SerializeField]
-        protected float _attackStrength;
-        [SerializeField]
-        protected float _maxArmor;
+        protected float _attackStrength;        
         [SerializeField]
         protected int _currencyToReward;
 
         private float _delta;
         private float _zero = 0f;
 
+        [Header("Health")]
+        [SerializeField]
+        protected float _maxHealth;
         [SerializeField]
         private float _currentHealth;
+        [Header("Armor")]
+        [SerializeField]
+        protected float _maxArmor;
         [SerializeField]
         private float _currentArmor;
 
@@ -61,17 +64,25 @@ namespace Mercier.Scripts.Classes
         }
 
         public static event Action<GameObject, int> onEnemyDeath;
+        private WaitForSeconds _onDeathWait = new WaitForSeconds(3.5f);
 
         protected void Awake()
         {
             if (_navMeshAgent == null)
             {
-                _navMeshAgent = GetComponent<NavMeshAgent>();
+                Debug.LogError("Enemy::Awake()::" + gameObject.name + "'s _navMeshAgent is NULL.");
+            }
+
+            if (_enemyAnim == null)
+            {
+                Debug.LogError("Enemy::Awake()::" + gameObject.name + "'s _enemyAnimis NULL.");
             }
         }
 
         public void OnEnable()
         {
+            _enemyAnim.SetBool("isDead", false);
+
             Health = _maxHealth;
             Armor = _maxArmor;
 
@@ -82,11 +93,13 @@ namespace Mercier.Scripts.Classes
             _navMeshAgent.speed = UpdateSpeed(_speed);
 
             Turret.onTurretAttack += ReceiveDamage;
+            OnDeathBehavior.onDeathAnimStateExit += Die;
         }
 
         public void OnDisable()
         {
             Turret.onTurretAttack -= ReceiveDamage;
+            OnDeathBehavior.onDeathAnimStateExit -= Die;
         }
 
         protected void Start()
@@ -119,7 +132,7 @@ namespace Mercier.Scripts.Classes
                 armor -= damageAmount;
 
                 _delta = health - armor;
-                Debug.Log("Current Armor: " + _currentArmor);
+                //Debug.Log("Current Armor: " + _currentArmor);
                 if (armor < _zero)
                 {
                     armor = _zero;
@@ -142,7 +155,7 @@ namespace Mercier.Scripts.Classes
             health -= (_delta / _maxHealth) * damageAmount;
             
             curHealth = health;
-            Debug.Log("Current Health: " + _currentHealth);
+            //Debug.Log("Current Health: " + _currentHealth);
             
             // check if dead
             if (curHealth <= 0)
@@ -158,9 +171,28 @@ namespace Mercier.Scripts.Classes
             // add reward to player currency
 
             onEnemyDeath?.Invoke(enemy, reward);
+            _navMeshAgent.isStopped = true;
+            _enemyAnim.SetBool("isDead", true);
 
+            StartCoroutine(DieRoutine());
+        }
+
+        protected virtual IEnumerator DieRoutine()
+        {
+            yield return _onDeathWait;
+
+            _enemyAnim.WriteDefaultValues();
             gameObject.SetActive(false);
         }
+
+        protected virtual void Die(GameObject enemy) // Mech2 would transition to standing up even if using OnStateExit()
+        {
+            if (this.gameObject == enemy)
+            {
+                //_enemyAnim.WriteDefaultValues();
+                //gameObject.SetActive(false);
+            }
+        }        
     }
 }
 

@@ -9,6 +9,16 @@ namespace Mercier.Scripts.Classes
 {
     public abstract class Turret : MonoBehaviour, IEventable
     {
+        public enum TurretState
+        { 
+            Idle,
+            Searching,
+            Attacking,
+            Destroyed
+        }
+
+        public TurretState currentState;
+
         [Header("Rotation Settings")]
         [SerializeField]
         private Transform _objToRotate;
@@ -62,6 +72,8 @@ namespace Mercier.Scripts.Classes
 
         public void OnEnable()
         {
+            currentState = TurretState.Idle;
+
             AttackRadius.onAttackRadiusTriggered += UpdateAttackList;
             Enemy.onEnemyDeath += AssignNewTarget;
         }
@@ -74,8 +86,82 @@ namespace Mercier.Scripts.Classes
 
         protected virtual void Update()
         {
-            CalculateRotation();
-        }        
+            //CalculateRotation();
+            ControlTurretState();
+        } 
+        
+        protected virtual void ControlTurretState()
+        {
+            switch(currentState)
+            {
+                case TurretState.Idle:
+
+                    if (_activeTarget == null)
+                    {
+                        RotateToStart();
+                    }
+                    else
+                    {
+                        currentState = TurretState.Searching;
+                    }
+
+                    break;
+
+                case TurretState.Searching:
+
+                    if (!ReturnWithinLineOfSight())
+                    {
+                        RotateToStart();
+                    }
+                    else if (_activeTarget == null)
+                    {
+                        currentState = TurretState.Idle;
+                    }
+                    else
+                    {
+                        currentState = TurretState.Attacking;
+                    }
+
+                    break;
+
+                case TurretState.Attacking:
+
+                    if (_activeTarget != null)
+                    {
+                        if (ReturnWithinLineOfSight())
+                        {
+                            _hasFired = true;
+                            ActivateTurret(true);
+                            RotateToTarget(_activeTarget.transform.position);
+                            OnTurretAttack(_activeTarget, _attackStrength);
+                        }
+                        else
+                        {
+                            if (_hasFired)
+                            {
+                                _hasFired = false;
+                                ActivateTurret(false);
+
+                                if (!_activeTarget.activeInHierarchy)
+                                {
+                                    AssignNewTarget(_activeTarget, 0);
+                                }                                
+                            }
+
+                            RotateToStart();
+                        }
+                    }
+                    else
+                    {
+                        currentState = TurretState.Idle;
+                    }                    
+
+                    break;
+
+                case TurretState.Destroyed:
+                    break;
+            }
+        }
 
         protected virtual void CalculateRotation()
         {
@@ -174,12 +260,17 @@ namespace Mercier.Scripts.Classes
             {
                 _activeList.Remove(currentTarget);
 
-                _activeTarget = null;
+                if (_activeTarget == currentTarget)
+                {
+                    _activeTarget = null;
+                }                
 
                 if (_activeList.Any())
                 {
                     _activeTarget = _activeList.FirstOrDefault();
                 }
+
+                ActivateTurret(false);
             }
         }
 
@@ -195,13 +286,13 @@ namespace Mercier.Scripts.Classes
             }
         }   
         
-        protected virtual void UpdateAttackList(GameObject turret, GameObject activeTarget, bool addTo)
+        protected virtual void UpdateAttackList(GameObject turret, GameObject target, bool addTo)
         {
             if (this.gameObject == turret)
             {
                 if (addTo)
                 {
-                    _activeList.Add(activeTarget);
+                    _activeList.Add(target);
 
                     if (_activeList.Count <= 1)
                     {
@@ -210,9 +301,9 @@ namespace Mercier.Scripts.Classes
                 }
                 else
                 {
-                    if (_activeList.Contains(activeTarget))
+                    if (_activeList.Contains(target))
                     {
-                        _activeList.Remove(activeTarget);
+                        _activeList.Remove(target);
                     }
                 }
             }

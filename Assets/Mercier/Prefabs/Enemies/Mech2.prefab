@@ -2928,14 +2928,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69786046e9a810c4da18dae1fa5ce210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iD: 1
   _navMeshAgent: {fileID: 8536136369352605483}
+  _enemyAnim: {fileID: 3279792961363241529}
   _speed: 1.5
-  _maxHealth: 100
   _attackStrength: 0
-  _maxArmor: 50
   _currencyToReward: 25
+  _maxHealth: 100
   _currentHealth: 0
+  _maxArmor: 50
   _currentArmor: 0
 --- !u!95 &3279792961363241529
 Animator:
