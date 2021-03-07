@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GameDevHQ.FileBase.Missle_Launcher.Missle;
+using Mercier.Scripts.Classes;
 
 namespace GameDevHQ.FileBase.Missle_Launcher
 {
-    public class Missle_Launcher : MonoBehaviour
+    public class Missle_Launcher : Turret
     {
+        [Header("Missle Launcher Settings")]
         [SerializeField]
         private GameObject _missilePrefab; //holds the missle gameobject to clone
         [SerializeField]
@@ -25,14 +27,21 @@ namespace GameDevHQ.FileBase.Missle_Launcher
         private float _destroyTime = 10.0f; //how long till the rockets get cleaned up
         private bool _launched; //bool to check if we launched the rockets
 
+        protected override void Update()
+        {
+            base.Update();
+        }
+
+        /*
         private void Update()
         {
+            
             if (Input.GetKeyDown(KeyCode.Space) && _launched == false) //check for space key and if we launched the rockets
             {
                 _launched = true; //set the launch bool to true
                 StartCoroutine(FireRocketsRoutine()); //start a coroutine that fires the rockets. 
             }
-        }
+        }*/
 
         IEnumerator FireRocketsRoutine()
         {
@@ -59,6 +68,26 @@ namespace GameDevHQ.FileBase.Missle_Launcher
             }
 
             _launched = false; //set launch bool to false
+        }
+
+        protected override void EngageTarget()
+        {
+            
+        }
+
+        protected override void DisengageTarget()
+        {
+            
+        }
+
+        protected override void RotateToTarget(Vector3 target)
+        {
+            Debug.Log("Rotating to target.");
+        }
+
+        protected override void RotateToStart()
+        {
+            Debug.Log("Rotating to start.");
         }
     }
 }

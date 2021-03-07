@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1627450839}
   - component: {fileID: 7477258917046788967}
-  - component: {fileID: 2952412481083948608}
   - component: {fileID: 1627450842}
   - component: {fileID: 1627450841}
   - component: {fileID: 1627450840}
@@ -48,28 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4928fcbb36b8514791f3e564bee967b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parentTurret: {fileID: 0}
---- !u!114 &2952412481083948608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1627450838}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 269fb9b6f176bb148a9758baff7fe80f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gatlingGun: {fileID: 5474698699604471377}
-  _objToRotate: {fileID: 5360060924682897711}
-  _rotationSpeed: 5
-  _minMaxX: {x: -25, y: 35}
-  _minMaxY: {x: -45, y: 45}
-  _maxLineOfSight: 65
-  _attackList: []
-  _activeTarget: {fileID: 0}
-  currentState: 0
+  _parentTurret: {fileID: 5361602506161335635}
 --- !u!33 &1627450842
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -193,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c7edd4816764b2cb111ea15f8f117a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
   _objToRotate: {fileID: 5360060924682897711}
   _rotationSpeed: 2.5
   _viewingAngle: 65

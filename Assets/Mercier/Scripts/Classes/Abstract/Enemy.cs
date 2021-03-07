@@ -15,7 +15,7 @@ namespace Mercier.Scripts.Classes
         [SerializeField]
         private NavMeshAgent _navMeshAgent;
         [SerializeField]
-        private Animator _enemyAnim; // anim.WriteDefaultValues() set before deactivation
+        private Animator _enemyAnim;
         private Vector3 _target;
 
         [SerializeField]
@@ -132,7 +132,7 @@ namespace Mercier.Scripts.Classes
                 armor -= damageAmount;
 
                 _delta = health - armor;
-                //Debug.Log("Current Armor: " + _currentArmor);
+                
                 if (armor < _zero)
                 {
                     armor = _zero;
@@ -155,9 +155,7 @@ namespace Mercier.Scripts.Classes
             health -= (_delta / _maxHealth) * damageAmount;
             
             curHealth = health;
-            //Debug.Log("Current Health: " + _currentHealth);
-            
-            // check if dead
+
             if (curHealth <= 0)
             {
                 curHealth = 0;
@@ -185,7 +183,8 @@ namespace Mercier.Scripts.Classes
             gameObject.SetActive(false);
         }
 
-        protected virtual void Die(GameObject enemy) // Mech2 would transition to standing up even if using OnStateExit()
+        // Mech2 would transition to standing up even if using OnStateExit() so used coroutine
+        protected virtual void Die(GameObject enemy) 
         {
             if (this.gameObject == enemy)
             {
@@ -195,5 +194,3 @@ namespace Mercier.Scripts.Classes
         }        
     }
 }
-
-

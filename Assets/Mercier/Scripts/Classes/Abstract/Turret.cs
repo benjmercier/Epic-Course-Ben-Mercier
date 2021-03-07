@@ -27,9 +27,9 @@ namespace Mercier.Scripts.Classes
         [SerializeField]
         protected float _viewingAngle = 65f;
         [SerializeField]
-        protected Vector2 _maxRotationAngle = new Vector2(-25f, 35f);
+        protected Vector2 _maxRotationAngle = new Vector2(35f, 45f);
         [SerializeField]
-        protected Vector2 _minRotationAngle = new Vector2(-45f, 45f);
+        protected Vector2 _minRotationAngle = new Vector2(-25f, -45f);
 
         private Vector3 _targetSighting;
         private float _cosAngle;
@@ -86,7 +86,6 @@ namespace Mercier.Scripts.Classes
 
         protected virtual void Update()
         {
-            //CalculateRotation();
             ControlTurretState();
         } 
         
@@ -141,11 +140,7 @@ namespace Mercier.Scripts.Classes
                             {
                                 _hasFired = false;
                                 ActivateTurret(false);
-
-                                if (!_activeTarget.activeInHierarchy)
-                                {
-                                    AssignNewTarget(_activeTarget, 0);
-                                }                                
+                                AssignNewTarget(_activeTarget, 0);
                             }
 
                             RotateToStart();
@@ -160,37 +155,6 @@ namespace Mercier.Scripts.Classes
 
                 case TurretState.Destroyed:
                     break;
-            }
-        }
-
-        protected virtual void CalculateRotation()
-        {
-            if (_activeTarget != null)
-            {
-                if (ReturnWithinLineOfSight())
-                {
-                    _hasFired = true;
-                    ActivateTurret(true);
-                    RotateToTarget(_activeTarget.transform.position);
-
-                    //AttackTarget();
-                    OnTurretAttack(_activeTarget, _attackStrength);
-                }
-                else
-                {
-                    if (_hasFired)
-                    {
-                        _hasFired = false;
-                        ActivateTurret(false);
-                        AssignNewTarget(_activeTarget, 0);
-                    }
-
-                    RotateToStart();
-                }
-            }
-            else
-            {
-                RotateToStart();
             }
         }
 
@@ -220,7 +184,7 @@ namespace Mercier.Scripts.Classes
             _objToRotate.rotation = Quaternion.Euler(_xClamped, _yClamped, _lookRotation.eulerAngles.z);
         }
 
-        private void RotateToStart()
+        protected virtual void RotateToStart()
         {
             _movement = _rotationSpeed * Time.deltaTime;
 
@@ -240,19 +204,6 @@ namespace Mercier.Scripts.Classes
         protected abstract void EngageTarget();
 
         protected abstract void DisengageTarget();
-
-        /*
-        protected virtual void AttackTarget()
-        {
-            if (Time.time > _lastFire)
-            {
-                _lastFire = Time.time + _fireRate;
-
-                // apply damage
-
-                Debug.Log("Causing Damage");
-            }
-        }*/
 
         private void AssignNewTarget(GameObject currentTarget, int reward)
         {
@@ -281,8 +232,6 @@ namespace Mercier.Scripts.Classes
                 _lastFire = Time.time + _fireRate;
 
                 onTurretAttack?.Invoke(activeTarget, damageAmount);
-
-                Debug.Log("Causing Damage");
             }
         }   
         

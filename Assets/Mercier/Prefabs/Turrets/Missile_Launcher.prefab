@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3633033328952232905}
+  - component: {fileID: 4929736602820308031}
   - component: {fileID: 1998557414398345303}
   - component: {fileID: 5146219003380237773}
   - component: {fileID: 717912864627203555}
@@ -33,6 +34,19 @@ Transform:
   m_Father: {fileID: 4923994587792334976}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4929736602820308031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2183149132098908715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4928fcbb36b8514791f3e564bee967b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parentTurret: {fileID: 0}
 --- !u!33 &1998557414398345303
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -787,6 +801,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37f75a662e08584192823355ae4ac73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
+  _objToRotate: {fileID: 4921082170010932556}
+  _rotationSpeed: 2.5
+  _viewingAngle: 65
+  _maxRotationAngle: {x: 35, y: 45}
+  _minRotationAngle: {x: -25, y: -45}
+  _activeList: []
+  _activeTarget: {fileID: 0}
+  _attackStrength: 5
+  _fireRate: 0.5
   _missilePrefab: {fileID: 1408549652012730, guid: 6f244204e60f45647b263f4edda01147,
     type: 3}
   _misslePositions:
