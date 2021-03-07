@@ -82,7 +82,55 @@ namespace GameDevHQ.FileBase.Missle_Launcher
 
         protected override void RotateToTarget(Vector3 target)
         {
+            /*
+            _targetDirection = target - _objToRotate.position;
+
+            _movement = _rotationSpeed * Time.deltaTime;
+
+            _rotateTowards = Vector3.RotateTowards(_objToRotate.forward, _targetDirection, _movement, 0f);
+            _lookRotation = Quaternion.LookRotation(_rotateTowards);
+
+            _xClamped = Mathf.Clamp(_lookRotation.eulerAngles.x, _minRotationAngle.x, _maxRotationAngle.x);
+            _yClamped = Mathf.Clamp(_lookRotation.eulerAngles.y, _minRotationAngle.y + _yAngleOffset, _maxRotationAngle.y + _yAngleOffset);
+
+            _objToRotate.rotation = Quaternion.Euler(_xClamped, _yClamped, _lookRotation.eulerAngles.z);
+            */
+
+
             Debug.Log("Rotating to target.");
+
+            // take target direction and movement
+            // separate _rotateTowards & _lookRotation by object
+            // x rot obj has y set to 0
+            // y rot obj has x set to 0
+            // clamp each
+            // combine to one and pass to rotation?
+
+            _targetDirection = target - _baseRotationObj.position;
+
+            _movement = _rotationSpeed * Time.deltaTime;
+
+            //_rotateTowards = Vector3.RotateTowards(_rotationObj.forward, _targetDirection, _movement, 0f);
+            //_rotateTowards.y = 0;
+
+            var _baseRotateTowards = Vector3.RotateTowards(_baseRotationObj.forward, _targetDirection, _movement, 0f);
+            _baseRotateTowards.y = 0;
+
+            var _auxRotateTowards = Vector3.RotateTowards(_auxRotationObj.forward, _targetDirection, _movement, 0f);
+            //_auxRotateTowards.x = 0;
+            //_auxRotateTowards.z = 0;
+
+            _xClamped = Mathf.Clamp(_auxRotateTowards.x, _minRotationAngle.x, _maxRotationAngle.x);
+            _auxRotateTowards.x = _xClamped;
+
+            var _baseLookRotation = Quaternion.LookRotation(_baseRotateTowards); // clamp x
+            var _auxLookRotation = Quaternion.LookRotation(_auxRotateTowards); // clamp y
+
+            //_xClamped = Mathf.Clamp(_auxLookRotation.eulerAngles.x, _minRotationAngle.x, _maxRotationAngle.x);
+            //_yClamped = Mathf.Clamp(_auxLookRotation.eulerAngles.y, _minRotationAngle.y + _yAngleOffset, _maxRotationAngle.y + _yAngleOffset);
+
+            _baseRotationObj.rotation = _baseLookRotation;
+            _auxRotationObj.rotation = _auxLookRotation; // Quaternion.Euler(_xClamped, _auxLookRotation.eulerAngles.y, _auxLookRotation.eulerAngles.z);
         }
 
         protected override void RotateToStart()

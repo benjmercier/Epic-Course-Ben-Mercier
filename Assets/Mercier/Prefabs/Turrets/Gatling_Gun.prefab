@@ -172,7 +172,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  _objToRotate: {fileID: 5360060924682897711}
+  _baseRotationObj: {fileID: 5360060924682897711}
+  _auxRotationObj: {fileID: 0}
   _rotationSpeed: 2.5
   _viewingAngle: 65
   _maxRotationAngle: {x: 35, y: 45}

@@ -21,7 +21,9 @@ namespace Mercier.Scripts.Classes
 
         [Header("Rotation Settings")]
         [SerializeField]
-        private Transform _objToRotate;
+        protected Transform _baseRotationObj;
+        [SerializeField]
+        protected Transform _auxRotationObj;
         [SerializeField]
         protected float _rotationSpeed = 2.5f;
         [SerializeField]
@@ -35,14 +37,14 @@ namespace Mercier.Scripts.Classes
         private float _cosAngle;
         private float _targetAngle;        
 
-        private Quaternion _initialRotation;        
-        private Vector3 _targetDirection;
-        private Vector3 _rotateTowards;
-        private Quaternion _lookRotation;
-        private float _movement;
-        private float _xClamped;
-        private float _yClamped;
-        private float _yAngleOffset = 180f;
+        protected Quaternion _initialRotation;
+        protected Vector3 _targetDirection;
+        protected Vector3 _rotateTowards;
+        protected Quaternion _lookRotation;
+        protected float _movement;
+        protected float _xClamped;
+        protected float _yClamped;
+        protected float _yAngleOffset = 180f;
 
         [Header("Attack Settings")]
         [SerializeField]
@@ -53,8 +55,8 @@ namespace Mercier.Scripts.Classes
         protected float _attackStrength = 5f;
         [SerializeField]
         protected float _fireRate = 0.5f;
-        private float _lastFire;
-        private bool _hasFired;
+        protected float _lastFire;
+        protected bool _hasFired;
         protected bool _canFire;
 
         // set event system to communicate with active target
@@ -62,12 +64,24 @@ namespace Mercier.Scripts.Classes
 
         protected virtual void Awake()
         {
-            if (_objToRotate == null)
+            if (_baseRotationObj == null)
             {
-                Debug.LogError("Turret::Start()::" + _objToRotate.ToString() + " is NULL.");
+                Debug.LogError("Turret::Start()::" + gameObject.name + "'s _rotationObj is NULL.");
             }
 
-            _initialRotation = _objToRotate.rotation;
+            if (_auxRotationObj != null)
+            {
+                var x = _baseRotationObj.rotation.eulerAngles.x;
+                var y = _auxRotationObj.rotation.eulerAngles.y;
+                var z = _baseRotationObj.rotation.eulerAngles.z;
+
+                _initialRotation = Quaternion.Euler(x, y, z);
+            }
+            else
+            {
+                _initialRotation = _baseRotationObj.rotation;
+            }
+            
         }
 
         public void OnEnable()
@@ -132,7 +146,7 @@ namespace Mercier.Scripts.Classes
                             _hasFired = true;
                             ActivateTurret(true);
                             RotateToTarget(_activeTarget.transform.position);
-                            OnTurretAttack(_activeTarget, _attackStrength);
+                            //OnTurretAttack(_activeTarget, _attackStrength);
                         }
                         else
                         {
@@ -160,9 +174,9 @@ namespace Mercier.Scripts.Classes
 
         private bool ReturnWithinLineOfSight()
         {
-            _targetSighting = _activeTarget.transform.position - _objToRotate.position;
+            _targetSighting = _activeTarget.transform.position - _baseRotationObj.position;
 
-            _cosAngle = Vector3.Dot(_targetSighting.normalized, _objToRotate.forward);
+            _cosAngle = Vector3.Dot(_targetSighting.normalized, _baseRotationObj.forward);
 
             _targetAngle = Mathf.Acos(_cosAngle) * Mathf.Rad2Deg;
 
@@ -171,24 +185,24 @@ namespace Mercier.Scripts.Classes
 
         protected virtual void RotateToTarget(Vector3 target)
         {
-            _targetDirection = target - _objToRotate.position;
+            _targetDirection = target - _baseRotationObj.position;
 
             _movement = _rotationSpeed * Time.deltaTime;
 
-            _rotateTowards = Vector3.RotateTowards(_objToRotate.forward, _targetDirection, _movement, 0f);
+            _rotateTowards = Vector3.RotateTowards(_baseRotationObj.forward, _targetDirection, _movement, 0f);
             _lookRotation = Quaternion.LookRotation(_rotateTowards);
 
             _xClamped = Mathf.Clamp(_lookRotation.eulerAngles.x, _minRotationAngle.x, _maxRotationAngle.x);
             _yClamped = Mathf.Clamp(_lookRotation.eulerAngles.y, _minRotationAngle.y + _yAngleOffset, _maxRotationAngle.y + _yAngleOffset);
 
-            _objToRotate.rotation = Quaternion.Euler(_xClamped, _yClamped, _lookRotation.eulerAngles.z);
+            _baseRotationObj.rotation = Quaternion.Euler(_xClamped, _yClamped, _lookRotation.eulerAngles.z);
         }
 
         protected virtual void RotateToStart()
         {
             _movement = _rotationSpeed * Time.deltaTime;
 
-            _objToRotate.rotation = Quaternion.Slerp(_objToRotate.rotation, _initialRotation, _movement);
+            _baseRotationObj.rotation = Quaternion.Slerp(_baseRotationObj.rotation, _initialRotation, _movement);
         }
 
         protected virtual void ActivateTurret(bool activate)
