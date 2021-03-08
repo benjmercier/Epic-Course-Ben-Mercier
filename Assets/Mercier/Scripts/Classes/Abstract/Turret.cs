@@ -193,7 +193,7 @@ namespace Mercier.Scripts.Classes
             return _targetAngle <= _viewingAngle;
         }
 
-        protected abstract void RotateToTarget(Vector3 target);
+        protected abstract void RotateToTarget(Vector3 target); // late update may work better
 
         protected abstract void RotateToStart();
 

@@ -16,7 +16,8 @@ MonoBehaviour:
   index: 1
   buffer: 20
   prefabs:
-  - {fileID: 5361602506161335635, guid: 6f8e16e316707ab498d2a7fde36f6cdf, type: 3}
-  - {fileID: 7809918525972281956, guid: 174cb0a363c56914d8be9eeed857e6e7, type: 3}
-  - {fileID: 4919045958501377848, guid: 1beac53d5aa4696408a78d30afc8d2e3, type: 3}
+  - {fileID: 401132117131954635, guid: 250dc2454d48ed44fb0df7f23d588440, type: 3}
+  - {fileID: 6373045444735503527, guid: df1878049e20bae44ace0c74e52b6747, type: 3}
+  - {fileID: 9201399544196024905, guid: 6d4a628b030d352478a6e81494d7cebc, type: 3}
+  - {fileID: 2976905752199410027, guid: 21c121dc6ec34104b80d2feffc1cf1e1, type: 3}
   list: []

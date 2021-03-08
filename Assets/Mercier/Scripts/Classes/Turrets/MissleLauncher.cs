@@ -1,14 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameDevHQ.FileBase.Missle_Launcher.Missle;
 
 namespace Mercier.Scripts.Classes
 {
     public class MissleLauncher : Turret
     {
+        public enum MissileType
+        {
+            Normal,
+            Homing
+        }
+
         [Header("Missle Launcher Settings")]
         [SerializeField]
         private GameObject _missilePrefab; //holds the missle gameobject to clone
+        [SerializeField]
+        private MissileType _missileType; //type of missle to be launched
         [SerializeField]
         private GameObject[] _misslePositions; //array to hold the rocket positions on the turret
         [SerializeField]
@@ -24,6 +33,8 @@ namespace Mercier.Scripts.Classes
         [SerializeField]
         private float _destroyTime = 10.0f; //how long till the rockets get cleaned up
         private bool _launched; //bool to check if we launched the rockets
+        [SerializeField]
+        private Transform _target; //Who should the rocket fire at?
 
         protected override void Update()
         {
@@ -52,7 +63,7 @@ namespace Mercier.Scripts.Classes
                 rocket.transform.localEulerAngles = new Vector3(-90, 0, 0); //set the rotation values to be properly aligned with the rockets forward direction
                 rocket.transform.parent = null; //set the rocket parent to null
 
-                rocket.GetComponent<GameDevHQ.FileBase.Missle_Launcher.Missle.Missle>().AssignMissleRules(_launchSpeed, _power, _fuseDelay, _destroyTime); //assign missle properties 
+                rocket.GetComponent<Missle>().AssignMissleRules(_missileType, _target, _launchSpeed, _power, _fuseDelay, _destroyTime); //assign missle properties 
 
                 _misslePositions[i].SetActive(false); //turn off the rocket sitting in the turret to make it look like it fired
 
