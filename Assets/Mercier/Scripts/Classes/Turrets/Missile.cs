@@ -6,7 +6,7 @@ namespace Mercier.Scripts.Classes
 {
     [RequireComponent(typeof(Rigidbody))] //require rigidbody
     [RequireComponent(typeof(AudioSource))] //require audiosource
-    public class Missle : MonoBehaviour
+    public class Missile : MonoBehaviour
     {
         [SerializeField]
         private ParticleSystem _particle; //reference to the particle system
@@ -29,7 +29,7 @@ namespace Mercier.Scripts.Classes
         private bool _fuseOut = false; //bool for if the rocket fuse
         private bool _trackRotation = false; //bool to track rotation of the rocket
 
-        private MissleLauncher.MissileType _missileType;
+        private MissileLauncher.MissileType _missileType;
         private Transform _target;
 
         // Use this for initialization
@@ -78,16 +78,16 @@ namespace Mercier.Scripts.Classes
 
             if (_trackRotation == true) //check track rotation bool
             {
-                if (_missileType == MissleLauncher.MissileType.Normal) //checking for normal missile 
+                if (_missileType == MissileLauncher.MissileType.Normal) //checking for normal missile 
                 {
                     _rigidbody.rotation = Quaternion.LookRotation(_rigidbody.velocity); // adjust rotation of rocket based on velocity
                     _rigidbody.AddForce(transform.forward * 100f); //add force to the rocket
                 }
-                else if (_missileType == MissleLauncher.MissileType.Homing) //if missle is homing
+                else if (_missileType == MissileLauncher.MissileType.Homing) //if missle is homing
                 {
                     if (_target == null) //checking if the target is null
                     {
-                        _missileType = MissleLauncher.MissileType.Normal; //assign back to normal
+                        _missileType = MissileLauncher.MissileType.Normal; //assign back to normal
                         return;
                     }
 
@@ -106,7 +106,7 @@ namespace Mercier.Scripts.Classes
         /// <summary>
         /// This method is used to assign traits to our missle assigned from the launcher.
         /// </summary>
-        public void AssignMissleRules(MissleLauncher.MissileType missileType, Transform target, float launchSpeed, float power, float fuseDelay, float destroyTimer)
+        public void AssignMissileRules(MissileLauncher.MissileType missileType, Transform target, float launchSpeed, float power, float fuseDelay, float destroyTimer)
         {
             _missileType = missileType; //assign the missle type
             _target = target; //Who should the rocket follow?
@@ -118,10 +118,13 @@ namespace Mercier.Scripts.Classes
 
         private void OnCollisionEnter(Collision other)
         {
-            Destroy(other.gameObject); //destroy collided object
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                Destroy(other.gameObject); //destroy collided object
 
-            if (_explosionPrefab != null)
-                Instantiate(_explosionPrefab, transform.position, Quaternion.identity); //instantiate explosion
+                if (_explosionPrefab != null)
+                    Instantiate(_explosionPrefab, transform.position, Quaternion.identity); //instantiate explosion
+            }
 
             Destroy(this.gameObject); //destroy the rocket (this)
         }

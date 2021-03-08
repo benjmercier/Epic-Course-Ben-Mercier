@@ -6,7 +6,7 @@ using Mercier.Scripts.Classes;
 
 namespace GameDevHQ.FileBase.Missle_Launcher
 {
-    public class Missle_Launcher : Turret
+    public class Missle_Launcher : MonoBehaviour // Turret
     {
         [Header("Missle Launcher Settings")]
         [SerializeField]
@@ -27,10 +27,11 @@ namespace GameDevHQ.FileBase.Missle_Launcher
         private float _destroyTime = 10.0f; //how long till the rockets get cleaned up
         private bool _launched; //bool to check if we launched the rockets
 
+        /*
         protected override void Update()
         {
             base.Update();
-        }
+        }*/
 
         /*
         private void Update()
@@ -70,6 +71,7 @@ namespace GameDevHQ.FileBase.Missle_Launcher
             _launched = false; //set launch bool to false
         }
 
+        /*
         protected override void EngageTarget()
         {
             
@@ -111,6 +113,7 @@ namespace GameDevHQ.FileBase.Missle_Launcher
             _baseRotationObj.rotation = Quaternion.Slerp(_baseRotationObj.rotation, _baseInitialRotation, _movement);
             _auxRotationObj.rotation = Quaternion.Slerp(_auxRotationObj.rotation, _auxInitialRotation, _movement);
         }
+        */
     }
 }
 

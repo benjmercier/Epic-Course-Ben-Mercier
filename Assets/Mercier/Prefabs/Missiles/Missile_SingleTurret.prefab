@@ -48,11 +48,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b8430100ec2be4d979c211957d6153, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _particle: {fileID: 0}
+  _particle: {fileID: 5080325216339623863}
   _explosionPrefab: {fileID: 0}
-  _launchSpeed: 0
-  _power: 0
-  _fuseDelay: 0
+  _launchSpeed: 1
+  _power: 10
+  _fuseDelay: 0.25
 --- !u!114 &5031765073126328673
 MonoBehaviour:
   m_ObjectHideFlags: 0

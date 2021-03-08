@@ -29,9 +29,9 @@ namespace Mercier.Scripts.Classes
         [SerializeField]
         protected float _viewingAngle = 65f;
         [SerializeField]
-        protected Vector2 _maxRotationAngle = new Vector2(35f, 45f);
+        protected Vector2 _maxRotationAngle = new Vector2(45f, 45f);
         [SerializeField]
-        protected Vector2 _minRotationAngle = new Vector2(-25f, -45f);
+        protected Vector2 _minRotationAngle = new Vector2(-45f, -45f);
 
         private Vector3 _targetSighting;
         private float _cosAngle;
@@ -156,7 +156,7 @@ namespace Mercier.Scripts.Classes
                             _hasFired = true;
                             ActivateTurret(true);
                             RotateToTarget(_activeTarget.transform.position);
-                            //OnTurretAttack(_activeTarget, _attackStrength);
+                            TurretAttack(_activeTarget, _attackStrength);
                         }
                         else
                         {
@@ -182,7 +182,7 @@ namespace Mercier.Scripts.Classes
             }
         }
 
-        private bool ReturnWithinLineOfSight()
+        private bool ReturnWithinLineOfSight() // may not need for missile
         {
             _targetSighting = _activeTarget.transform.position - _baseRotationObj.position;
 
@@ -231,16 +231,12 @@ namespace Mercier.Scripts.Classes
             }
         }
 
-        // make abstract
+        protected abstract void TurretAttack(GameObject activeTarget, float damageAmount);
+        
         protected virtual void OnTurretAttack(GameObject activeTarget, float damageAmount)
         {
-            if (Time.time > _lastFire)
-            {
-                _lastFire = Time.time + _fireRate;
-
-                onTurretAttack?.Invoke(activeTarget, damageAmount);
-            }
-        }   
+            onTurretAttack?.Invoke(activeTarget, damageAmount);
+        }
         
         protected virtual void UpdateAttackList(GameObject turret, GameObject target, bool addTo)
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -115,5 +116,15 @@ namespace Mercier.Scripts.Classes
 
             _baseRotationObj.rotation = Quaternion.Slerp(_baseRotationObj.rotation, _baseInitialRotation, _movement);
         }
+
+        protected override void TurretAttack(GameObject activeTarget, float damageAmount)
+        {
+            if (Time.time > _lastFire)
+            {
+                _lastFire = Time.time + _fireRate;
+                
+                OnTurretAttack(activeTarget, damageAmount);
+            }
+        }    
     }
 }

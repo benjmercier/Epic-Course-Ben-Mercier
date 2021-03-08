@@ -1320,7 +1320,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1693568624011698191
 Transform:
   m_ObjectHideFlags: 0
@@ -1328,8 +1328,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699286027065544987}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.22618, y: 0.22618, z: 0.22618}
   m_Children:
   - {fileID: 1701891266260381709}
@@ -1351,7 +1351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 8130879818932858865}
   _enemyAnim: {fileID: 1640634097325754351}
-  _speed: 1.5
+  _speed: 0.5
   _attackStrength: 0
   _currencyToReward: 15
   _maxHealth: 50
@@ -1410,8 +1410,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 5.2, z: 0}
+  m_Size: {x: 4.5, y: 8.8, z: 2.5}
+  m_Center: {x: 0, y: 4.35, z: 0}
 --- !u!1 &1699406618113837991
 GameObject:
   m_ObjectHideFlags: 0
