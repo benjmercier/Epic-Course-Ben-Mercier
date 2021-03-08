@@ -239,6 +239,7 @@ namespace Mercier.Scripts.Classes
             }
         }
 
+        // make abstract
         protected virtual void OnTurretAttack(GameObject activeTarget, float damageAmount)
         {
             if (Time.time > _lastFire)
