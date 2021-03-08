@@ -82,32 +82,23 @@ namespace GameDevHQ.FileBase.Missle_Launcher
 
         protected override void RotateToTarget(Vector3 target)
         {
-            Debug.Log("Rotating to target.");
-
-            // take target direction and movement
-            // separate _rotateTowards & _lookRotation by object
-            // x rot obj has y set to 0
-            // y rot obj has x set to 0
-            // clamp each
-            // combine to one and pass to rotation?
-
             _targetDirection = target - _baseRotationObj.position;
 
             _movement = _rotationSpeed * Time.deltaTime;
 
-            var _baseRotateTowards = Vector3.RotateTowards(_baseRotationObj.forward, _targetDirection, _movement, 0f);
+            _baseRotateTowards = Vector3.RotateTowards(_baseRotationObj.forward, _targetDirection, _movement, 0f);
             _baseRotateTowards.y = 0;
 
-            var _auxRotateTowards = Vector3.RotateTowards(_auxRotationObj.forward, _targetDirection, _movement, 0f);
+            _auxRotateTowards = Vector3.RotateTowards(_auxRotationObj.forward, _targetDirection, _movement, 0f);
 
-            var _baseLookRotation = Quaternion.LookRotation(_baseRotateTowards); // clamp y
-            var _auxLookRotation = Quaternion.LookRotation(_auxRotateTowards); // clamp x
+            _baseLookRotation = Quaternion.LookRotation(_baseRotateTowards); // clamp y
+            _auxLookRotation = Quaternion.LookRotation(_auxRotateTowards); // clamp x
 
-            var xAngle = _auxLookRotation.eulerAngles.x <= 180 ? 
+            _xRotAngleCheck = _auxLookRotation.eulerAngles.x <= 180 ? 
                 _auxLookRotation.eulerAngles.x : 
                 -(360 - _auxLookRotation.eulerAngles.x); // is condition true ? yes : no  (conditional operator)
             
-            _xClamped = Mathf.Clamp(xAngle, _minRotationAngle.x, _maxRotationAngle.x);
+            _xClamped = Mathf.Clamp(_xRotAngleCheck, _minRotationAngle.x, _maxRotationAngle.x);
 
             _baseRotationObj.rotation = _baseLookRotation;
             _auxRotationObj.rotation = Quaternion.Euler(_xClamped, _auxLookRotation.eulerAngles.y, _auxLookRotation.eulerAngles.z); //_auxLookRotation; 
@@ -115,7 +106,10 @@ namespace GameDevHQ.FileBase.Missle_Launcher
 
         protected override void RotateToStart()
         {
-            Debug.Log("Rotating to start.");
+            _movement = _rotationSpeed * Time.deltaTime;
+
+            _baseRotationObj.rotation = Quaternion.Slerp(_baseRotationObj.rotation, _baseInitialRotation, _movement);
+            _auxRotationObj.rotation = Quaternion.Slerp(_auxRotationObj.rotation, _auxInitialRotation, _movement);
         }
     }
 }

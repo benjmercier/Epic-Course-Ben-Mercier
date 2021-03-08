@@ -1,0 +1,170 @@
+fileFormatVersion: 2
+guid: c8c969a6f11e84b6b84c31c7a9229e19
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Body
+    100002: Chest
+    100004: Hip
+    100006: Hip_2
+    100008: Joint_4
+    100010: Joint_4_2
+    100012: L_ARM
+    100014: L_Arm
+    100016: L_Forearm
+    100018: L_LEG
+    100020: L_Leg
+    100022: L_LEG_1
+    100024: L_LEG_2
+    100026: //RootNode
+    100028: R_ARM
+    100030: R_Arm
+    100032: R_Foot
+    100034: R_Foot_2
+    100036: R_Forearm
+    100038: R_Knee
+    100040: R_Knee_2
+    100042: R_LEG
+    100044: R_Leg
+    100046: R_LEG_1
+    100048: R_LEG_2
+    100050: Root
+    400000: Body
+    400002: Chest
+    400004: Hip
+    400006: Hip_2
+    400008: Joint_4
+    400010: Joint_4_2
+    400012: L_ARM
+    400014: L_Arm
+    400016: L_Forearm
+    400018: L_LEG
+    400020: L_Leg
+    400022: L_LEG_1
+    400024: L_LEG_2
+    400026: //RootNode
+    400028: R_ARM
+    400030: R_Arm
+    400032: R_Foot
+    400034: R_Foot_2
+    400036: R_Forearm
+    400038: R_Knee
+    400040: R_Knee_2
+    400042: R_LEG
+    400044: R_Leg
+    400046: R_LEG_1
+    400048: R_LEG_2
+    400050: Root
+    2100000: Mecha_01
+    4300000: Hip_2
+    4300002: R_LEG
+    4300004: R_LEG_1
+    4300006: R_LEG_2
+    4300008: L_LEG
+    4300010: L_LEG_1
+    4300012: L_LEG_2
+    4300014: Body
+    4300016: R_ARM
+    4300018: L_ARM
+    9500000: //RootNode
+    13700000: Body
+    13700002: Hip_2
+    13700004: L_ARM
+    13700006: L_LEG
+    13700008: L_LEG_1
+    13700010: L_LEG_2
+    13700012: R_ARM
+    13700014: R_LEG
+    13700016: R_LEG_1
+    13700018: R_LEG_2
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mecha_01
+    second: {fileID: 2100000, guid: 98025b1a2c84f41ba91f15f9aa94d643, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -44,7 +44,6 @@ namespace GameDevHQ.FileBase.Dual_Gatling_Gun
             _audioSource.clip = _fireSound; //assign the clip to play
         }
 
-        /*
         // Update is called once per frame
         void Update()
         {
@@ -76,7 +75,7 @@ namespace GameDevHQ.FileBase.Dual_Gatling_Gun
                 _audioSource.Stop(); //stop the sound effect from playing
                 _startWeaponNoise = true; //set the start weapon noise value to true
             }
-        }*/
+        }
 
         // Method to rotate gun barrel 
         void RotateBarrel() 
