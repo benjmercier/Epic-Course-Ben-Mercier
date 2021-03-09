@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Mercier.Scripts.ScriptableObjects;
+using Mercier.Scripts.Classes;
 
 namespace Mercier.Scripts.Managers
 {
@@ -51,9 +52,12 @@ namespace Mercier.Scripts.Managers
 
         private Dictionary<int, List<GameObject>> _tempPoolDictionary;
 
+        private List<GameObject> _prefabList;
         private GameObject _prefabFromPool;
         private int _poolIndex;
         private int _randomIndex;
+
+        //test
 
         private void Start()
         {
@@ -64,16 +68,16 @@ namespace Mercier.Scripts.Managers
         {
             _activeDictionaryList = new List<Dictionary<int, List<GameObject>>>();
 
-            for (int a = 0; a < poolList.Count; a++)
+            for (int a = 0; a < poolList.Count; a++) // each active pool
             {
                 _tempPoolDictionary = new Dictionary<int, List<GameObject>>();
 
-                for (int b = 0; b < poolList[a].prefabs.Length; b++)
+                for (int b = 0; b < poolList[a].database.databaseList.Count; b++) // for each entry in pool's database
                 {
-                    _poolIndex = System.Array.IndexOf(poolList[a].prefabs, poolList[a].prefabs[b]);
+                    _poolIndex = b; // System.Array.IndexOf(poolList[a].database.databaseList, poolList[a].database.databaseList[b].prefab);// .prefabs[b]);
 
                     poolList[a].list = new List<GameObject>();
-                    poolList[a].list = GeneratePool(poolList[a].buffer, poolList[a].prefabs[b], _poolContainers[a], poolList[a].list);
+                    poolList[a].list = GeneratePool(poolList[a].buffer, poolList[a].database.databaseList[b].prefab, _poolContainers[a], poolList[a].list);
 
                     _tempPoolDictionary.Add(_poolIndex, poolList[a].list);
                 }
@@ -105,10 +109,17 @@ namespace Mercier.Scripts.Managers
 
         public GameObject ReturnPrefabFromPool(bool isRandom, int dictionaryID, int dictionaryKey)
         {
-            return PrefabToReturn(isRandom, _activeDictionaryList[dictionaryID], dictionaryKey, _activePools[dictionaryID].prefabs, _poolContainers[dictionaryID]);
+            _prefabList = new List<GameObject>();
+
+            for (int i = 0; i < _activePools[dictionaryID].database.databaseList.Count; i++)
+            {
+                _prefabList.Add(_activePools[dictionaryID].database.databaseList[i].prefab);
+            }
+
+            return PrefabToReturn(isRandom, _activeDictionaryList[dictionaryID], dictionaryKey, _prefabList, _poolContainers[dictionaryID]);
         }
 
-        private GameObject PrefabToReturn(bool isRandom, Dictionary<int, List<GameObject>> dictionary, int dictionaryKey, GameObject[] prefabs, GameObject container)
+        private GameObject PrefabToReturn(bool isRandom, Dictionary<int, List<GameObject>> dictionary, int dictionaryKey, List<GameObject> prefabs, GameObject container)
         {
             if (isRandom)
             {
@@ -124,7 +135,7 @@ namespace Mercier.Scripts.Managers
             return _prefabFromPool;
         }
 
-        private void CheckIfActive(Dictionary<int, List<GameObject>> dictionary, int dictionaryKey, GameObject[] prefabs, GameObject container)
+        private void CheckIfActive(Dictionary<int, List<GameObject>> dictionary, int dictionaryKey, List<GameObject> prefabs, GameObject container)
         {
             if (dictionary[dictionaryKey].Any(a => !a.activeInHierarchy))
             {

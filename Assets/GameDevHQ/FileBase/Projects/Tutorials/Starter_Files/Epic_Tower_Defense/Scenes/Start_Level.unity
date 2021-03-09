@@ -3528,6 +3528,7 @@ Transform:
   - {fileID: 1978773958}
   - {fileID: 1611822517}
   - {fileID: 1796771457}
+  - {fileID: 529402560}
   m_Father: {fileID: 917291711}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3547,10 +3548,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e835d6570ed9f384db577551b780bc21, type: 2}
   - {fileID: 11400000, guid: 8d07d203425f1494bad9113e758e5250, type: 2}
   - {fileID: 11400000, guid: f843bd3fa81d397419930a30edde30be, type: 2}
+  - {fileID: 11400000, guid: 7e9a026db4e490445a569573aae8886a, type: 2}
   _poolContainers:
   - {fileID: 1978773957}
   - {fileID: 1611822516}
   - {fileID: 1796771456}
+  - {fileID: 529402559}
 --- !u!1 &412009219
 GameObject:
   m_ObjectHideFlags: 0
@@ -4167,6 +4170,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1429168616}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &529402559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 529402560}
+  m_Layer: 0
+  m_Name: MissileContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &529402560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529402559}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 410019302}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -11704,7 +11737,7 @@ GameObject:
   - component: {fileID: 1580226531}
   - component: {fileID: 1580226532}
   m_Layer: 0
-  m_Name: InventoryManager
+  m_Name: DatabaseManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11733,10 +11766,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1580226530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c8ca53b91a4ee04290a3c536d195b8a, type: 3}
+  m_Script: {fileID: 11500000, guid: c81c0f3ef78201d44b88830b21cf3553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turretInventory: {fileID: 11400000, guid: 7c2f02be62618f84ea13fba8fd572750, type: 2}
+  databases:
+  - {fileID: 11400000, guid: e90645e5676753c40baa128b9b301821, type: 2}
+  - {fileID: 11400000, guid: fb5dd0b5252b46d46aa1ab737f360d4c, type: 2}
+  - {fileID: 11400000, guid: 6f9c8c7da359265478c3e17ead4e04d3, type: 2}
+  - {fileID: 11400000, guid: 654f72a8a500f1343957e5ee8dec15cd, type: 2}
 --- !u!1001 &1584802540
 PrefabInstance:
   m_ObjectHideFlags: 0

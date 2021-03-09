@@ -108,7 +108,7 @@ namespace Mercier.Scripts.Managers
         private bool CalculateFundsAvailable(int selectedIndex)
         {
             _availableFunds = GameManager.Instance._warFundsAvailable;
-            _turretCost = InventoryManager.Instance._turretInventory.turretInventory[selectedIndex].cost;
+            //_turretCost = DatabaseManager.Instance.turretDatabase.databaseList[selectedIndex].cost;
 
             _enoughFunds = _availableFunds >= _turretCost;
 
@@ -163,7 +163,7 @@ namespace Mercier.Scripts.Managers
 
         private void EnableTurret()
         {
-            _newTurret = PoolManager.Instance.ReturnPrefabFromPool(false, 1, _activeDecoyIndex);
+            //_newTurret = PoolManager.Instance.ReturnPrefabFromPool(false, 1, _activeDecoyIndex);
             _newTurret.transform.position = _activeDecoyPos;
             OnDecoyTurretSelected(false, _activeDecoyIndex);
             _newTurret.SetActive(true);

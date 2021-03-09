@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e59d374c0f1974492cf97821684e55, type: 3}
+  m_Name: DecoyTurretDatabase
+  m_EditorClassIdentifier: 
+  databaseList:
+  - name: Gatling Gun
+    iD: 0
+    prefab: {fileID: 4408318359526371091, guid: 6c395502812da2d43a3f6fab7f88256c,
+      type: 3}
+  - name: Dual Gatling Gun
+    iD: 1
+    prefab: {fileID: 2104691201202795195, guid: 0fcec3874e281414eaf78eb08ecd00d3,
+      type: 3}
+  - name: Missile Launcher
+    iD: 2
+    prefab: {fileID: 75257300829262585, guid: 104c458385a7ae04b83827ed7a96d6ee, type: 3}
+  - name: Dual Missile Launcher
+    iD: 3
+    prefab: {fileID: 5908761942006774438, guid: 0fae11f745400984ba27e7d7d835e686,
+      type: 3}

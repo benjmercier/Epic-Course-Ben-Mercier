@@ -5,9 +5,9 @@ using Mercier.Scripts.ScriptableObjects;
 
 namespace Mercier.Scripts.Managers
 {
-    public class InventoryManager : MonoSingleton<InventoryManager>
+    public class DatabaseManager : MonoSingleton<DatabaseManager>
     {
-        public Inventory_Turret _turretInventory;
+        public List<Database> databases = new List<Database>();
     }
 }
 

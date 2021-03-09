@@ -15,6 +15,7 @@ MonoBehaviour:
   name: Enemy Pool
   index: 0
   buffer: 10
+  database: {fileID: 11400000, guid: e90645e5676753c40baa128b9b301821, type: 2}
   prefabs:
   - {fileID: 1699286027065544987, guid: cbf5a24d16c3f8747b19b0caee9def9d, type: 3}
   - {fileID: 3230445893702710185, guid: f256c2302d2e5b1469fb5d85644a34cd, type: 3}

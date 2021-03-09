@@ -18,6 +18,7 @@ namespace Mercier.Scripts.Classes
         }
 
         public TurretState currentState;
+        public int turretCost;
 
         [Header("Rotation Settings")]
         [SerializeField]

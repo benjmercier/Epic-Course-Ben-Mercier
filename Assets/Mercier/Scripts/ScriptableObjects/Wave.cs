@@ -5,7 +5,7 @@ using Mercier.Scripts.Classes;
 
 namespace Mercier.Scripts.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "NewWave.asset", menuName = "Scriptable Objects/New Wave")]
+    [CreateAssetMenu(fileName = "NewWave.asset", menuName = "Scriptable Objects/Wave")]
     public class Wave : ScriptableObject
     {
         public bool useBlockWave;

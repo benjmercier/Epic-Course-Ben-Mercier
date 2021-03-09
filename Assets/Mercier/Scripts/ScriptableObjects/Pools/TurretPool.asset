@@ -15,6 +15,7 @@ MonoBehaviour:
   name: Turret Pool
   index: 1
   buffer: 20
+  database: {fileID: 11400000, guid: fb5dd0b5252b46d46aa1ab737f360d4c, type: 2}
   prefabs:
   - {fileID: 401132117131954635, guid: 250dc2454d48ed44fb0df7f23d588440, type: 3}
   - {fileID: 6373045444735503527, guid: df1878049e20bae44ace0c74e52b6747, type: 3}

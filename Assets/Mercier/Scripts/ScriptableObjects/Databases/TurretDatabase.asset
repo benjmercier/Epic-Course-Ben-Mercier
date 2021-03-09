@@ -9,26 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47010c383ca91e44ca301dc91e91b13d, type: 3}
-  m_Name: TurretInventory
+  m_Script: {fileID: 11500000, guid: f6e59d374c0f1974492cf97821684e55, type: 3}
+  m_Name: TurretDatabase
   m_EditorClassIdentifier: 
-  turretInventory:
+  databaseList:
   - name: Gatling Gun
     iD: 0
     prefab: {fileID: 401132117131954635, guid: 250dc2454d48ed44fb0df7f23d588440, type: 3}
-    cost: 150
   - name: Dual Gatling Gun
     iD: 1
     prefab: {fileID: 6373045444735503527, guid: df1878049e20bae44ace0c74e52b6747,
       type: 3}
-    cost: 300
   - name: Missile Launcher
     iD: 2
     prefab: {fileID: 9201399544196024905, guid: 6d4a628b030d352478a6e81494d7cebc,
       type: 3}
-    cost: 250
   - name: Dual Missile Launcher
     iD: 3
     prefab: {fileID: 2976905752199410027, guid: 21c121dc6ec34104b80d2feffc1cf1e1,
       type: 3}
-    cost: 500
