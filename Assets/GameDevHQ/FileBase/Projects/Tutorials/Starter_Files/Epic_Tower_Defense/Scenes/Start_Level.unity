@@ -13483,6 +13483,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1753206890530248107, guid: 6d4a628b030d352478a6e81494d7cebc,
         type: 3}
+      propertyPath: _reloadTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753206890530248107, guid: 6d4a628b030d352478a6e81494d7cebc,
+        type: 3}
       propertyPath: _viewingAngle
       value: 180
       objectReference: {fileID: 0}

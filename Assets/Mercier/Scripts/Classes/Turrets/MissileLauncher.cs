@@ -33,38 +33,31 @@ namespace Mercier.Scripts.Classes
         [SerializeField]
         private float _destroyTime = 10.0f; //how long till the rockets get cleaned up
         private bool _launched; //bool to check if we launched the rockets
-        //[SerializeField]
-        //private Transform _target; //Who should the rocket fire at?
-
-        private bool _lockedOn = false;
+                
         private int _missileLaunchIndex = 0;
         private GameObject _missileToLaunch;
         private Vector3 _missileLaunchRotation = new Vector3(-90f, 0f, 0f);
+
+        //private bool _lockedOn = false;
+        private Vector3 _forwardView;
+        private Vector3 _targetDirectionNorm;
+        private float _dotAngle;
 
         protected override void Update()
         {
             base.Update();
         }
 
-        /*
-        private void Update()
-        {
-            
-            if (Input.GetKeyDown(KeyCode.Space) && _launched == false) //check for space key and if we launched the rockets
-            {
-                _launched = true; //set the launch bool to true
-                StartCoroutine(FireRocketsRoutine()); //start a coroutine that fires the rockets. 
-            }
-        }*/
-
         private IEnumerator MissileLaunchRoutine()
         {
-            if (_missileLaunchIndex < _missilePositions.Length && _lockedOn)
+            if (_missileLaunchIndex < _missilePositions.Length)
             {
                 for (int i = _missileLaunchIndex; i < _missilePositions.Length; i++)
                 {
                     if (_activeTarget == null)
                     {
+                        StartCoroutine(MissileReloadRoutine());
+
                         break;
                     }
 
@@ -82,37 +75,27 @@ namespace Mercier.Scripts.Classes
 
                     yield return new WaitForSeconds(_fireDelay); // cache and call to helper 
                 }
-            }
+            }   
+        }
 
-
-            //while (_activeTarget != null) //_missilePositions.All(a => !a.activeInHierarchy)) // is this too unperformant?
-            //{
-                
-            //}
-
-            for (int i = _missileLaunchIndex; i < _missilePositions.Length; i++)
+        private IEnumerator MissileReloadRoutine()
+        {
+            while (_activeTarget == null)
             {
-                yield return new WaitForSeconds(_reloadTime);
-
-                _missilePositions[i].SetActive(true);
-
-                _missileLaunchIndex--;
-
-                if (_missileLaunchIndex < 0)
+                for (int i = _missileLaunchIndex; i <= _missilePositions.Length; i--)
                 {
-                    _missileLaunchIndex = 0;
-                }
-            }
-            /*
-            foreach (var missle in _missilePositions)
-            {
-                if (!missle.activeInHierarchy)
-                {
-                    yield return new WaitForSeconds(_reloadTime); // cache
+                    yield return new WaitForSeconds(_reloadTime);
 
-                    missle.SetActive(true);
+                    _missilePositions[i].SetActive(true);
+
+                    _missileLaunchIndex--;
+
+                    if (_missileLaunchIndex < 0)
+                    {
+                        _missileLaunchIndex = 0;
+                    }
                 }
-            }*/
+            }            
 
             _launched = false;
         }
@@ -176,31 +159,17 @@ namespace Mercier.Scripts.Classes
 
             _baseRotationObj.rotation = _baseLookRotation;
             _auxRotationObj.rotation = Quaternion.Euler(_xClamped, _auxLookRotation.eulerAngles.y, _auxLookRotation.eulerAngles.z);
-
-            _lockedOn = IsLockedOn(_activeTarget.transform.position);
-            Debug.Log("Locked On: " + _lockedOn);
         }
 
         private bool IsLockedOn(Vector3 targetPos)
         {
-            //Vector3 baseForward = _baseRotationObj.forward;
-            Vector3 forward = _auxRotationObj.forward;
+            _forwardView = _auxRotationObj.forward;
 
-            //Vector3 baseTarget = (targetPos - _baseRotationObj.position).normalized;
-            Vector3 targetNorm = (targetPos - _auxRotationObj.position).normalized;
+            _targetDirectionNorm = (targetPos - _auxRotationObj.position).normalized;
 
-            //var baseDot = Vector3.Dot(baseForward, baseTarget);
-            var dotAngle = Vector3.Dot(forward, targetNorm);
+            _dotAngle = Vector3.Dot(_forwardView, _targetDirectionNorm);
 
-            return dotAngle < 0.95f ? false : true;
-        }
-
-        protected override void RotateToStart()
-        {
-            _movement = _rotationSpeed * Time.deltaTime;
-
-            _baseRotationObj.rotation = Quaternion.Slerp(_baseRotationObj.rotation, _baseInitialRotation, _movement);
-            _auxRotationObj.rotation = Quaternion.Slerp(_auxRotationObj.rotation, _auxInitialRotation, _movement);
+            return _dotAngle < 0.95f ? false : true;
         }
 
         protected override void TurretAttack(GameObject activeTarget, float damageAmount)
@@ -209,7 +178,7 @@ namespace Mercier.Scripts.Classes
 
             if (_launched == false)
             {
-                if (_lockedOn)
+                if (IsLockedOn(activeTarget.transform.position))
                 {
                     _launched = true;
                     StartCoroutine(MissileLaunchRoutine());
@@ -217,6 +186,14 @@ namespace Mercier.Scripts.Classes
             }
 
             //OnTurretAttack(activeTarget, damageAmount);  // calls event on Turret class
+        }
+
+        protected override void RotateToStart()
+        {
+            _movement = _rotationSpeed * Time.deltaTime;
+
+            _baseRotationObj.rotation = Quaternion.Slerp(_baseRotationObj.rotation, _baseInitialRotation, _movement);
+            _auxRotationObj.rotation = Quaternion.Slerp(_auxRotationObj.rotation, _auxInitialRotation, _movement);
         }
     }
 }
