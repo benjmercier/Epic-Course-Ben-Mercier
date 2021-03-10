@@ -74,7 +74,7 @@ namespace Mercier.Scripts.Managers
 
                 for (int b = 0; b < poolList[a].database.databaseList.Count; b++) // for each entry in pool's database
                 {
-                    _poolIndex = b; // System.Array.IndexOf(poolList[a].database.databaseList, poolList[a].database.databaseList[b].prefab);// .prefabs[b]);
+                    _poolIndex = b; 
 
                     poolList[a].list = new List<GameObject>();
                     poolList[a].list = GeneratePool(poolList[a].buffer, poolList[a].database.databaseList[b].prefab, _poolContainers[a], poolList[a].list);
