@@ -84,19 +84,23 @@ namespace Mercier.Scripts.Classes
 
             if (_auxRotationObj != null)
             {
-                _auxInitialRotation = _auxRotationObj.rotation;
                 _isAuxRotationActive = true;
             }
             else
             {
                 _isAuxRotationActive = false;
             }
-
-            _baseInitialRotation = _baseRotationObj.rotation;
         }
 
         public void OnEnable()
         {
+            _baseInitialRotation = _baseRotationObj.rotation;
+
+            if (_isAuxRotationActive)
+            {
+                _auxInitialRotation = _auxRotationObj.rotation;
+            }
+
             currentState = TurretState.Idle;
 
             AttackRadius.onAttackRadiusTriggered += UpdateAttackList;
@@ -197,6 +201,11 @@ namespace Mercier.Scripts.Classes
         protected abstract void RotateToTarget(Vector3 target); // late update may work better
 
         protected abstract void RotateToStart();
+
+        protected float ReturnRotationAngleCheck(float localEulerAngle)
+        {
+            return localEulerAngle <= 180 ? localEulerAngle : -(360 - localEulerAngle);
+        }
 
         protected virtual void ActivateTurret(bool activate)
         {

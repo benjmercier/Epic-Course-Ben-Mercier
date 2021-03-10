@@ -12,6 +12,7 @@ namespace Mercier.Scripts.Managers
         private GameObject _activeDecoy;
         private int _activeDecoyIndex = 0;
         private Vector3 _activeDecoyPos;
+        private Quaternion _activeDecoyRot;
         [SerializeField]
         private float _yPosOffset = 0.5f;        
 
@@ -109,6 +110,7 @@ namespace Mercier.Scripts.Managers
         {
             _availableFunds = GameManager.Instance._warFundsAvailable;
             //_turretCost = DatabaseManager.Instance.turretDatabase.databaseList[selectedIndex].cost;
+            // set cost on decoy turret?
 
             _enoughFunds = _availableFunds >= _turretCost;
 
@@ -129,8 +131,11 @@ namespace Mercier.Scripts.Managers
                 if (_canActivateTurret)
                 {
                     _activeDecoyPos = _rayHit.transform.position;
-
+                    //set rotation
+                    _activeDecoyRot = _rayHit.transform.rotation;
                     _activeDecoy.transform.position = _activeDecoyPos;
+                    //set decoy rotation to rotation
+                    _activeDecoy.transform.rotation = _activeDecoyRot;
                 }
                 else
                 {
@@ -165,6 +170,8 @@ namespace Mercier.Scripts.Managers
         {
             _newTurret = PoolManager.Instance.ReturnPrefabFromPool(false, 1, _activeDecoyIndex);
             _newTurret.transform.position = _activeDecoyPos;
+            //set newTurret rotation to active rotation
+            _newTurret.transform.rotation = _activeDecoyRot;
             OnDecoyTurretSelected(false, _activeDecoyIndex);
             _newTurret.SetActive(true);
 

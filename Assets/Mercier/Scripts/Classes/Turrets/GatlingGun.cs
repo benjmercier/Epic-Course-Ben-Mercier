@@ -104,10 +104,15 @@ namespace Mercier.Scripts.Classes
             _baseRotateTowards = Vector3.RotateTowards(_baseRotationObj.forward, _targetDirection, _movement, 0f);
             _baseLookRotation = Quaternion.LookRotation(_baseRotateTowards);
 
-            _xClamped = Mathf.Clamp(_baseLookRotation.eulerAngles.x, _minRotationAngle.x, _maxRotationAngle.x);
-            _yClamped = Mathf.Clamp(_baseLookRotation.eulerAngles.y, _minRotationAngle.y + _yAngleOffset, _maxRotationAngle.y + _yAngleOffset);
+            _baseRotationObj.rotation = _baseLookRotation;
 
-            _baseRotationObj.rotation = Quaternion.Euler(_xClamped, _yClamped, _baseLookRotation.eulerAngles.z);
+            _xRotAngleCheck = ReturnRotationAngleCheck(_baseRotationObj.localEulerAngles.x);
+            _yRotAngleCheck = ReturnRotationAngleCheck(_baseRotationObj.localEulerAngles.y);
+
+            _xClamped = Mathf.Clamp(_xRotAngleCheck, _minRotationAngle.x, _maxRotationAngle.x);
+            _yClamped = Mathf.Clamp(_yRotAngleCheck, _minRotationAngle.y, _maxRotationAngle.y);
+
+            _baseRotationObj.localRotation = Quaternion.Euler(_xClamped, _yClamped, _baseRotationObj.localEulerAngles.z);
         }
 
         protected override void RotateToStart()

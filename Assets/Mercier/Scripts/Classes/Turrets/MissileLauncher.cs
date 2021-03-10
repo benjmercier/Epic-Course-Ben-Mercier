@@ -82,7 +82,7 @@ namespace Mercier.Scripts.Classes
         {
             while (_activeTarget == null)
             {
-                for (int i = _missileLaunchIndex; i <= _missilePositions.Length; i--)
+                for (int i = 0; i <= _missilePositions.Length; i++)
                 {
                     yield return new WaitForSeconds(_reloadTime);
 
@@ -150,15 +150,23 @@ namespace Mercier.Scripts.Classes
 
             _baseLookRotation = Quaternion.LookRotation(_baseRotateTowards); // clamp y
             _auxLookRotation = Quaternion.LookRotation(_auxRotateTowards); // clamp x
-
+            
+            /*
             _xRotAngleCheck = _auxLookRotation.eulerAngles.x <= 180 ?
                 _auxLookRotation.eulerAngles.x :
                 -(360 - _auxLookRotation.eulerAngles.x); // is condition true ? yes : no  (conditional operator)
 
             _xClamped = Mathf.Clamp(_xRotAngleCheck, _minRotationAngle.x, _maxRotationAngle.x);
-
+            */
             _baseRotationObj.rotation = _baseLookRotation;
-            _auxRotationObj.rotation = Quaternion.Euler(_xClamped, _auxLookRotation.eulerAngles.y, _auxLookRotation.eulerAngles.z);
+            _auxRotationObj.rotation = _auxLookRotation; //Quaternion.Euler(_xClamped, _auxLookRotation.eulerAngles.y, _auxLookRotation.eulerAngles.z);
+
+            _xRotAngleCheck = ReturnRotationAngleCheck(_auxRotationObj.localEulerAngles.x);
+
+            _xClamped = Mathf.Clamp(_xRotAngleCheck, _minRotationAngle.x, _maxRotationAngle.x);
+
+            _auxRotationObj.localRotation = Quaternion.Euler(_xClamped, _auxRotationObj.localEulerAngles.y, _auxRotationObj.localEulerAngles.z);
+            _auxRotationObj.localRotation = RestrictLocalRotaionY(_auxRotationObj.localEulerAngles);
         }
 
         private bool IsLockedOn(Vector3 targetPos)
@@ -193,7 +201,14 @@ namespace Mercier.Scripts.Classes
             _movement = _rotationSpeed * Time.deltaTime;
 
             _baseRotationObj.rotation = Quaternion.Slerp(_baseRotationObj.rotation, _baseInitialRotation, _movement);
+
             _auxRotationObj.rotation = Quaternion.Slerp(_auxRotationObj.rotation, _auxInitialRotation, _movement);
+            _auxRotationObj.localRotation = RestrictLocalRotaionY(_auxRotationObj.localEulerAngles);
+        }
+
+        private Quaternion RestrictLocalRotaionY(Vector3 localEulerAngles)
+        {
+            return Quaternion.Euler(localEulerAngles.x, 0, localEulerAngles.z);
         }
     }
 }
