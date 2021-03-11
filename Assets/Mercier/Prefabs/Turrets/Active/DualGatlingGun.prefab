@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2733442577112400218}
+  - component: {fileID: 8701360188360861144}
   - component: {fileID: 1710402176148834799}
   - component: {fileID: 8122425524622434719}
   - component: {fileID: 2743424266440556528}
@@ -34,6 +35,19 @@ Transform:
   m_Father: {fileID: 6374961541006805355}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8701360188360861144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4472631471917188953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4928fcbb36b8514791f3e564bee967b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parentTurret: {fileID: 6373045444735503527}
 --- !u!33 &1710402176148834799
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4999,7 +5013,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6372988886192578071}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.000000014901159, z: -0, w: 1}
   m_LocalPosition: {x: -0.004159232, y: 0.48127356, z: -0.21440434}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -9961,7 +9975,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6374961541006805355}
-  - component: {fileID: 6476450799763238801}
+  - component: {fileID: 3796623707800323118}
   - component: {fileID: 6437040216786780445}
   m_Layer: 2
   m_Name: DualGatlingGun
@@ -9986,7 +10000,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6476450799763238801
+--- !u!114 &3796623707800323118
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9995,9 +10009,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 6373045444735503527}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa87186eb31905c4fa207e5970b35579, type: 3}
+  m_Script: {fileID: 11500000, guid: 793c9eafc987c6f459c5f26a3456f63b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
+  turretCost: 300
+  _baseRotationObj: {fileID: 6375083457127266903}
+  _auxRotationObj: {fileID: 0}
+  _rotationSpeed: 2.5
+  _viewingAngle: 45
+  _maxRotationAngle: {x: 45, y: 45}
+  _minRotationAngle: {x: -45, y: -45}
+  _attackTargetList: []
+  _attackTarget: {fileID: 0}
+  _rotationTargetList: []
+  _rotationTarget: {fileID: 0}
+  _attackStrength: 20
+  _fireRate: 0.5
   _gunBarrel:
   - {fileID: 6370312747807529339}
   - {fileID: 6370132299101657047}
@@ -10007,7 +10035,8 @@ MonoBehaviour:
   _bulletCasings:
   - {fileID: 6536712326930481193}
   - {fileID: 6536249352914334381}
-  _fireSound: {fileID: 8300000, guid: ebcd7ceac90454c1e9dc458cb87b6f75, type: 3}
+  _fireSound: {fileID: 8300000, guid: e5685074ce40ea845a3d98a16d804415, type: 3}
+  _audioSource: {fileID: 6437040216786780445}
 --- !u!82 &6437040216786780445
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14912,7 +14941,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6373193023623309939}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.000000119209275, z: -0, w: 1}
   m_LocalPosition: {x: -1.8025274e-24, y: -0.27239025, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -19968,7 +19997,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6373414523006178081}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: 0.000000029802322, z: -0, w: 1}
   m_LocalPosition: {x: 1.8025274e-24, y: 0.27239025, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

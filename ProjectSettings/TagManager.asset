@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Target
   - Enemy
+  - RotationTarget
+  - AttackTarget
   layers:
   - Default
   - TransparentFX

@@ -2,23 +2,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Mercier.Scripts.Classes
 {
-    [RequireComponent(typeof(AudioSource))] //Require Audio Source component
+    [RequireComponent(typeof(AudioSource))]
     public class GatlingGun : Turret
     {
         [Header("Gatling Gun Settings")]
         [SerializeField]
-        private Transform _gunBarrel; //Reference to hold the gun barrel
+        private Transform[] _gunBarrel; 
         [SerializeField]
-        private GameObject _muzzleFlash; //reference to the muzzle flash effect to play when firing
+        private GameObject[] _muzzleFlash; 
         [SerializeField]
-        private ParticleSystem _bulletCasings; //reference to the bullet casing effect to play when firing
+        private ParticleSystem[] _bulletCasings; 
         [SerializeField]
-        private AudioClip _fireSound; //Reference to the audio clip
+        private AudioClip _fireSound; 
         [SerializeField]
-        private AudioSource _audioSource; //reference to the audio source component
+        private AudioSource _audioSource; 
+
         private bool _startWeaponNoise = true;
 
         protected override void Awake()
@@ -27,36 +29,36 @@ namespace Mercier.Scripts.Classes
 
             if (_gunBarrel == null)
             {
-                Debug.LogError("Gatling_Gun::Awake()::" + _gunBarrel.ToString() + " is null.");
+                Debug.LogError("Gatling_Gun::Awake()::_gunBarrel is null.");
             }
 
             if (_muzzleFlash == null)
             {
-                Debug.LogError("Gatling_Gun::Awake()::" + _muzzleFlash.ToString() + " is null.");
+                Debug.LogError("Gatling_Gun::Awake()::_muzzleFlash is null.");
             }
 
             if (_bulletCasings == null)
             {
-                Debug.LogError("Gatling_Gun::Awake()::" + _bulletCasings.ToString() + " is null.");
+                Debug.LogError("Gatling_Gun::Awake()::_bulletCasings is null.");
             }
 
             if (_fireSound == null)
             {
-                Debug.LogError("Gatling_Gun::Awake()::" + _fireSound.ToString() + " is null.");
+                Debug.LogError("Gatling_Gun::Awake():: _fireSound is null.");
             }
 
             if (_audioSource == null)
             {
-                Debug.LogError("Gatling_Gun::Awake()::" + _audioSource.ToString() + " is null.");
+                Debug.LogError("Gatling_Gun::Awake()::_audioSource is null.");
             }
         }
 
         void Start()
         {
-            _muzzleFlash.SetActive(false); //setting the initial state of the muzzle flash effect to off
-            _audioSource.playOnAwake = false; //disabling play on awake
-            _audioSource.loop = true; //making sure our sound effect loops
-            _audioSource.clip = _fireSound; //assign the clip to play
+            _muzzleFlash.ToList().ForEach(i => i.SetActive(false));
+            _audioSource.playOnAwake = false; 
+            _audioSource.loop = true; 
+            _audioSource.clip = _fireSound; 
         }
 
         protected override void Update()
@@ -72,8 +74,8 @@ namespace Mercier.Scripts.Classes
         protected override void EngageTarget()
         {
             RotateBarrel();
-            _muzzleFlash.SetActive(true);
-            _bulletCasings.Emit(1);
+            _muzzleFlash.ToList().ForEach(i => i.SetActive(true));
+            _bulletCasings.ToList().ForEach(i => i.Emit(1));
 
             if (_startWeaponNoise)
             {
@@ -84,15 +86,14 @@ namespace Mercier.Scripts.Classes
 
         protected override void DisengageTarget()
         {
-            _muzzleFlash.SetActive(false);
+            _muzzleFlash.ToList().ForEach(i => i.SetActive(false));
             _audioSource.Stop();
             _startWeaponNoise = true;
         }
 
         void RotateBarrel()
         {
-            _gunBarrel.transform.Rotate(Vector3.forward * Time.deltaTime * -500.0f);
-
+            _gunBarrel.ToList().ForEach(i => i.transform.Rotate(Vector3.forward * Time.deltaTime * -500.0f));
         }
 
         protected override void RotateToTarget(Vector3 target)

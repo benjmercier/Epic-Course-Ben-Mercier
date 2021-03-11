@@ -24,4 +24,4 @@ MonoBehaviour:
   customWaveSequence: 
   useRandomWave: 0
   randomWaveTotal: 0
-  spawnWaitTime: 8
+  spawnWaitTime: 4

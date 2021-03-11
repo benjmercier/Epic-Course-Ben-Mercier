@@ -135,7 +135,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 400898781420586265}
-  m_LocalRotation: {x: -0, y: -9.8607613e-32, z: -4.1037882e-26, w: 1}
+  m_LocalRotation: {x: -1.5375678e-33, y: 0.000000014901161, z: -4.103786e-26, w: 1}
   m_LocalPosition: {x: -0.29565015, y: 0.38314095, z: -0.22158031}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -244,16 +244,21 @@ MonoBehaviour:
   _baseRotationObj: {fileID: 404169035213483447}
   _auxRotationObj: {fileID: 0}
   _rotationSpeed: 2.5
-  _viewingAngle: 65
+  _viewingAngle: 45
   _maxRotationAngle: {x: 35, y: 45}
   _minRotationAngle: {x: -25, y: -45}
-  _activeList: []
-  _activeTarget: {fileID: 0}
+  _attackTargetList: []
+  _attackTarget: {fileID: 0}
+  _rotationTargetList: []
+  _rotationTarget: {fileID: 0}
   _attackStrength: 10
   _fireRate: 0.5
-  _gunBarrel: {fileID: 397743574581918417}
-  _muzzleFlash: {fileID: 401611261718918445}
-  _bulletCasings: {fileID: 528119166555997487}
+  _gunBarrel:
+  - {fileID: 397743574581918417}
+  _muzzleFlash:
+  - {fileID: 401611261718918445}
+  _bulletCasings:
+  - {fileID: 528119166555997487}
   _fireSound: {fileID: 8300000, guid: b0c8ae94507161d4c8d9058e6e1108f4, type: 3}
   _audioSource: {fileID: 338414913596262393}
 --- !u!82 &338414913596262393

@@ -61,9 +61,13 @@ namespace Mercier.Scripts.Classes
 
         [Header("Attack Settings")]
         [SerializeField]
-        protected List<GameObject> _activeList = new List<GameObject>();
+        protected List<GameObject> _attackTargetList = new List<GameObject>();
         [SerializeField]
-        protected GameObject _activeTarget;
+        protected GameObject _attackTarget;
+        [SerializeField]
+        protected List<GameObject> _rotationTargetList = new List<GameObject>();
+        [SerializeField]
+        protected GameObject _rotationTarget;
         [SerializeField]
         protected float _attackStrength = 5f;
         [SerializeField]
@@ -74,6 +78,9 @@ namespace Mercier.Scripts.Classes
 
         // set event system to communicate with active target
         public static event Action<GameObject, float> onTurretAttack;
+
+        // event to aim at enemy's target
+        public static event Func<GameObject, GameObject> onRequestRotationTarget;
 
         protected virtual void Awake()
         {
@@ -92,7 +99,7 @@ namespace Mercier.Scripts.Classes
             }
         }
 
-        public void OnEnable()
+        public virtual void OnEnable()
         {
             _baseInitialRotation = _baseRotationObj.rotation;
 
@@ -103,13 +110,13 @@ namespace Mercier.Scripts.Classes
 
             currentState = TurretState.Idle;
 
-            AttackRadius.onAttackRadiusTriggered += UpdateAttackList;
+            AttackRadius.onAttackRadiusTriggered += UpdateTargetList;
             Enemy.onEnemyDeath += AssignNewTarget;
         }
 
-        public void OnDisable()
+        public virtual void OnDisable()
         {
-            AttackRadius.onAttackRadiusTriggered -= UpdateAttackList;
+            AttackRadius.onAttackRadiusTriggered -= UpdateTargetList;
             Enemy.onEnemyDeath -= AssignNewTarget;
         }
 
@@ -124,7 +131,7 @@ namespace Mercier.Scripts.Classes
             {
                 case TurretState.Idle:
 
-                    if (_activeTarget == null)
+                    if (_attackTarget == null)
                     {
                         RotateToStart();
                     }
@@ -137,11 +144,11 @@ namespace Mercier.Scripts.Classes
 
                 case TurretState.Searching:
 
-                    if (!ReturnWithinLineOfSight())
+                    if (!ReturnWithinLineOfSight(_attackTarget))
                     {
                         RotateToStart();
                     }
-                    else if (_activeTarget == null)
+                    else if (_attackTarget == null)
                     {
                         currentState = TurretState.Idle;
                     }
@@ -154,14 +161,19 @@ namespace Mercier.Scripts.Classes
 
                 case TurretState.Attacking:
 
-                    if (_activeTarget != null)
+                    if (_attackTarget != null)
                     {
-                        if (ReturnWithinLineOfSight())
+                        if (ReturnWithinLineOfSight(_attackTarget))
                         {
                             _hasFired = true;
                             ActivateTurret(true);
-                            RotateToTarget(_activeTarget.transform.position);
-                            TurretAttack(_activeTarget, _attackStrength);
+
+                            if (_rotationTarget != null)
+                            {
+                                RotateToTarget(_rotationTarget.transform.position);
+                            }
+                            
+                            TurretAttack(_attackTarget, _attackStrength);
                         }
                         else
                         {
@@ -169,7 +181,7 @@ namespace Mercier.Scripts.Classes
                             {
                                 _hasFired = false;
                                 ActivateTurret(false);
-                                AssignNewTarget(_activeTarget, 0);
+                                AssignNewTarget(_attackTarget, 0);
                             }
 
                             RotateToStart();
@@ -187,15 +199,15 @@ namespace Mercier.Scripts.Classes
             }
         }
 
-        private bool ReturnWithinLineOfSight() // may not need for missile
+        private bool ReturnWithinLineOfSight(GameObject target) // may not need for missile
         {
-            _targetSighting = _activeTarget.transform.position - _baseRotationObj.position;
+            _targetSighting = target.transform.position - _baseRotationObj.position;
 
-            _cosAngle = Vector3.Dot(_targetSighting.normalized, _baseRotationObj.forward);
+            _cosAngle = Vector3.Dot(_targetSighting.normalized, this.transform.forward);
 
             _targetAngle = Mathf.Acos(_cosAngle) * Mathf.Rad2Deg;
-
-            return _targetAngle <= _viewingAngle;
+            
+            return _targetAngle <= _maxRotationAngle.y; //_viewingAngle;
         }
 
         protected abstract void RotateToTarget(Vector3 target); // late update may work better
@@ -221,51 +233,74 @@ namespace Mercier.Scripts.Classes
 
         protected abstract void DisengageTarget();
 
-        private void AssignNewTarget(GameObject currentTarget, int reward)
+        private void AssignNewTarget(GameObject currentAttackTarget, int reward)
         {
-            if (_activeList.Contains(currentTarget))
+            if (_attackTarget == currentAttackTarget)
             {
-                _activeList.Remove(currentTarget);
-
-                if (_activeTarget == currentTarget)
+                if (!ReturnWithinLineOfSight(currentAttackTarget))
                 {
-                    _activeTarget = null;
-                }                
+                    _attackTargetList.Remove(currentAttackTarget);
 
-                if (_activeList.Any())
-                {
-                    _activeTarget = _activeList.FirstOrDefault();
+                    _attackTarget = null;
+                    _rotationTarget = null;
+
+                    if (_attackTargetList.Any())
+                    {
+                        _attackTarget = _attackTargetList.Where(t => ReturnWithinLineOfSight(t)).OrderBy(t => Vector3.Distance(t.transform.position, transform.position)).FirstOrDefault();
+
+                        if (_attackTarget != null)
+                        {
+                            _rotationTarget = OnRequestRotationTarget(_attackTarget);
+                        }
+                    }
                 }
 
                 ActivateTurret(false);
             }
         }
 
-        protected abstract void TurretAttack(GameObject activeTarget, float damageAmount);
+        protected abstract void TurretAttack(GameObject activeRotationTarget, float damageAmount);
         
         protected virtual void OnTurretAttack(GameObject activeTarget, float damageAmount)
         {
             onTurretAttack?.Invoke(activeTarget, damageAmount);
         }
+
+        protected virtual GameObject OnRequestRotationTarget(GameObject activeTarget)
+        {
+            return onRequestRotationTarget?.Invoke(activeTarget);
+        }
         
-        protected virtual void UpdateAttackList(GameObject turret, GameObject target, bool addTo)
+        protected virtual void UpdateTargetList(GameObject turret, GameObject target, bool addTo)
         {
             if (this.gameObject == turret)
             {
                 if (addTo)
                 {
-                    _activeList.Add(target);
+                    _attackTargetList.Add(target);
 
-                    if (_activeList.Count <= 1)
+                    foreach (var obj in _attackTargetList)
                     {
-                        _activeTarget = _activeList.FirstOrDefault();
+                        if (ReturnWithinLineOfSight(obj))
+                        {
+                            _attackTarget = obj;
+
+                            _rotationTarget = OnRequestRotationTarget(_attackTarget);
+                            //Debug.Log("rotationTarget: " + _rotationTarget.name);
+
+                            return;
+                        }
+                        else
+                        {
+                            _attackTarget = null;
+                        }
                     }
                 }
                 else
                 {
-                    if (_activeList.Contains(target))
+                    if (_attackTargetList.Contains(target))
                     {
-                        _activeList.Remove(target);
+                        _attackTargetList.Remove(target);
                     }
                 }
             }

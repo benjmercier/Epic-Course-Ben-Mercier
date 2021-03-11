@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -15,33 +16,49 @@ namespace Mercier.Scripts.Classes
 
         [Header("Missle Launcher Settings")]
         [SerializeField]
-        private GameObject _missilePrefab; //holds the missle gameobject to clone
+        private GameObject _missilePrefab;
         [SerializeField]
-        private MissileType _missileType; //type of missle to be launched
+        private MissileType _missileType;
         [SerializeField]
-        private GameObject[] _missilePositions; //array to hold the rocket positions on the turret
+        private GameObject[] _missilePositions;
         [SerializeField]
-        private float _fireDelay; //fire delay between rockets
+        private float _fireDelay;
         [SerializeField]
-        private float _launchSpeed; //initial launch speed of the rocket
+        private float _launchSpeed; 
         [SerializeField]
-        private float _power; //power to apply to the force of the rocket
+        private float _power; 
         [SerializeField]
-        private float _fuseDelay; //fuse delay before the rocket launches
+        private float _fuseDelay;
         [SerializeField]
-        private float _reloadTime; //time in between reloading the rockets
+        private float _reloadTime; 
         [SerializeField]
-        private float _destroyTime = 10.0f; //how long till the rockets get cleaned up
-        private bool _launched; //bool to check if we launched the rockets
+        private float _destroyTime = 10.0f; 
+        private bool _launched; 
                 
         private int _missileLaunchIndex = 0;
         private GameObject _missileToLaunch;
         private Vector3 _missileLaunchRotation = new Vector3(-90f, 0f, 0f);
 
-        //private bool _lockedOn = false;
         private Vector3 _forwardView;
         private Vector3 _targetDirectionNorm;
         private float _dotAngle;
+
+        private Queue<GameObject> _openPositionQueue = new Queue<GameObject>();
+        private List<GameObject> _currentMissileSalvo = new List<GameObject>();
+
+        public override void OnEnable()
+        {
+            base.OnEnable();
+
+            Missile.onTargetEnemyHit += OnMissileHitTarget;
+        }
+
+        public override void OnDisable()
+        {
+            base.OnDisable();
+
+            Missile.onTargetEnemyHit -= OnMissileHitTarget;
+        }
 
         protected override void Update()
         {
@@ -52,9 +69,11 @@ namespace Mercier.Scripts.Classes
         {
             if (_missileLaunchIndex < _missilePositions.Length)
             {
+                _currentMissileSalvo.Clear();
+
                 for (int i = _missileLaunchIndex; i < _missilePositions.Length; i++)
                 {
-                    if (_activeTarget == null)
+                    if (_attackTarget == null)
                     {
                         StartCoroutine(MissileReloadRoutine());
 
@@ -66,10 +85,16 @@ namespace Mercier.Scripts.Classes
                     _missileToLaunch.transform.localEulerAngles = _missileLaunchRotation;
                     _missileToLaunch.transform.parent = null;
 
+                    // add active missiles to list
+                    _currentMissileSalvo.Add(_missileToLaunch);
+
                     // change to event
-                    _missileToLaunch.GetComponent<Missile>().AssignMissileRules(_missileType, _activeTarget.transform, _launchSpeed, _power, _fuseDelay, _destroyTime);
+                    _missileToLaunch.GetComponent<Missile>().AssignMissileRules(_missileType, _attackTarget.transform, _launchSpeed, _power, _fuseDelay, _destroyTime);
 
                     _missilePositions[i].SetActive(false);
+
+                    // add inactive missilePositions to queue
+                    _openPositionQueue.Enqueue(_missilePositions[i]);
 
                     _missileLaunchIndex++;
 
@@ -80,13 +105,15 @@ namespace Mercier.Scripts.Classes
 
         private IEnumerator MissileReloadRoutine()
         {
-            while (_activeTarget == null)
+            while (_attackTarget == null)
             {
-                for (int i = 0; i <= _missilePositions.Length; i++)
+                if (_openPositionQueue.Any(i => !i.activeInHierarchy))
                 {
                     yield return new WaitForSeconds(_reloadTime);
 
-                    _missilePositions[i].SetActive(true);
+                    _openPositionQueue.Peek().SetActive(true);
+
+                    _openPositionQueue.Dequeue();
 
                     _missileLaunchIndex--;
 
@@ -98,33 +125,6 @@ namespace Mercier.Scripts.Classes
             }            
 
             _launched = false;
-        }
-
-        IEnumerator FireRocketsRoutine()
-        {
-            for (int i = 0; i < _missilePositions.Length; i++) //for loop to iterate through each missle position
-            {
-                GameObject rocket = Instantiate(_missilePrefab) as GameObject; //instantiate a rocket
-
-                rocket.transform.parent = _missilePositions[i].transform; //set the rockets parent to the missle launch position 
-                rocket.transform.localPosition = Vector3.zero; //set the rocket position values to zero
-                rocket.transform.localEulerAngles = new Vector3(-90, 0, 0); //set the rotation values to be properly aligned with the rockets forward direction
-                rocket.transform.parent = null; //set the rocket parent to null
-
-                rocket.GetComponent<Missile>().AssignMissileRules(_missileType, _activeTarget.transform, _launchSpeed, _power, _fuseDelay, _destroyTime); //assign missle properties 
-
-                _missilePositions[i].SetActive(false); //turn off the rocket sitting in the turret to make it look like it fired
-
-                yield return new WaitForSeconds(_fireDelay); //wait for the firedelay
-            }
-
-            for (int i = 0; i < _missilePositions.Length; i++) //itterate through missle positions
-            {
-                yield return new WaitForSeconds(_reloadTime); //wait for reload time
-                _missilePositions[i].SetActive(true); //enable fake rocket to show ready to fire
-            }
-
-            _launched = false; //set launch bool to false
         }
 
         protected override void EngageTarget()
@@ -151,15 +151,8 @@ namespace Mercier.Scripts.Classes
             _baseLookRotation = Quaternion.LookRotation(_baseRotateTowards); // clamp y
             _auxLookRotation = Quaternion.LookRotation(_auxRotateTowards); // clamp x
             
-            /*
-            _xRotAngleCheck = _auxLookRotation.eulerAngles.x <= 180 ?
-                _auxLookRotation.eulerAngles.x :
-                -(360 - _auxLookRotation.eulerAngles.x); // is condition true ? yes : no  (conditional operator)
-
-            _xClamped = Mathf.Clamp(_xRotAngleCheck, _minRotationAngle.x, _maxRotationAngle.x);
-            */
             _baseRotationObj.rotation = _baseLookRotation;
-            _auxRotationObj.rotation = _auxLookRotation; //Quaternion.Euler(_xClamped, _auxLookRotation.eulerAngles.y, _auxLookRotation.eulerAngles.z);
+            _auxRotationObj.rotation = _auxLookRotation;
 
             _xRotAngleCheck = ReturnRotationAngleCheck(_auxRotationObj.localEulerAngles.x);
 
@@ -192,8 +185,15 @@ namespace Mercier.Scripts.Classes
                     StartCoroutine(MissileLaunchRoutine());
                 }
             }
+        }
 
-            //OnTurretAttack(activeTarget, damageAmount);  // calls event on Turret class
+        private void OnMissileHitTarget(GameObject missile, GameObject target)
+        {
+            if (_currentMissileSalvo.Contains(missile))
+            {
+                OnTurretAttack(target, _attackStrength);
+                Debug.Log("MISSILE HIT!");
+            }
         }
 
         protected override void RotateToStart()

@@ -131,10 +131,9 @@ namespace Mercier.Scripts.Managers
                 if (_canActivateTurret)
                 {
                     _activeDecoyPos = _rayHit.transform.position;
-                    //set rotation
                     _activeDecoyRot = _rayHit.transform.rotation;
+
                     _activeDecoy.transform.position = _activeDecoyPos;
-                    //set decoy rotation to rotation
                     _activeDecoy.transform.rotation = _activeDecoyRot;
                 }
                 else
@@ -170,8 +169,8 @@ namespace Mercier.Scripts.Managers
         {
             _newTurret = PoolManager.Instance.ReturnPrefabFromPool(false, 1, _activeDecoyIndex);
             _newTurret.transform.position = _activeDecoyPos;
-            //set newTurret rotation to active rotation
             _newTurret.transform.rotation = _activeDecoyRot;
+
             OnDecoyTurretSelected(false, _activeDecoyIndex);
             _newTurret.SetActive(true);
 

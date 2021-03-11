@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,12 +33,14 @@ namespace Mercier.Scripts.Classes
         private MissileLauncher.MissileType _missileType;
         private Transform _target;
 
+        public static event Action<GameObject, GameObject> onTargetEnemyHit;
+
         // Use this for initialization
         IEnumerator Start()
         {
             _rigidbody = GetComponent<Rigidbody>(); //assign the rigidbody component 
             _audioSource = GetComponent<AudioSource>(); //assign the audiosource component
-            _audioSource.pitch = Random.Range(0.7f, 1.9f); //randomize the pitch of the rocket audio
+            _audioSource.pitch = UnityEngine.Random.Range(0.7f, 1.9f); //randomize the pitch of the rocket audio
             _particle.Play(); //play the particles of the rocket
             _audioSource.Play(); //play the rocket sound
 
@@ -116,15 +119,24 @@ namespace Mercier.Scripts.Classes
             Destroy(this.gameObject, destroyTimer); //destroy the rocket after destroyTimer 
         }
 
+        private void OnTargetEnemyHit(GameObject missile, GameObject target)
+        {
+            onTargetEnemyHit?.Invoke(missile, target);
+        }
+
         private void OnCollisionEnter(Collision other)
         {
             if (other.gameObject.CompareTag("Enemy"))
             {
-                Destroy(other.gameObject); //destroy collided object
+                //Destroy(other.gameObject); //destroy collided object
+
+                OnTargetEnemyHit(this.gameObject, other.gameObject);
 
                 if (_explosionPrefab != null)
                     Instantiate(_explosionPrefab, transform.position, Quaternion.identity); //instantiate explosion
             }
+
+            Debug.Log("Hit: " + other.gameObject.name);
 
             Destroy(this.gameObject); //destroy the rocket (this)
         }
