@@ -17,12 +17,14 @@ namespace Mercier.Scripts.Classes
                 Debug.LogError("AttackTarget::OnEnable()::targetParent is null on " + gameObject.transform.parent.name);
             }
 
-            Turret.onRequestRotationTarget += ReturnRotationTarget;
+            //Turret.onRequestRotationTarget += ReturnRotationTarget;
+            BaseTurret.onRequestRotationTarget += ReturnRotationTarget;
         }
 
         public void OnDisable()
         {
-            Turret.onRequestRotationTarget -= ReturnRotationTarget;
+            //Turret.onRequestRotationTarget -= ReturnRotationTarget;
+            BaseTurret.onRequestRotationTarget -= ReturnRotationTarget;
         }
 
         private GameObject ReturnRotationTarget(GameObject parent)

@@ -92,13 +92,13 @@ namespace Mercier.Scripts.Classes
 
             _navMeshAgent.speed = UpdateSpeed(_speed);
 
-            Turret.onTurretAttack += ReceiveDamage;
+            TurretOld.onTurretAttack += ReceiveDamage;
             OnDeathBehavior.onDeathAnimStateExit += Die;
         }
 
         public void OnDisable()
         {
-            Turret.onTurretAttack -= ReceiveDamage;
+            TurretOld.onTurretAttack -= ReceiveDamage;
             OnDeathBehavior.onDeathAnimStateExit -= Die;
         }
 

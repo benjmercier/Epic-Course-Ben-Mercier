@@ -63,7 +63,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2719642626893569882}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -360,14 +360,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  turretCost: 0
   _baseRotationObj: {fileID: 9198597922989053111}
   _auxRotationObj: {fileID: 9203658387981394183}
   _rotationSpeed: 2.5
   _viewingAngle: 65
   _maxRotationAngle: {x: 45, y: 0}
   _minRotationAngle: {x: -35, y: 0}
-  _activeList: []
-  _activeTarget: {fileID: 0}
+  _attackTargetList: []
+  _attackTarget: {fileID: 0}
+  _rotationTargetList: []
+  _rotationTarget: {fileID: 0}
   _attackStrength: 15
   _fireRate: 0.5
   _missilePrefab: {fileID: 4919123869470472027, guid: e911f7ebecda20a43967e648623cec51,

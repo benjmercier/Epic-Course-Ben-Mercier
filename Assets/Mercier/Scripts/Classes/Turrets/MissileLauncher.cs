@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Mercier.Scripts.Classes
 {
-    public class MissileLauncher : Turret
+    public class MissileLauncher : TurretOld
     {
         public enum MissileType
         {
