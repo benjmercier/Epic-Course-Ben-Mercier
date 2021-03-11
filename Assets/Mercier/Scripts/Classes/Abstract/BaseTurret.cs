@@ -11,7 +11,6 @@ namespace Mercier.Scripts.Classes
         public enum TurretState
         {
             Idle,
-            Searching,
             Attacking,
             Destroyed
         }
@@ -20,29 +19,6 @@ namespace Mercier.Scripts.Classes
 
         [SerializeField]
         protected int _turretCost;
-
-        [Header("Primary Rotation")]
-        [SerializeField]
-        protected Transform _primaryRotation;
-        [SerializeField]
-        protected float _rotationSpeed = 2.5f;
-        [SerializeField]
-        protected Vector2 _maxRotationAngle = new Vector2(45f, 45f);
-        [SerializeField]
-        protected Vector2 _minRotationAngle = new Vector2(-45f, -45f);
-
-        protected Vector3 _targetDirection;
-        protected float _movement;
-
-        protected Quaternion _primaryInitialRotation;
-        protected Vector3 _primaryRotateTowards;
-        protected Quaternion _primaryLookRotation;
-
-        protected float _xAngleCheck;
-        protected float _yAngleCheck;
-
-        protected float _xClamped;
-        protected float _yClamped;
 
         [Header("Attack Settings")]
         [SerializeField]
@@ -57,6 +33,29 @@ namespace Mercier.Scripts.Classes
         protected bool _canFire;
         protected bool _hasFired;
 
+        [Header("Primary Rotation")]
+        [SerializeField]
+        protected Transform _primaryRotationObj;
+        [SerializeField]
+        protected float _primaryRotationSpeed = 2.5f;
+        [SerializeField]
+        protected Vector2 _maxRotationAngle = new Vector2(45f, 45f);
+        [SerializeField]
+        protected Vector2 _minRotationAngle = new Vector2(-45f, -45f);
+
+        protected Vector3 _targetDirection;
+        protected float _primaryMovement;
+
+        protected Quaternion _primaryInitialRotation;
+        protected Vector3 _primaryRotateTowards;
+        protected Quaternion _primaryLookRotation;
+
+        protected float _xAngleCheck;
+        protected float _yAngleCheck;
+
+        protected float _xClamped;
+        protected float _yClamped;
+
         // event to communicate with activeTarget
         public static event Action<GameObject, float> onTurretAttack;
 
@@ -65,7 +64,7 @@ namespace Mercier.Scripts.Classes
 
         protected virtual void Awake()
         {
-            if (_primaryRotation == null)
+            if (_primaryRotationObj == null)
             {
                 Debug.LogError("BaseTurret::Awake()::_primaryRotation is NULL on " + gameObject.name);
             }
@@ -73,7 +72,7 @@ namespace Mercier.Scripts.Classes
 
         public virtual void OnEnable()
         {
-            _primaryInitialRotation = _primaryRotation.rotation;
+            _primaryInitialRotation = _primaryRotationObj.rotation;
 
             currentState = TurretState.Idle;
 
@@ -94,9 +93,37 @@ namespace Mercier.Scripts.Classes
 
         protected abstract void ControlTurretState();
 
-        protected abstract void UpdateTargetList(GameObject turret, GameObject target, bool addToList);
+        protected virtual void UpdateTargetList(GameObject turret, GameObject target, bool addToList) // called each time AttackRadius entered
+        {
+            if (this.gameObject == turret)
+            {
+                if (addToList)
+                {
+                    _activeTargetList.Add(target);
+
+                    if (_activeTarget == null)
+                    {
+                        _activeTarget = ReturnActiveTarget();
+                    }                    
+                }
+                else
+                {
+                    if (_activeTargetList.Contains(target))
+                    {
+                        _activeTargetList.Remove(target);
+
+                        if (_activeTarget == target)
+                        {
+                            _activeTarget = ReturnActiveTarget();
+                        }
+                    }
+                }
+            }
+        }
 
         protected abstract void AssignNewTarget(GameObject activeTarget, int reward);
+
+        protected abstract GameObject ReturnActiveTarget();
 
         protected virtual GameObject OnRequestRotationTarget(GameObject activeTarget)
         {

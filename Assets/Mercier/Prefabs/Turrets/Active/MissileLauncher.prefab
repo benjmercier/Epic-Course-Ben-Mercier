@@ -323,6 +323,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9198475674593758705}
+  - component: {fileID: 5503193539007330868}
   - component: {fileID: 1753206890530248107}
   m_Layer: 2
   m_Name: MissileLauncher
@@ -347,7 +348,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1753206890530248107
+--- !u!114 &5503193539007330868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -355,6 +356,47 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9201399544196024905}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aba068ff1ced114488b5d4b32275bd02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+  _turretCost: 0
+  _activeTargetList: []
+  _activeTarget: {fileID: 0}
+  _rotationTarget: {fileID: 0}
+  _attackStrength: 10
+  _primaryRotationObj: {fileID: 9198597922989053111}
+  _primaryRotationSpeed: 2.5
+  _maxRotationAngle: {x: 45, y: 45}
+  _minRotationAngle: {x: -45, y: -45}
+  _auxiliaryRotationObj: {fileID: 9203658387981394183}
+  _auxiliaryRotationSpeed: 2.5
+  _minFacingAccuracy: 0.95
+  _missileType: 1
+  _missilePrefab: {fileID: 4919123869470472027, guid: e911f7ebecda20a43967e648623cec51,
+    type: 3}
+  _missilePositions:
+  - {fileID: 9201170876977968511}
+  - {fileID: 9201843077327332659}
+  - {fileID: 9201409757687012799}
+  - {fileID: 9201484008685637117}
+  - {fileID: 9202034998818821779}
+  - {fileID: 9201582673616843887}
+  _fireDelay: 2
+  _launchSpeed: 10
+  _power: 20
+  _fuseDelay: 0
+  _reloadTime: 0.25
+  _destroyTime: 10
+--- !u!114 &1753206890530248107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9201399544196024905}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f90c194ad6ab7b479a2982f486384bf, type: 3}
   m_Name: 

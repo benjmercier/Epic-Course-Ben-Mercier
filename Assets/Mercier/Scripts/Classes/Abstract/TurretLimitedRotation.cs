@@ -20,28 +20,13 @@ namespace Mercier.Scripts.Classes
             switch (currentState)
             {
                 case TurretState.Idle:
-                    if (_activeTarget == null)
+                    if (_activeTarget == null || !_activeTarget.activeInHierarchy)
                     {
                         RotateToStart();
                     }
                     else
-                    {
-                        currentState = TurretState.Searching;
-                    }
-                    break;
-
-                case TurretState.Searching:
-                    if (ReturnTargetInLineOfSight(_activeTarget))
                     {
                         currentState = TurretState.Attacking;
-                    }
-                    else if (_activeTarget == null)
-                    {
-                        currentState = TurretState.Idle;
-                    }
-                    else
-                    {
-                        RotateToStart();
                     }
                     break;
 
@@ -85,27 +70,14 @@ namespace Mercier.Scripts.Classes
 
         protected virtual bool ReturnTargetInLineOfSight(GameObject target)
         {
-            _targetVector = target.transform.position - _primaryRotation.position;
+            _targetVector = target.transform.position - _primaryRotationObj.position;
 
             _cosAngle = Vector3.Dot(_targetVector.normalized, this.transform.forward);
 
             _targetAngle = Mathf.Acos(_cosAngle) * Mathf.Rad2Deg;
 
             return _targetAngle <= _maxRotationAngle.y;
-        }
-
-        protected override void UpdateTargetList(GameObject turret, GameObject target, bool addToList)
-        {
-            if (this.gameObject == turret)
-            {
-                if (addToList)
-                {
-                    _activeTargetList.Add(target);
-
-                    _activeTarget = ReturnActiveTarget();
-                }
-            }
-        }        
+        }   
 
         protected override void AssignNewTarget(GameObject activeTarget, int reward)
         {
@@ -122,7 +94,7 @@ namespace Mercier.Scripts.Classes
             }
         }
 
-        protected GameObject ReturnActiveTarget()
+        protected override GameObject ReturnActiveTarget()
         {
             if (_activeTargetList.Any(t => ReturnTargetInLineOfSight(t)))
             {
@@ -145,29 +117,29 @@ namespace Mercier.Scripts.Classes
 
         protected override void RotateToTarget(Vector3 target)
         {
-            _targetDirection = target - _primaryRotation.position;
+            _targetDirection = target - _primaryRotationObj.position;
 
-            _movement = _rotationSpeed * Time.deltaTime;
+            _primaryMovement = _primaryRotationSpeed * Time.deltaTime;
 
-            _primaryRotateTowards = Vector3.RotateTowards(_primaryRotation.forward, _targetDirection, _movement, 0f);
+            _primaryRotateTowards = Vector3.RotateTowards(_primaryRotationObj.forward, _targetDirection, _primaryMovement, 0f);
             _primaryLookRotation = Quaternion.LookRotation(_primaryRotateTowards);
 
-            _primaryRotation.rotation = _primaryLookRotation;
+            _primaryRotationObj.rotation = _primaryLookRotation;
 
-            _xAngleCheck = ReturnLocalEulerAngleCheck(_primaryRotation.localEulerAngles.x);
-            _yAngleCheck = ReturnLocalEulerAngleCheck(_primaryRotation.localEulerAngles.y);
+            _xAngleCheck = ReturnLocalEulerAngleCheck(_primaryRotationObj.localEulerAngles.x);
+            _yAngleCheck = ReturnLocalEulerAngleCheck(_primaryRotationObj.localEulerAngles.y);
 
             _xClamped = Mathf.Clamp(_xAngleCheck, _minRotationAngle.x, _maxRotationAngle.x);
             _yClamped = Mathf.Clamp(_yAngleCheck, _minRotationAngle.y, _maxRotationAngle.y);
 
-            _primaryRotation.localRotation = Quaternion.Euler(_xClamped, _yClamped, _primaryRotation.localEulerAngles.z);
+            _primaryRotationObj.localRotation = Quaternion.Euler(_xClamped, _yClamped, _primaryRotationObj.localEulerAngles.z);
         }
 
         protected override void RotateToStart()
         {
-            _movement = _rotationSpeed * Time.deltaTime;
+            _primaryMovement = _primaryRotationSpeed * Time.deltaTime;
 
-            _primaryRotation.rotation = Quaternion.Slerp(_primaryRotation.rotation, _primaryInitialRotation, _movement);
+            _primaryRotationObj.rotation = Quaternion.Slerp(_primaryRotationObj.rotation, _primaryInitialRotation, _primaryMovement);
         }
 
         protected override void TurretAttack(GameObject activeTarget, float damageAmount)

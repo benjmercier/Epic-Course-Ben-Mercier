@@ -10014,8 +10014,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   _turretCost: 0
-  _primaryRotation: {fileID: 6375083457127266903}
-  _rotationSpeed: 2.5
+  _primaryRotationObj: {fileID: 6375083457127266903}
+  _primaryRotationSpeed: 2.5
   _maxRotationAngle: {x: 45, y: 45}
   _minRotationAngle: {x: -45, y: -45}
   _activeTargetList: []
