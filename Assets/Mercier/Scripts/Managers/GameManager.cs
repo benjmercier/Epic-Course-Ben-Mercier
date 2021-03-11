@@ -9,7 +9,15 @@ namespace Mercier.Scripts.Managers
 {
     public class GameManager : MonoSingleton<GameManager>, IEventable
     {
-        public int _warFundsAvailable;        
+        public int _warFundsAvailable;
+        [Range(0f, 5f)]
+        [SerializeField]
+        float timescale = 2.5f;
+
+        private void Update()
+        {
+            Time.timeScale = timescale;
+        }
 
         public void OnEnable()
         {

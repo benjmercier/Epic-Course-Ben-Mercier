@@ -104,7 +104,7 @@ namespace Mercier.Scripts.Classes
 
                 if (_activeTarget != null)
                 {
-                    _rotationTarget = OnRequestRotationTarget(_activeTarget);
+                    OnCheckForRotationTarget(_activeTarget);
                 }
 
                 return _activeTarget;

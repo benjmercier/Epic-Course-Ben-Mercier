@@ -6950,6 +6950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _warFundsAvailable: 550
+  timescale: 1
 --- !u!1001 &922941816
 PrefabInstance:
   m_ObjectHideFlags: 0

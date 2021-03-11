@@ -60,7 +60,9 @@ namespace Mercier.Scripts.Classes
         public static event Action<GameObject, float> onTurretAttack;
 
         // event to aim at activeTarget's target
-        public static event Func<GameObject, GameObject> onRequestRotationTarget;
+        //public static event Func<GameObject, GameObject> onRequestRotationTarget;
+
+        public static event Action<GameObject> onCheckForRotationTarget;
 
         protected virtual void Awake()
         {
@@ -77,12 +79,14 @@ namespace Mercier.Scripts.Classes
             currentState = TurretState.Idle;
 
             AttackRadius.onAttackRadiusTriggered += UpdateTargetList;
+            RotationTarget.onConfirmRotationTarget += AssignRotationTarget;
             Enemy.onEnemyDeath += AssignNewTarget;
         }
 
         public virtual void OnDisable()
         {
             AttackRadius.onAttackRadiusTriggered -= UpdateTargetList;
+            RotationTarget.onConfirmRotationTarget -= AssignRotationTarget;
             Enemy.onEnemyDeath -= AssignNewTarget;
         }
 
@@ -125,9 +129,14 @@ namespace Mercier.Scripts.Classes
 
         protected abstract GameObject ReturnActiveTarget();
 
-        protected virtual GameObject OnRequestRotationTarget(GameObject activeTarget)
+        protected virtual void OnCheckForRotationTarget(GameObject activeTarget)
         {
-            return onRequestRotationTarget?.Invoke(activeTarget);
+            onCheckForRotationTarget?.Invoke(activeTarget);
+        }
+
+        protected virtual void AssignRotationTarget(GameObject rotationTarget)
+        {
+            _rotationTarget = rotationTarget;
         }
 
         protected abstract void RotateToTarget(Vector3 target);

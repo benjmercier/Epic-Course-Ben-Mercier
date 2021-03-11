@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mercier.Scripts.Interfaces;
@@ -8,35 +9,36 @@ namespace Mercier.Scripts.Classes
     public class RotationTarget : MonoBehaviour, IEventable
     {
         [SerializeField]
-        private GameObject targetParent;
+        private GameObject _targetParent;
+
+        public static event Action<GameObject> onConfirmRotationTarget;
 
         public void OnEnable()
         {
-            if (targetParent == null)
+            if (_targetParent == null)
             {
                 Debug.LogError("AttackTarget::OnEnable()::targetParent is null on " + gameObject.transform.parent.name);
             }
 
-            //Turret.onRequestRotationTarget += ReturnRotationTarget;
-            BaseTurret.onRequestRotationTarget += ReturnRotationTarget;
+            BaseTurret.onCheckForRotationTarget += VerifyRotationTarget;
         }
 
         public void OnDisable()
         {
-            //Turret.onRequestRotationTarget -= ReturnRotationTarget;
-            BaseTurret.onRequestRotationTarget -= ReturnRotationTarget;
+            BaseTurret.onCheckForRotationTarget -= VerifyRotationTarget;
         }
 
-        private GameObject ReturnRotationTarget(GameObject parent)
+        private void VerifyRotationTarget(GameObject parent)
         {
-            if (targetParent == parent)
+            if (_targetParent == parent)
             {
-                return this.gameObject;
+                OnConfirmRotationTarget(this.gameObject);
             }
-            else
-            {
-                return null;
-            }
+        }
+
+        private void OnConfirmRotationTarget(GameObject rotationTarget)
+        {
+            onConfirmRotationTarget?.Invoke(rotationTarget);
         }
     }
 }

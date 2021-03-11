@@ -72,7 +72,7 @@ namespace Mercier.Scripts.Classes
                         }
                         else
                         {
-                            _rotationTarget = OnRequestRotationTarget(_activeTarget);
+                            OnCheckForRotationTarget(_activeTarget);
                         }
 
 
@@ -110,11 +110,11 @@ namespace Mercier.Scripts.Classes
             if (_activeTargetList.Any())
             {
                 _activeTarget = _activeTargetList.OrderBy(t => Vector3.Distance(t.transform.position, transform.position)).
-                    FirstOrDefault();
+                    FirstOrDefault();                
 
                 if (_activeTarget != null)
                 {
-                    _rotationTarget = OnRequestRotationTarget(_activeTarget);
+                    OnCheckForRotationTarget(_activeTarget);
                 }
 
                 return _activeTarget;
