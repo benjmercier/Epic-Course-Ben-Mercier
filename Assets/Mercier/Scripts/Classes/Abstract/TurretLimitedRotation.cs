@@ -14,6 +14,22 @@ namespace Mercier.Scripts.Classes
         protected Vector3 _targetVector;
         protected float _cosAngle;
         protected float _targetAngle;
+        [SerializeField]
+        protected float _viewAngle = 75f;
+
+        protected virtual void LateUpdate()
+        {
+            switch (currentState)
+            {
+                case TurretState.Idle:
+                    RotateToStart();
+                    break;
+
+                case TurretState.Attacking:
+                    RotateToTarget(_rotationTarget.transform.position);
+                    break;
+            }
+        }
 
         protected override void ControlTurretState()
         {
@@ -76,7 +92,7 @@ namespace Mercier.Scripts.Classes
 
             _targetAngle = Mathf.Acos(_cosAngle) * Mathf.Rad2Deg;
 
-            return _targetAngle <= _maxRotationAngle.y;
+            return _targetAngle <= _viewAngle;
         }   
 
         protected override void AssignNewTarget(GameObject activeTarget, int reward)
@@ -117,6 +133,14 @@ namespace Mercier.Scripts.Classes
 
         protected override void RotateToTarget(Vector3 target)
         {
+            _primaryMovement = _primaryRotationSpeed * Time.deltaTime;
+
+            _targetDirection = target - _primaryRotationObj.position;
+            _primaryLookRotation = Quaternion.LookRotation(_targetDirection);
+
+            _primaryRotationObj.rotation = Quaternion.Slerp(_primaryRotationObj.rotation, _primaryLookRotation, _primaryMovement);
+
+            /*
             _targetDirection = target - _primaryRotationObj.position;
 
             _primaryMovement = _primaryRotationSpeed * Time.deltaTime;
@@ -133,6 +157,7 @@ namespace Mercier.Scripts.Classes
             _yClamped = Mathf.Clamp(_yAngleCheck, _minRotationAngle.y, _maxRotationAngle.y);
 
             _primaryRotationObj.localRotation = Quaternion.Euler(_xClamped, _yClamped, _primaryRotationObj.localEulerAngles.z);
+            */
         }
 
         protected override void RotateToStart()

@@ -2,32 +2,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mercier.Scripts.Classes.Abstract.Turret.TurretStates;
 using Mercier.Scripts.Interfaces;
+using Mercier.Scripts.Classes;
 
-namespace Mercier.Scripts.Classes
+namespace Mercier.Scripts.Classes.Abstract.Turret
 {
-    public abstract class BaseTurret : MonoBehaviour, IEventable
+    public abstract class Turret : MonoBehaviour, IEventable
     {
-        public enum TurretState
-        {
-            Idle,
-            CoolDown,
-            Attacking,
-            Destroyed
-        }
-
-        public TurretState currentState;
+        private TurretBaseState _currentTurretState;
+        public TurretBaseState CurrentTurretStat { get { return _currentTurretState; } }
+        public readonly TurretIdleState turretIdleState = new TurretIdleState();
+        public readonly TurretCoolDownState turretCoolDownState = new TurretCoolDownState();
+        public readonly TurretAttackingState turretAttackingState = new TurretAttackingState();
+        public readonly TurretDestroyedState turretDestroyedState = new TurretDestroyedState();
 
         [SerializeField]
-        protected int _turretCost;
+        public int _turretCost;
 
         [Header("Attack Settings")]
         [SerializeField]
         protected List<GameObject> _activeTargetList = new List<GameObject>();
         [SerializeField]
         protected GameObject _activeTarget;
+        public GameObject ActiveTarget { get { return _activeTarget; } }
         [SerializeField]
         protected GameObject _rotationTarget;
+        public GameObject RotationTarget { get { return _rotationTarget; } }
         [SerializeField]
         protected float _attackStrength = 10f;
 
@@ -48,6 +49,7 @@ namespace Mercier.Scripts.Classes
         protected float _primaryMovement;
 
         protected Quaternion _primaryInitialRotation;
+        public Quaternion PrimaryInitialRotation { get { return _primaryInitialRotation; } }
         protected Vector3 _primaryRotateTowards;
         protected Quaternion _primaryLookRotation;
 
@@ -57,12 +59,16 @@ namespace Mercier.Scripts.Classes
         protected float _xClamped;
         protected float _yClamped;
 
+        [Range(0, 2)]
+        [SerializeField]
+        protected float _minAngleToStartRotation = 1f;
+        protected float _primaryAngleToStartRotation;
+        
+
         // event to communicate with activeTarget
         public static event Action<GameObject, float> onTurretAttack;
 
-        // event to aim at activeTarget's target
-        //public static event Func<GameObject, GameObject> onRequestRotationTarget;
-
+        // event to check rotationTarget
         public static event Action<GameObject> onCheckForRotationTarget;
 
         protected virtual void Awake()
@@ -77,28 +83,40 @@ namespace Mercier.Scripts.Classes
         {
             _primaryInitialRotation = _primaryRotationObj.rotation;
 
-            currentState = TurretState.Idle;
+            TransitionToState(turretIdleState);
 
             AttackRadius.onAttackRadiusTriggered += UpdateTargetList;
-            RotationTarget.onConfirmRotationTarget += AssignRotationTarget;
+            Classes.RotationTarget.onConfirmRotationTarget += AssignRotationTarget;
             Enemy.onEnemyDeath += AssignNewTarget;
         }
 
         public virtual void OnDisable()
         {
             AttackRadius.onAttackRadiusTriggered -= UpdateTargetList;
-            RotationTarget.onConfirmRotationTarget -= AssignRotationTarget;
+            Classes.RotationTarget.onConfirmRotationTarget -= AssignRotationTarget;
             Enemy.onEnemyDeath -= AssignNewTarget;
         }
 
         protected virtual void Update()
         {
-            ControlTurretState();
+            _currentTurretState.Update(this);
+
+            Debug.Log("Current State: " + _currentTurretState.ToString());
         }
 
-        protected abstract void ControlTurretState();
+        protected virtual void LateUpdate()
+        {
+            _currentTurretState.LateUpdate(this);
+        }
 
-        protected virtual void UpdateTargetList(GameObject turret, GameObject target, bool addToList) // called each time AttackRadius entered
+        public void TransitionToState(TurretBaseState state)
+        {
+            _currentTurretState = state;
+            _currentTurretState.EnterState(this);
+        }
+
+        // called each time AttackRadius entered
+        protected virtual void UpdateTargetList(GameObject turret, GameObject target, bool addToList) 
         {
             if (this.gameObject == turret)
             {
@@ -109,7 +127,7 @@ namespace Mercier.Scripts.Classes
                     if (_activeTarget == null)
                     {
                         _activeTarget = ReturnActiveTarget();
-                    }                    
+                    }
                 }
                 else
                 {
@@ -143,9 +161,11 @@ namespace Mercier.Scripts.Classes
             }
         }
 
-        protected abstract void RotateToTarget(Vector3 target);
+        public abstract void RotateToTarget(Vector3 target);
 
-        protected abstract void RotateToStart();
+        public abstract void RotateToStart();
+
+        public abstract bool IsAtStart();
 
         protected float ReturnLocalEulerAngleCheck(float localEulerAngle)
         {

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mercier.Scripts.Interfaces;
+using Mercier.Scripts.Classes.Abstract.Turret;
 
 namespace Mercier.Scripts.Classes
 {
@@ -11,7 +12,7 @@ namespace Mercier.Scripts.Classes
         [SerializeField]
         private GameObject _targetParent;
 
-        public static event Action<GameObject> onConfirmRotationTarget;
+        public static event Action<GameObject, GameObject> onConfirmRotationTarget;
 
         public void OnEnable()
         {
@@ -21,24 +22,26 @@ namespace Mercier.Scripts.Classes
             }
 
             BaseTurret.onCheckForRotationTarget += VerifyRotationTarget;
+            Turret.onCheckForRotationTarget += VerifyRotationTarget;
         }
 
         public void OnDisable()
         {
             BaseTurret.onCheckForRotationTarget -= VerifyRotationTarget;
+            Turret.onCheckForRotationTarget -= VerifyRotationTarget;
         }
 
         private void VerifyRotationTarget(GameObject parent)
         {
             if (_targetParent == parent)
             {
-                OnConfirmRotationTarget(this.gameObject);
+                OnConfirmRotationTarget(parent, this.gameObject);
             }
         }
 
-        private void OnConfirmRotationTarget(GameObject rotationTarget)
+        private void OnConfirmRotationTarget(GameObject parent, GameObject rotationTarget)
         {
-            onConfirmRotationTarget?.Invoke(rotationTarget);
+            onConfirmRotationTarget?.Invoke(parent, rotationTarget);
         }
     }
 }
