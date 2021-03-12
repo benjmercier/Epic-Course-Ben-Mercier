@@ -85,11 +85,14 @@ namespace Mercier.Scripts.Classes.Turrets
 
         public override void TurretAttack()
         {
-            if (_launched == false)
+            if (IsFacingTarget())
             {
-                _launched = true;
+                if (_launched == false)
+                {
+                    _launched = true;
 
-                StartCoroutine(MissileLaunchRoutine());
+                    StartCoroutine(MissileLaunchRoutine());
+                }
             }
         }
 

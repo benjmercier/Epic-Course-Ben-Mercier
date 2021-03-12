@@ -15,7 +15,7 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         protected float _auxiliaryRotationSpeed = 2.5f;
         [Range(0.0f, 1.0f)]
         [SerializeField]
-        protected float _minFacingAccuracy = 0.95f;
+        protected float _minLookVariance = 0.95f;
 
         protected float _auxiliaryMovement;
         protected Quaternion _auxiliaryInitialRotation;
@@ -25,8 +25,8 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         protected float _auxiliaryAngleToStartRotation;
 
         protected Vector3 _forwardView;
-        protected Vector3 _directionToFace;
-        protected float _dotAngle;
+        protected Vector3 _directionToLook;
+        protected float _lookAngle;
 
         protected override void Awake()
         {
@@ -131,14 +131,19 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         {
             return Quaternion.Euler(localEulerAngles.x, 0, localEulerAngles.z);
         }
-        
-        protected virtual bool IsFacingTarget(Vector3 target)
+
+        protected virtual bool IsFacingTarget()
         {
-            _directionToFace = target - _auxiliaryRotationObj.position;
+            if (_rotationTarget != null)
+            {
+                _directionToLook = _rotationTarget.transform.position - _auxiliaryRotationObj.position;
 
-            _dotAngle = Vector3.Dot(_forwardView, _directionToFace.normalized);
+                _lookAngle = Vector3.Angle(_auxiliaryRotationObj.forward, _directionToLook);
 
-            return _dotAngle < _minFacingAccuracy ? false : true;
+                return _lookAngle < _minLookVariance ? true : false;
+            }
+
+            return false;
         }
     }
 }

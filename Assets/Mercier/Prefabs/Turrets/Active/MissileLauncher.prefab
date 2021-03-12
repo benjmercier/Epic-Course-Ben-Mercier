@@ -365,13 +365,13 @@ MonoBehaviour:
   _rotationTarget: {fileID: 0}
   _attackStrength: 10
   _primaryRotationObj: {fileID: 9198597922989053111}
-  _primaryRotationSpeed: 2.5
+  _primaryRotationSpeed: 5
   _maxRotationAngle: {x: 45, y: 45}
   _minRotationAngle: {x: -45, y: -45}
   _minAngleToStartRotation: 1
   _auxiliaryRotationObj: {fileID: 9203658387981394183}
-  _auxiliaryRotationSpeed: 2.5
-  _minFacingAccuracy: 0.95
+  _auxiliaryRotationSpeed: 5
+  _minLookAccuracy: 0.95
   _missileType: 1
   _missilePrefab: {fileID: 4919123869470472027, guid: e911f7ebecda20a43967e648623cec51,
     type: 3}
