@@ -50,14 +50,14 @@ namespace Mercier.Scripts.Classes
         {
             base.OnEnable();
 
-            Missile.onTargetEnemyHit += OnMissileHitTarget;
+            MissileOld.onTargetEnemyHit += OnMissileHitTarget;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
 
-            Missile.onTargetEnemyHit -= OnMissileHitTarget;
+            MissileOld.onTargetEnemyHit -= OnMissileHitTarget;
         }
 
         protected override void Update()
@@ -89,7 +89,7 @@ namespace Mercier.Scripts.Classes
                     _currentMissileSalvo.Add(_missileToLaunch);
 
                     // change to event
-                    _missileToLaunch.GetComponent<Missile>().AssignMissileRules(_missileType, _attackTarget.transform, _launchSpeed, _power, _fuseDelay, _destroyTime);
+                    _missileToLaunch.GetComponent<MissileOld>().AssignMissileRules(_missileType, _attackTarget.transform, _launchSpeed, _power, _fuseDelay, _destroyTime);
 
                     _missilePositions[i].SetActive(false);
 

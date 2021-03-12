@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Mercier.Scripts.Classes
+namespace Mercier.Scripts.Classes.Turrets
 {
     [RequireComponent(typeof(Rigidbody))] //require rigidbody
     [RequireComponent(typeof(AudioSource))] //require audiosource
@@ -14,11 +14,11 @@ namespace Mercier.Scripts.Classes
         [SerializeField]
         private GameObject _explosionPrefab; //Explosion prefab to play on impact
         [SerializeField]
-        private float _launchSpeed; //launch speed of the rocket
+        private float _launchSpeed = 1f; //launch speed of the rocket
         [SerializeField]
-        private float _power; //power of the rocket
+        private float _power = 10f; //power of the rocket
         [SerializeField] //fuse delay of the rocket
-        private float _fuseDelay;
+        private float _fuseDelay = 0.25f;
 
         private Rigidbody _rigidbody; //reference to the rigidbody of the rocket
         private AudioSource _audioSource; //reference to the audiosource of the rocket
@@ -30,7 +30,7 @@ namespace Mercier.Scripts.Classes
         private bool _fuseOut = false; //bool for if the rocket fuse
         private bool _trackRotation = false; //bool to track rotation of the rocket
 
-        private MissileLauncher.MissileType _missileType;
+        private MissileLauncher_FSM.MissileType _missileType;
         private Transform _target;
 
         public static event Action<GameObject, GameObject> onTargetEnemyHit;
@@ -81,16 +81,16 @@ namespace Mercier.Scripts.Classes
 
             if (_trackRotation == true) //check track rotation bool
             {
-                if (_missileType == MissileLauncher.MissileType.Normal) //checking for normal missile 
+                if (_missileType == MissileLauncher_FSM.MissileType.Normal) //checking for normal missile 
                 {
                     _rigidbody.rotation = Quaternion.LookRotation(_rigidbody.velocity); // adjust rotation of rocket based on velocity
                     _rigidbody.AddForce(transform.forward * 100f); //add force to the rocket
                 }
-                else if (_missileType == MissileLauncher.MissileType.Homing) //if missle is homing
+                else if (_missileType == MissileLauncher_FSM.MissileType.Homing) //if missle is homing
                 {
                     if (_target == null) //checking if the target is null
                     {
-                        _missileType = MissileLauncher.MissileType.Normal; //assign back to normal
+                        _missileType = MissileLauncher_FSM.MissileType.Normal; //assign back to normal
                         return;
                     }
 
@@ -109,7 +109,7 @@ namespace Mercier.Scripts.Classes
         /// <summary>
         /// This method is used to assign traits to our missle assigned from the launcher.
         /// </summary>
-        public void AssignMissileRules(MissileLauncher.MissileType missileType, Transform target, float launchSpeed, float power, float fuseDelay, float destroyTimer)
+        public void AssignMissileRules(MissileLauncher_FSM.MissileType missileType, Transform target, float launchSpeed, float power, float fuseDelay, float destroyTimer)
         {
             _missileType = missileType; //assign the missle type
             _target = target; //Who should the rocket follow?
@@ -142,3 +142,4 @@ namespace Mercier.Scripts.Classes
         }
     }
 }
+

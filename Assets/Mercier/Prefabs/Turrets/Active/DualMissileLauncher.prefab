@@ -89,7 +89,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2974582972463478835}
-  - component: {fileID: 2940325579530485217}
+  - component: {fileID: 1070914041426402304}
   m_Layer: 0
   m_Name: DualMissileLauncher
   m_TagString: Untagged
@@ -112,19 +112,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2940325579530485217
+--- !u!114 &1070914041426402304
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2976905752199410027}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441abd9413f41a943bfae1f9d5de828d, type: 3}
+  m_Script: {fileID: 11500000, guid: 22440509da91c604cb78baef5581354e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
   _turretCost: 0
   _activeTargetList: []
   _activeTarget: {fileID: 0}
@@ -134,30 +133,19 @@ MonoBehaviour:
   _primaryRotationSpeed: 2.5
   _maxRotationAngle: {x: 45, y: 45}
   _minRotationAngle: {x: -45, y: -45}
+  _minAngleToStartRotation: 1
   _auxiliaryRotationObj: {fileID: 2979278607841352053}
   _auxiliaryRotationSpeed: 2.5
   _minFacingAccuracy: 0.95
-  _missilePrefab: {fileID: 4953852045786937378, guid: e7a23ba392816c24aabc8ac293e9e276,
+  _missileType: 0
+  _missilePrefab: {fileID: 4953852045786937378, guid: 7926e88fd16361847a47994891857dba,
     type: 3}
-  _misslePositionsLeft:
-  - {fileID: 2977997627352071979}
-  - {fileID: 2977112026167388393}
-  - {fileID: 2978562024478515789}
-  - {fileID: 2977115533790030583}
-  - {fileID: 2977455893201083247}
-  - {fileID: 2977895565801608969}
-  _misslePositionsRight:
-  - {fileID: 2977298846529546173}
-  - {fileID: 2977574164857873329}
-  - {fileID: 2978481205010536497}
-  - {fileID: 2977476265552983027}
-  - {fileID: 2977851681249595439}
-  - {fileID: 2976917701999053815}
-  _fireDelay: 1
+  _missilePositions: []
+  _fireDelay: 2
   _launchSpeed: 10
   _power: 20
   _fuseDelay: 0
-  _reloadTime: 0
+  _reloadTime: 0.25
   _destroyTime: 10
 --- !u!1 &2976917701999053815
 GameObject:

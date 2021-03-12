@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-namespace Mercier.Scripts.Classes
+namespace Mercier.Scripts.Classes.Turrets
 {
     public class MissileLauncher2 : TurretOpenRotation
     {
@@ -61,14 +61,14 @@ namespace Mercier.Scripts.Classes
         {
             base.OnEnable();
 
-            Missile.onTargetEnemyHit += OnMissileHitTarget;
+            MissileOld.onTargetEnemyHit += OnMissileHitTarget;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
 
-            Missile.onTargetEnemyHit -= OnMissileHitTarget;
+            MissileOld.onTargetEnemyHit -= OnMissileHitTarget;
         }
 
         protected override void EngageTarget()
@@ -115,7 +115,7 @@ namespace Mercier.Scripts.Classes
                     _currentMissileSalvo.Add(_missileToLaunch);
 
                     // change to event
-                    _missileToLaunch.GetComponent<Missile2>().AssignMissileRules(_missileType, _activeTarget.transform, _launchSpeed, _power, _fuseDelay, _destroyTime);
+                    //_missileToLaunch.GetComponent<Missile>().AssignMissileRules(_missileType, _activeTarget.transform, _launchSpeed, _power, _fuseDelay, _destroyTime);
                     _missilePositions[i].SetActive(false);
 
                     // add inactive missilePositions to queue

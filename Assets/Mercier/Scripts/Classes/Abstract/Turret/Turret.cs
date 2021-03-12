@@ -31,6 +31,7 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         public GameObject RotationTarget { get { return _rotationTarget; } }
         [SerializeField]
         protected float _attackStrength = 10f;
+        public float AttackStrength { get { return _attackStrength; } }
 
         protected bool _canFire;
         protected bool _hasFired;
@@ -186,11 +187,11 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
         protected abstract void DisengageTarget();
 
-        protected abstract void TurretAttack(GameObject activeTarget, float damageAmount);
+        public abstract void TurretAttack();
 
-        protected virtual void OnTurretAttack(GameObject activeTarget, float damageAmount)
+        protected virtual void OnTurretAttack()
         {
-            onTurretAttack?.Invoke(activeTarget, damageAmount);
+            onTurretAttack?.Invoke(_activeTarget, _attackStrength);
         }
     }
 }

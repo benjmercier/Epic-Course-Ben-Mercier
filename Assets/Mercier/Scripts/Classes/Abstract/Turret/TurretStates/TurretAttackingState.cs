@@ -16,6 +16,8 @@ namespace Mercier.Scripts.Classes.Abstract.Turret.TurretStates
             {
                 turret.TransitionToState(turret.turretCoolDownState);
             }
+
+            turret.TurretAttack();
         }
 
         public override void LateUpdate(Turret turret)

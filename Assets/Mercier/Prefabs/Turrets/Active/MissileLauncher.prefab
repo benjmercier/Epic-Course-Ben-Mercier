@@ -324,7 +324,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9198475674593758705}
   - component: {fileID: 84210705708723090}
-  - component: {fileID: 5503193539007330868}
   m_Layer: 2
   m_Name: MissileLauncher
   m_TagString: Untagged
@@ -370,31 +369,6 @@ MonoBehaviour:
   _maxRotationAngle: {x: 45, y: 45}
   _minRotationAngle: {x: -45, y: -45}
   _minAngleToStartRotation: 1
-  _auxiliaryRotationObj: {fileID: 9203658387981394183}
-  _auxiliaryRotationSpeed: 2.5
-  _minFacingAccuracy: 0.95
---- !u!114 &5503193539007330868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9201399544196024905}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aba068ff1ced114488b5d4b32275bd02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: 0
-  _turretCost: 0
-  _activeTargetList: []
-  _activeTarget: {fileID: 0}
-  _rotationTarget: {fileID: 0}
-  _attackStrength: 10
-  _primaryRotationObj: {fileID: 9198597922989053111}
-  _primaryRotationSpeed: 2.5
-  _maxRotationAngle: {x: 45, y: 45}
-  _minRotationAngle: {x: -45, y: -45}
   _auxiliaryRotationObj: {fileID: 9203658387981394183}
   _auxiliaryRotationSpeed: 2.5
   _minFacingAccuracy: 0.95

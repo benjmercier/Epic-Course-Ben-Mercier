@@ -6,7 +6,7 @@ using System.Linq;
 namespace Mercier.Scripts.Classes
 {
     [RequireComponent(typeof(AudioSource))]
-    public class GatlingGun : TurretLimitedRotation
+    public class GatlingGun : TurretLimitedRotationOld
     {
         [Header("Gatling Gun Settings")]
         [SerializeField]
