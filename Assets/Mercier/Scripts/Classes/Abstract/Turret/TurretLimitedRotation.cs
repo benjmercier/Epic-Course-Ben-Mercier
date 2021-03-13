@@ -15,8 +15,6 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         protected Vector3 _targetVector;
         protected float _cosAngle;
         protected float _targetAngle;
-        [SerializeField]
-        protected float _viewAngle = 75f;
 
         protected virtual bool ReturnTargetInLineOfSight(GameObject target)
         {
@@ -26,21 +24,24 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
             _targetAngle = Mathf.Acos(_cosAngle) * Mathf.Rad2Deg;
                         
-            return _targetAngle <= _maxRotationAngle.y;// _viewAngle;
+            return _targetAngle <= _maxRotationAngle.y;
         }
 
+        // registered to Enemy onDeath event
         protected override void AssignNewTarget(GameObject activeTarget, int reward)
         {
             if (_activeTarget == activeTarget)
             {
-                if (!ReturnTargetInLineOfSight(activeTarget))
+                _activeTargetList.Remove(activeTarget);
+
+                _activeTarget = ReturnActiveTarget();
+            }
+            else
+            {
+                if (_activeTargetList.Contains(activeTarget))
                 {
                     _activeTargetList.Remove(activeTarget);
-
-                    _activeTarget = ReturnActiveTarget();
                 }
-
-                //ActivateTurret(false);
             }
         }
 
@@ -74,8 +75,8 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
             _primaryMovement = _primaryRotationSpeed * Time.deltaTime;
 
-            _targetDirection = target - _primaryRotationObj.position;
-            _primaryLookRotation = Quaternion.LookRotation(_targetDirection);
+            _primaryTargetDirection = target - _primaryRotationObj.position;
+            _primaryLookRotation = Quaternion.LookRotation(_primaryTargetDirection);
 
             _primaryRotationObj.rotation = Quaternion.Slerp(_primaryRotationObj.rotation, _primaryLookRotation, _primaryMovement);
 

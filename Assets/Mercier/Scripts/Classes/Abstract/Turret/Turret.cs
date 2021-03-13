@@ -42,11 +42,11 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         [SerializeField]
         protected float _primaryRotationSpeed = 2.5f;
         [SerializeField]
-        protected Vector2 _maxRotationAngle = new Vector2(45f, 45f);
+        protected Vector2 _maxRotationAngle = new Vector2(65f, 65f);
         [SerializeField]
-        protected Vector2 _minRotationAngle = new Vector2(-45f, -45f);
+        protected Vector2 _minRotationAngle = new Vector2(-65f, -65f);
 
-        protected Vector3 _targetDirection;
+        protected Vector3 _primaryTargetDirection;
         protected float _primaryMovement;
 
         protected Quaternion _primaryInitialRotation;
@@ -116,7 +116,7 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
             _currentTurretState.EnterState(this);
         }
 
-        // called each time AttackRadius entered
+        // registered to AttackRadius OnTriggerEnter/Exit
         protected virtual void UpdateTargetList(GameObject turret, GameObject target, bool addToList) 
         {
             if (this.gameObject == turret)

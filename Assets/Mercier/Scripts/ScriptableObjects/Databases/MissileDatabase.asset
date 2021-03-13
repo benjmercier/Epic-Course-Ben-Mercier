@@ -13,11 +13,7 @@ MonoBehaviour:
   m_Name: MissileDatabase
   m_EditorClassIdentifier: 
   databaseList:
-  - name: Single Turret Missile
+  - name: Missile1
     iD: 0
-    prefab: {fileID: 4919123869470472027, guid: e911f7ebecda20a43967e648623cec51,
-      type: 3}
-  - name: Dual Turret Missile
-    iD: 1
-    prefab: {fileID: 4953852045786937378, guid: 7926e88fd16361847a47994891857dba,
+    prefab: {fileID: 3943512348999178177, guid: bc00669e4de25484e98399506163cc45,
       type: 3}

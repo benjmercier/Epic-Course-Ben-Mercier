@@ -4946,7 +4946,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 226f26ff30f1e4211895fc3029e34d96, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5013,7 +5012,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6372988886192578071}
-  m_LocalRotation: {x: -0, y: -0.000000014901159, z: -0, w: 1}
+  m_LocalRotation: {x: -0.00000001490116, y: -0.000000014901161, z: -9.325873e-15,
+    w: 1}
   m_LocalPosition: {x: -0.004159232, y: 0.48127356, z: -0.21440434}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -9732,7 +9732,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: fdbaa274f62e74a23b90855541dd06c9, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9983,7 +9982,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6374961541006805355
 Transform:
   m_ObjectHideFlags: 0
@@ -10007,7 +10006,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6373045444735503527}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 825ab7420f585214396d7887cd304540, type: 3}
   m_Name: 
@@ -10017,18 +10016,23 @@ MonoBehaviour:
   _activeTarget: {fileID: 0}
   _rotationTarget: {fileID: 0}
   _attackStrength: 10
-  _primaryRotationObj: {fileID: 0}
+  _primaryRotationObj: {fileID: 6375083457127266903}
   _primaryRotationSpeed: 2.5
-  _maxRotationAngle: {x: 45, y: 45}
-  _minRotationAngle: {x: -45, y: -45}
+  _maxRotationAngle: {x: 75, y: 90}
+  _minRotationAngle: {x: -75, y: -90}
   _minAngleToStartRotation: 1
   _fireRate: 0.5
-  _viewAngle: 75
-  _gunBarrel: []
-  _muzzleFlash: []
-  _bulletCasings: []
-  _fireSound: {fileID: 0}
-  _audioSource: {fileID: 0}
+  _gunBarrel:
+  - {fileID: 6370312747807529339}
+  - {fileID: 6370132299101657047}
+  _muzzleFlash:
+  - {fileID: 6373000658513083629}
+  - {fileID: 6373314177213469571}
+  _bulletCasings:
+  - {fileID: 6536712326930481193}
+  - {fileID: 6536249352914334381}
+  _fireSound: {fileID: 8300000, guid: e5685074ce40ea845a3d98a16d804415, type: 3}
+  _audioSource: {fileID: 6437040216786780445}
 --- !u!82 &6437040216786780445
 AudioSource:
   m_ObjectHideFlags: 0
@@ -19841,7 +19845,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: fdbaa274f62e74a23b90855541dd06c9, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -29705,7 +29708,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 226f26ff30f1e4211895fc3029e34d96, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

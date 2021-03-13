@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using Mercier.Scripts.Interfaces;
 using Mercier.Scripts.Managers;
 using Mercier.Scripts.AnimBehaviors;
+using Mercier.Scripts.Classes.Abstract.Turret;
 
 namespace Mercier.Scripts.Classes
 {
@@ -39,32 +40,12 @@ namespace Mercier.Scripts.Classes
         [SerializeField]
         private float _currentArmor;
 
-        public float Health
-        {
-            get
-            {
-                return _currentHealth;
-            }
-            set
-            {
-                _currentHealth = value;
-            }
-        }
-                
-        public float Armor
-        {
-            get
-            {
-                return _currentArmor;
-            }
-            set
-            {
-                _currentArmor = value;
-            }
-        }
+        public float Health { get { return _currentHealth; } set { _currentHealth = value; } }
+        public float Armor { get { return _currentArmor; } set { _currentArmor = value; } }
 
-        public static event Action<GameObject, int> onEnemyDeath;
         private WaitForSeconds _onDeathWait = new WaitForSeconds(3.5f);
+
+        public static event Action<GameObject, int> onEnemyDeath;        
 
         protected void Awake()
         {
@@ -92,13 +73,13 @@ namespace Mercier.Scripts.Classes
 
             _navMeshAgent.speed = UpdateSpeed(_speed);
 
-            TurretOld.onTurretAttack += ReceiveDamage;
+            Turret.onTurretAttack += ReceiveDamage;
             OnDeathBehavior.onDeathAnimStateExit += Die;
         }
 
         public void OnDisable()
         {
-            TurretOld.onTurretAttack -= ReceiveDamage;
+            Turret.onTurretAttack -= ReceiveDamage;
             OnDeathBehavior.onDeathAnimStateExit -= Die;
         }
 

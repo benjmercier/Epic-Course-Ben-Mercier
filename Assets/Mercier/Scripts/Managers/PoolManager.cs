@@ -57,8 +57,6 @@ namespace Mercier.Scripts.Managers
         private int _poolIndex;
         private int _randomIndex;
 
-        //test
-
         private void Start()
         {
             _activeDictionaryList = GeneratePoolDictionaries(_activePools);

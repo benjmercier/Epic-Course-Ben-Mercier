@@ -75,6 +75,10 @@ namespace Mercier.Scripts.Managers
                 {
                     OnDecoyTurretSelected(true, 2);
                 }
+                else if (Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    OnDecoyTurretSelected(true, 3);
+                }
             }
             else
             {

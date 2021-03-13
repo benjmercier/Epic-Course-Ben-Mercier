@@ -21,13 +21,11 @@ namespace Mercier.Scripts.Classes
                 Debug.LogError("AttackTarget::OnEnable()::targetParent is null on " + gameObject.transform.parent.name);
             }
 
-            BaseTurret.onCheckForRotationTarget += VerifyRotationTarget;
             Turret.onCheckForRotationTarget += VerifyRotationTarget;
         }
 
         public void OnDisable()
         {
-            BaseTurret.onCheckForRotationTarget -= VerifyRotationTarget;
             Turret.onCheckForRotationTarget -= VerifyRotationTarget;
         }
 

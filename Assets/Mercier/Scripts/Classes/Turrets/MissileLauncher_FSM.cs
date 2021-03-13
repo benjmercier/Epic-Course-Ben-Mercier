@@ -73,6 +73,16 @@ namespace Mercier.Scripts.Classes.Turrets
             MissileOld.onTargetEnemyHit -= OnMissileHitTarget;
         }
 
+        protected override void Update()
+        {
+            base.Update();
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                StartCoroutine(MissileLaunchRoutine());
+            }            
+        }
+
         protected override void EngageTarget()
         {
 
@@ -98,12 +108,16 @@ namespace Mercier.Scripts.Classes.Turrets
 
         private IEnumerator MissileLaunchRoutine()
         {
+            Debug.Log("Started MissileLaunchRoutine()");
+            Debug.Log("MissilePositions: " + _missilePositions.Length);
             if (_missileLaunchIndex < _missilePositions.Length)
             {
+                Debug.Log("first check");
                 _currentMissileSalvo.Clear();
 
                 for (int i = _missileLaunchIndex; i < _missilePositions.Length; i++)
                 {
+                    Debug.Log("second check " + _missileLaunchIndex);
                     if (_activeTarget == null)
                     {
                         StartCoroutine(MissileReloadRoutine());
@@ -111,16 +125,18 @@ namespace Mercier.Scripts.Classes.Turrets
                         break;
                     }
 
-                    _missileToLaunch = Instantiate(_missilePrefab, _missilePositions[i].transform); // change to pool
+                    _missileToLaunch = Instantiate(_missilePrefab, _missilePositions[i].transform);
                     _missileToLaunch.transform.localPosition = Vector3.zero;
-                    _missileToLaunch.transform.localEulerAngles = _missileLaunchRotation;
+                    _missileToLaunch.transform.localEulerAngles = Vector3.zero;
                     _missileToLaunch.transform.parent = null;
 
                     // add active missiles to list
                     _currentMissileSalvo.Add(_missileToLaunch);
 
                     // change to event
-                    _missileToLaunch.GetComponent<Missile>().AssignMissileRules(_missileType, _activeTarget.transform, _launchSpeed, _power, _fuseDelay, _destroyTime);
+                    _missileToLaunch.GetComponent<Missile>().AssignMissileRules
+                        (_missileType, _activeTarget.transform, _launchSpeed, _power, _fuseDelay, _destroyTime);
+
                     _missilePositions[i].SetActive(false);
 
                     // add inactive missilePositions to queue
@@ -143,6 +159,13 @@ namespace Mercier.Scripts.Classes.Turrets
                 {
                     yield return new WaitForSeconds(_reloadTime);
 
+                    if (_openPositionQueue.Count < 1)
+                    {
+                        _launched = false;
+
+                        break;
+                    }
+
                     _openPositionQueue.Peek().SetActive(true);
 
                     _openPositionQueue.Dequeue();
@@ -163,7 +186,7 @@ namespace Mercier.Scripts.Classes.Turrets
         {
             if (_currentMissileSalvo.Contains(missile))
             {
-                Debug.Log("MISSILE HIT!");
+                //Debug.Log("MISSILE HIT!");
                 OnTurretAttack();
             }
         }

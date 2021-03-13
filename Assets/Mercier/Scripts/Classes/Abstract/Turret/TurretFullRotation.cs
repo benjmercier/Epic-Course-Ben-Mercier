@@ -17,7 +17,9 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         [SerializeField]
         protected float _minLookVariance = 0.95f;
 
+        protected Vector3 _auxiliaryTargetDirection;
         protected float _auxiliaryMovement;
+
         protected Quaternion _auxiliaryInitialRotation;
         protected Vector3 _auxiliaryRotateTowards;
         protected Quaternion _auxiliaryLookRotation;
@@ -53,12 +55,14 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
             {
                 _activeTargetList.Remove(activeTarget);
 
-                _activeTarget = null;
-                _rotationTarget = null;
-
                 _activeTarget = ReturnActiveTarget();
-
-                ActivateTurret(false);
+            }
+            else
+            {
+                if (_activeTargetList.Contains(activeTarget))
+                {
+                    _activeTargetList.Remove(activeTarget);
+                }
             }
         }
 
@@ -84,26 +88,27 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
         public override void RotateToTarget(Vector3 target)
         {
-            _targetDirection = target - _primaryRotationObj.position;
+            _primaryTargetDirection = target - _primaryRotationObj.position;
+            _auxiliaryTargetDirection = target - _auxiliaryRotationObj.position;
 
             _primaryMovement = _primaryRotationSpeed * Time.deltaTime;
             _auxiliaryMovement = _auxiliaryRotationSpeed * Time.deltaTime;
 
-            _primaryRotateTowards = Vector3.RotateTowards(_primaryRotationObj.forward, _targetDirection, _primaryMovement, 0f);
+            _primaryRotateTowards = Vector3.RotateTowards(_primaryRotationObj.forward, _primaryTargetDirection, _primaryMovement, 0f);
             _primaryRotateTowards.y = 0f;
 
-            _auxiliaryRotateTowards = Vector3.RotateTowards(_auxiliaryRotationObj.forward, _targetDirection, _auxiliaryMovement, 0f);
+            _auxiliaryRotateTowards = Vector3.RotateTowards(_auxiliaryRotationObj.forward, _auxiliaryTargetDirection, _auxiliaryMovement, 0f);
 
             _primaryLookRotation = Quaternion.LookRotation(_primaryRotateTowards); // clamp y
             _auxiliaryLookRotation = Quaternion.LookRotation(_auxiliaryRotateTowards); // clamp x
 
             _primaryRotationObj.rotation = _primaryLookRotation;
             _auxiliaryRotationObj.rotation = _auxiliaryLookRotation;
-
+            
             _xAngleCheck = ReturnLocalEulerAngleCheck(_auxiliaryRotationObj.localEulerAngles.x);
-
+            
             _xClamped = Mathf.Clamp(_xAngleCheck, _minRotationAngle.x, _maxRotationAngle.x);
-
+            
             _auxiliaryRotationObj.localRotation = Quaternion.Euler(_xClamped, _auxiliaryRotationObj.localEulerAngles.y, _auxiliaryRotationObj.localEulerAngles.z);
             _auxiliaryRotationObj.localRotation = RestrictLocalEulerAngleY(_auxiliaryRotationObj.localEulerAngles);
         }
@@ -139,7 +144,7 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
                 _directionToLook = _rotationTarget.transform.position - _auxiliaryRotationObj.position;
 
                 _lookAngle = Vector3.Angle(_auxiliaryRotationObj.forward, _directionToLook);
-
+                //Debug.Log("lookAngle: " + _lookAngle);
                 return _lookAngle < _minLookVariance ? true : false;
             }
 
