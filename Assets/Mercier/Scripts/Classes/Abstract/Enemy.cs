@@ -22,6 +22,23 @@ namespace Mercier.Scripts.Classes
         protected float _speed;      
         [SerializeField]
         protected int _currencyToReward;
+        [SerializeField]
+        protected Renderer[] _renderersInChildren;
+
+        private float _minDissolveValue = 0f;
+        private float _maxDissolveValue = 1f;
+        [Range(0f, 1f)]
+        private float _currentDissolveValue;
+
+        private Color[] _fireColorArray =
+        {
+            new Color32(168, 6, 6, 255), // dark candy apple red
+            new Color32(187, 0, 9, 255), // ue red
+            new Color32(203, 12, 9, 255), // venetian red
+            new Color32(216, 41, 28, 255), // maximum red
+            new Color32(235, 58, 30, 255) // plochere's vermilion 
+        };
+        private int _colorIndex;
 
         [Header("Health")]
         [SerializeField]
@@ -99,6 +116,8 @@ namespace Mercier.Scripts.Classes
             {
                 Debug.LogError("Enemy::Awake()::" + gameObject.name + "'s _enemyAnimis NULL.");
             }
+
+            _renderersInChildren = GetComponentsInChildren<Renderer>();
         }
 
         public virtual void OnEnable()
@@ -143,6 +162,10 @@ namespace Mercier.Scripts.Classes
                 RotateToStart();
             }
             
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                StartCoroutine(MaterialDissolveRoutine());
+            }
         }
 
         protected virtual float UpdateSpeed(float speed)
@@ -304,5 +327,20 @@ namespace Mercier.Scripts.Classes
             _enemyAnim.WriteDefaultValues();
             gameObject.SetActive(false);
         }    
+
+        protected IEnumerator MaterialDissolveRoutine()
+        {
+            while (_currentDissolveValue < _maxDissolveValue)
+            {
+                _currentDissolveValue += 0.0075f;
+
+                _renderersInChildren.ToList().ForEach(m => m.material.SetColor("_edgeColor",
+                    _fireColorArray[UnityEngine.Random.Range(0, _fireColorArray.Length)] * UnityEngine.Random.Range(-3f, 3f)));
+
+                _renderersInChildren.ToList().ForEach(m => m.material.SetFloat("_fillAmount", _currentDissolveValue));
+
+                yield return new WaitForEndOfFrame();
+            }
+        }
     }
 }
