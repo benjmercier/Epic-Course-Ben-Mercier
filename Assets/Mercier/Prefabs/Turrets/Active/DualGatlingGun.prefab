@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4928fcbb36b8514791f3e564bee967b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parentTurret: {fileID: 6373045444735503527}
+  _parentObj: {fileID: 0}
 --- !u!33 &1710402176148834799
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9978,7 +9978,7 @@ GameObject:
   - component: {fileID: 6437040216786780445}
   m_Layer: 2
   m_Name: DualGatlingGun
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

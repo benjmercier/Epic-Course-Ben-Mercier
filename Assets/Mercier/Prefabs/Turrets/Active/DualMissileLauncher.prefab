@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 1070914041426402304}
   m_Layer: 0
   m_Name: DualMissileLauncher
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1468,7 +1468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4928fcbb36b8514791f3e564bee967b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parentTurret: {fileID: 2976905752199410027}
+  _parentObj: {fileID: 0}
 --- !u!33 &6382994822390094939
 MeshFilter:
   m_ObjectHideFlags: 0

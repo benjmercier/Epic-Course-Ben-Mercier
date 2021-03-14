@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4928fcbb36b8514791f3e564bee967b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parentTurret: {fileID: 9201399544196024905}
+  _parentObj: {fileID: 0}
 --- !u!33 &2327881070090562854
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -721,7 +721,7 @@ GameObject:
   - component: {fileID: 84210705708723090}
   m_Layer: 2
   m_Name: MissileLauncher
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

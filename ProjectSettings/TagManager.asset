@@ -7,6 +7,7 @@ TagManager:
   - Target
   - Enemy
   - RotationTarget
+  - Turret
   - AttackTarget
   layers:
   - Default

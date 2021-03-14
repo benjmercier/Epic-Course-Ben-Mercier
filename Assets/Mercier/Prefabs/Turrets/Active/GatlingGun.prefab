@@ -203,9 +203,10 @@ GameObject:
   - component: {fileID: 397581552539978015}
   - component: {fileID: 305894131700144043}
   - component: {fileID: 338414913596262393}
+  - component: {fileID: 8614139583791843165}
   m_Layer: 2
   m_Name: GatlingGun
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -250,7 +251,6 @@ MonoBehaviour:
   _minRotationAngle: {x: -45, y: -65}
   _minAngleToStartRotation: 1
   _fireRate: 0.5
-  _viewAngle: 75
   _gunBarrel:
   - {fileID: 397743574581918417}
   _muzzleFlash:
@@ -355,6 +355,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &8614139583791843165
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401132117131954635}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &401181599333628561
 GameObject:
   m_ObjectHideFlags: 0
@@ -15013,7 +15026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4928fcbb36b8514791f3e564bee967b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parentTurret: {fileID: 401132117131954635}
+  _parentObj: {fileID: 0}
 --- !u!33 &5762679649153927490
 MeshFilter:
   m_ObjectHideFlags: 0
