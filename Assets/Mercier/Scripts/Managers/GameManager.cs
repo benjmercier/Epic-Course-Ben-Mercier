@@ -9,7 +9,9 @@ namespace Mercier.Scripts.Managers
 {
     public class GameManager : MonoSingleton<GameManager>, IEventable
     {
-        public int _warFundsAvailable;
+        [SerializeField]
+        private int _warFundsAvailable;
+        public int WarFundsAvailable { get { return _warFundsAvailable; } set { _warFundsAvailable = value; } }
         [Range(0f, 5f)]
         [SerializeField]
         float timescale = 2.5f;
@@ -62,6 +64,8 @@ namespace Mercier.Scripts.Managers
         public void ItemPurchased(int cost)
         {
             _warFundsAvailable -= cost;
+
+            UIManager.Instance.UpdateWarFunds();
         }
     }
 }

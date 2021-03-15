@@ -116,9 +116,23 @@ namespace Mercier.Scripts.Managers
 
         private bool CalculateFundsAvailable(int selectedIndex)
         {
-            _availableFunds = GameManager.Instance._warFundsAvailable;
-            //_turretCost = DatabaseManager.Instance.turretDatabase.databaseList[selectedIndex].cost;
-            // set cost on decoy turret?
+            _availableFunds = GameManager.Instance.WarFundsAvailable;
+
+            switch (selectedIndex)
+            {
+                case 0:
+                    _turretCost = 250;
+                    break;
+                case 1:
+                    _turretCost = 500;
+                    break;
+                case 2:
+                    _turretCost = 350;
+                    break;
+                case 3:
+                    _turretCost = 700;
+                    break;
+            }
 
             _enoughFunds = _availableFunds >= _turretCost;
 

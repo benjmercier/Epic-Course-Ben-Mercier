@@ -21,15 +21,18 @@ namespace Mercier.Scripts.Classes
 
         public static event Action<bool> onTowerAvailable;
         public static event Action onEnableTurret;
+        
 
         public void OnEnable()
         {
             TowerManager.onDecoyTurretSelected += CheckTowerAvailability;
+            UIManager.onDisableTurret += TurretDisabled;
         }
 
         public void OnDisable()
         {
             TowerManager.onDecoyTurretSelected -= CheckTowerAvailability;
+            UIManager.onDisableTurret -= TurretDisabled;
         }
 
         private void Start()
@@ -91,15 +94,23 @@ namespace Mercier.Scripts.Classes
             if (onEnableTurret != null)
             {
                 onEnableTurret();
-                TurretEnabled();
+                TurretEnabled(true);
             }
         }
 
-        private void TurretEnabled()
+        private void TurretEnabled(bool enable)
         {
-            _isPosAvailable = false;
+            _isPosAvailable = !enable;
 
-            _towerRenderer.enabled = true;
+            _towerRenderer.enabled = enable;
+        }
+
+        private void TurretDisabled(GameObject turret)
+        {
+            if (gameObject == turret)
+            {
+                TurretEnabled(false);
+            }
         }
 
         /// <summary>
