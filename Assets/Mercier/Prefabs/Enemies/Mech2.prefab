@@ -2934,13 +2934,13 @@ MonoBehaviour:
   _enemyAnim: {fileID: 3279792961363241529}
   _speed: 2
   _currencyToReward: 25
+  _renderersInChildren: []
   _maxHealth: 100
   _currentHealth: 0
   _maxArmor: 50
   _currentArmor: 0
   _activeTargetList: []
   _activeTarget: {fileID: 0}
-  _rotationTarget: {fileID: 0}
   _attackStrength: 0
   _primaryRotationObj: {fileID: 3231772289988626305}
   _primaryRotationSpeed: 2.5
@@ -2995,7 +2995,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3230445893702710185}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 6.2, y: 5.35, z: 5.5}

@@ -25,9 +25,8 @@ namespace Mercier.Scripts.Classes
         [SerializeField]
         protected Renderer[] _renderersInChildren;
 
-        private float _minDissolveValue = 0f;
+        private float _defaultDissolveValue = 0f;
         private float _maxDissolveValue = 1f;
-        [Range(0f, 1f)]
         private float _currentDissolveValue;
 
         private Color[] _fireColorArray =
@@ -122,17 +121,22 @@ namespace Mercier.Scripts.Classes
 
         public virtual void OnEnable()
         {
+            _renderersInChildren.ToList().ForEach(m => m.material.SetFloat("_fillAmount", _defaultDissolveValue));
+
             _enemyAnim.SetBool(AnimationManager.Instance.IsDestroyedParam, false);
 
-            _primaryInitialRotation = transform.localRotation;
+            
 
             Health = _maxHealth;
             Armor = _maxArmor;
 
+            _navMeshAgent.enabled = true;
             _navTarget = SpawnManager.Instance.AssignTargetPos();
 
             _navMeshAgent.SetDestination(_navTarget);
             _navMeshAgent.speed = UpdateSpeed(_speed);
+
+            _primaryInitialRotation = _primaryRotationObj.localRotation;
 
             Turret.onTurretAttack += ReceiveDamage;
             AttackRadius.onAttackRadiusTriggered += UpdateTargetList;
@@ -253,7 +257,7 @@ namespace Mercier.Scripts.Classes
             {
                 _primaryMovement = _primaryRotationSpeed * Time.deltaTime;
 
-                _primaryRotationObj.localRotation = Quaternion.Slerp(_primaryRotationObj.localRotation, _primaryInitialRotation, _primaryMovement);
+                _primaryRotationObj.localRotation = Quaternion.Slerp(_primaryRotationObj.localRotation, _primaryInitialRotation, _primaryMovement); //Quaternion.Slerp(_primaryRotationObj.rotation, _primaryInitialRotation, _primaryMovement);
             }
         }
 
@@ -315,6 +319,8 @@ namespace Mercier.Scripts.Classes
 
             onEnemyDeath?.Invoke(enemy, reward);
             _navMeshAgent.isStopped = true;
+            _navMeshAgent.enabled = false;
+            _enemyAnim.SetBool(AnimationManager.Instance.IsFiringParam, false);
             _enemyAnim.SetBool(AnimationManager.Instance.IsDestroyedParam, true);
 
             StartCoroutine(DestroyedRoutine());
@@ -324,11 +330,16 @@ namespace Mercier.Scripts.Classes
         {
             yield return _onDeathWait;
 
-            _enemyAnim.WriteDefaultValues();
-            gameObject.SetActive(false);
+            StartCoroutine(MaterialDissolveRoutine(() =>
+            {
+
+
+                _enemyAnim.WriteDefaultValues();
+                gameObject.SetActive(false);
+            }));
         }    
 
-        protected IEnumerator MaterialDissolveRoutine()
+        protected IEnumerator MaterialDissolveRoutine(Action onComplete = null)
         {
             while (_currentDissolveValue < _maxDissolveValue)
             {
@@ -341,6 +352,8 @@ namespace Mercier.Scripts.Classes
 
                 yield return new WaitForEndOfFrame();
             }
+
+            onComplete?.Invoke();
         }
     }
 }

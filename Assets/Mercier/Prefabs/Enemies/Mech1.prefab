@@ -1356,6 +1356,7 @@ MonoBehaviour:
   _enemyAnim: {fileID: 1640634097325754351}
   _speed: 2
   _currencyToReward: 15
+  _renderersInChildren: []
   _maxHealth: 50
   _currentHealth: 0
   _maxArmor: 25
@@ -1394,7 +1395,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699286027065544987}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 3.75
   m_Speed: 1.5
