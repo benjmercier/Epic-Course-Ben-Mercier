@@ -5391,6 +5391,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c070c0219505b4b8c6a57293c6b860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _armoryButtons:
+  - {fileID: 631096880}
+  - {fileID: 760567662}
+  - {fileID: 1928989151}
+  - {fileID: 870461416}
 --- !u!1001 &595690249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5553,7 +5558,7 @@ GameObject:
   - component: {fileID: 631096881}
   - component: {fileID: 631096880}
   m_Layer: 5
-  m_Name: Button
+  m_Name: GatlingGun_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5621,7 +5626,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 631096881}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 592720673}
+        m_MethodName: set_DecoyToActivate
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &631096881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6553,7 +6569,7 @@ GameObject:
   - component: {fileID: 760567663}
   - component: {fileID: 760567662}
   m_Layer: 5
-  m_Name: Button
+  m_Name: DualGatlingGun_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6621,7 +6637,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 760567663}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 592720673}
+        m_MethodName: set_DecoyToActivate
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &760567663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7180,7 +7207,7 @@ GameObject:
   - component: {fileID: 870461417}
   - component: {fileID: 870461416}
   m_Layer: 5
-  m_Name: Button
+  m_Name: DualMissileLauncher_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7248,7 +7275,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 870461417}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 592720673}
+        m_MethodName: set_DecoyToActivate
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &870461417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7450,7 +7488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &909662580
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15760,6 +15798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5898b379c95284984514b6b626b9e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _activeTurretList: []
   _yPosOffset: 0.5
   _isDecoySelected: 0
   _canActivateTurret: 0
@@ -16032,7 +16071,7 @@ GameObject:
   - component: {fileID: 1928989152}
   - component: {fileID: 1928989151}
   m_Layer: 5
-  m_Name: Button
+  m_Name: MissileLauncher_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16100,7 +16139,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1928989152}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 592720673}
+        m_MethodName: set_DecoyToActivate
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1928989152
 MonoBehaviour:
   m_ObjectHideFlags: 0

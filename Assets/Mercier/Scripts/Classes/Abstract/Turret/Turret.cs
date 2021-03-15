@@ -102,7 +102,7 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         {
             _currentTurretState.Update(this);
 
-            Debug.Log("Current State: " + _currentTurretState.ToString());
+            //Debug.Log("Current State: " + _currentTurretState.ToString());
         }
 
         protected virtual void LateUpdate()

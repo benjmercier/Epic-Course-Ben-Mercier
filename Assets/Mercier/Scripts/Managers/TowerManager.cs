@@ -9,6 +9,9 @@ namespace Mercier.Scripts.Managers
 {
     public class TowerManager : MonoSingleton<TowerManager>, IEventable
     {
+        [SerializeField]
+        private List<GameObject> _activeTurretList = new List<GameObject>();        
+        
         private GameObject _activeDecoy;
         private int _activeDecoyIndex = 0;
         private Vector3 _activeDecoyPos;
@@ -89,7 +92,7 @@ namespace Mercier.Scripts.Managers
             }
         }
 
-        private void OnDecoyTurretSelected(bool isSelected, int selectedIndex)
+        public void OnDecoyTurretSelected(bool isSelected, int selectedIndex)
         {
             if (CalculateFundsAvailable(selectedIndex))
             {
@@ -174,6 +177,8 @@ namespace Mercier.Scripts.Managers
             _newTurret = PoolManager.Instance.ReturnPrefabFromPool(false, 1, _activeDecoyIndex);
             _newTurret.transform.position = _activeDecoyPos;
             _newTurret.transform.rotation = _activeDecoyRot;
+
+            _activeTurretList.Add(_newTurret);
 
             OnDecoyTurretSelected(false, _activeDecoyIndex);
             _newTurret.SetActive(true);
