@@ -10,7 +10,8 @@ namespace Mercier.Scripts.Managers
     public class TowerManager : MonoSingleton<TowerManager>, IEventable
     {
         [SerializeField]
-        private List<GameObject> _activeTurretList = new List<GameObject>();        
+        private List<GameObject> _activeTurretList = new List<GameObject>(); 
+        public List<GameObject> ActiveTurretList { get { return _activeTurretList; } }
         
         private GameObject _activeDecoy;
         private int _activeDecoyIndex = 0;
@@ -132,7 +133,7 @@ namespace Mercier.Scripts.Managers
         private void CastRayToMousePos()
         {
             _rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
-
+            // set layer for turretPos
             if (Physics.Raycast(_rayOrigin, out _rayHit))
             {
                 if (_canActivateTurret)
@@ -172,6 +173,8 @@ namespace Mercier.Scripts.Managers
             onTurretPlacementColor?.Invoke(color);
         }
 
+        // check if selected turret from UIManager is in activeTurretList
+        // if so, set inactive and pass in upgraded turret index
         private void EnableTurret()
         {
             _newTurret = PoolManager.Instance.ReturnPrefabFromPool(false, 1, _activeDecoyIndex);

@@ -17,8 +17,8 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         public readonly TurretAttackingState turretAttackingState = new TurretAttackingState();
         public readonly TurretDestroyedState turretDestroyedState = new TurretDestroyedState();
 
-        [SerializeField]
-        public int _turretCost;
+        public int turretCost;
+        public int turretID;
 
         [Header("Attack Settings")]
         [SerializeField]
@@ -192,6 +192,11 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         protected virtual void OnTurretAttack()
         {
             onTurretAttack?.Invoke(_activeTarget, _attackStrength);
+        }
+
+        protected virtual void OnMouseDown()
+        {
+            Debug.Log("You clicked me!");
         }
     }
 }

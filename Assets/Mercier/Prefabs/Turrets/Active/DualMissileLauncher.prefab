@@ -90,7 +90,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2974582972463478835}
   - component: {fileID: 1070914041426402304}
-  m_Layer: 0
+  - component: {fileID: 2731085058442061815}
+  m_Layer: 8
   m_Name: DualMissileLauncher
   m_TagString: Turret
   m_Icon: {fileID: 0}
@@ -125,7 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22440509da91c604cb78baef5581354e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turretCost: 0
+  turretCost: 700
+  turretID: 3
   _activeTargetList: []
   _activeTarget: {fileID: 0}
   _rotationTarget: {fileID: 0}
@@ -160,6 +162,19 @@ MonoBehaviour:
   _fuseDelay: 0
   _reloadTime: 0.25
   _destroyTime: 10
+--- !u!65 &2731085058442061815
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2976905752199410027}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.5, y: 3, z: 1.5}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &2976917701999053815
 GameObject:
   m_ObjectHideFlags: 0

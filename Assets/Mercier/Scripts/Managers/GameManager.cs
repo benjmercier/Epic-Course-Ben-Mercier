@@ -29,6 +29,21 @@ namespace Mercier.Scripts.Managers
         public string RotationTargetTag { get { return _rotationTargetTag; } }
         #endregion
 
+        #region Layers
+        [Header("Game Layers")]
+        [SerializeField]
+        private LayerMask _enemyLayer;
+        public LayerMask EnemyLayer { get { return _enemyLayer.value; } }
+
+        [SerializeField]
+        private LayerMask _turretLayer;
+        public LayerMask TurretLayer { get { return _turretLayer.value; } }
+
+        [SerializeField]
+        private LayerMask _turretPosLayer;
+        public LayerMask TurretPosLayer { get { return _turretPosLayer; } }
+        #endregion
+
         private void Update()
         {
             Time.timeScale = timescale;

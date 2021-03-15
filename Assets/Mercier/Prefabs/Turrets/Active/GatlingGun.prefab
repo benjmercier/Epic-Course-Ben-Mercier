@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 305894131700144043}
   - component: {fileID: 338414913596262393}
   - component: {fileID: 8614139583791843165}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatlingGun
   m_TagString: Turret
   m_Icon: {fileID: 0}
@@ -240,7 +240,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825ab7420f585214396d7887cd304540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turretCost: 0
+  turretCost: 250
+  turretID: 0
   _activeTargetList: []
   _activeTarget: {fileID: 0}
   _rotationTarget: {fileID: 0}
@@ -366,8 +367,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1 &401181599333628561
 GameObject:
   m_ObjectHideFlags: 0
