@@ -187,8 +187,6 @@ namespace Mercier.Scripts.Managers
             onTurretPlacementColor?.Invoke(color);
         }
 
-        // check if selected turret from UIManager is in activeTurretList
-        // if so, set inactive and pass in upgraded turret index
         private void EnableTurret()
         {
             _newTurret = PoolManager.Instance.ReturnPrefabFromPool(false, 1, _activeDecoyIndex);

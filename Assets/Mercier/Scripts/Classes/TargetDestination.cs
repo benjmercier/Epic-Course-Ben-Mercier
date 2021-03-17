@@ -5,7 +5,7 @@ using Mercier.Scripts.Managers;
 
 namespace Mercier.Scripts
 {
-    public class Target : MonoBehaviour
+    public class TargetDestination : MonoBehaviour
     {
         private void OnTriggerEnter(Collider other)
         {

@@ -2942,10 +2942,30 @@ MonoBehaviour:
   _activeTargetList: []
   _activeTarget: {fileID: 0}
   _attackStrength: 0
-  _primaryRotationObj: {fileID: 3231772289988626305}
-  _primaryRotationSpeed: 2.5
-  _maxRotationAngle: {x: 65, y: 65}
-  _minRotationAngle: {x: -65, y: -65}
+  _primaryRotation:
+    objTransform: {fileID: 3231590250286393185}
+    speed: 2.5
+    maxAngle: {x: 90, y: 90}
+    minAngle: {x: -90, y: -90}
+    maxIdleOffset: 1
+    maxLookOffset: 0.95
+    angleToIdle: 0
+    targetDirection: {x: 0, y: 0, z: 0}
+    movement: 0
+    idleRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotateTowards: {x: 0, y: 0, z: 0}
+    lookRotation: {x: 0, y: 0, z: 0, w: 0}
+    xAxisCheck: 0
+    yAxisCheck: 0
+    xAxisClamp: 0
+    yAxisClamp: 0
+  _attack:
+    activeTargetList: []
+    activeTarget: {fileID: 0}
+    rotationTarget: {fileID: 0}
+    targetVector: {x: 0, y: 0, z: 0}
+    dotAngle: 0
+    targetAngle: 0
 --- !u!95 &3279792961363241529
 Animator:
   serializedVersion: 3

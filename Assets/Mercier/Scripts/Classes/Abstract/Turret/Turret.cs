@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ using Mercier.Scripts.Classes;
 
 namespace Mercier.Scripts.Classes.Abstract.Turret
 {
+    [SelectionBase]
     public abstract class Turret : MonoBehaviour, IEventable
     {
         private TurretBaseState _currentTurretState;
@@ -117,8 +119,9 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         }
 
         // registered to AttackRadius OnTriggerEnter/Exit
-        protected virtual void UpdateTargetList(GameObject turret, GameObject target, bool addToList) 
+        protected virtual void UpdateTargetList(GameObject obj, GameObject target, bool addToList) 
         {
+            /*
             if (this.gameObject == turret)
             {
                 if (addToList)
@@ -142,8 +145,62 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
                         }
                     }
                 }
+            }*/
+
+            if (this.gameObject == obj)
+            {
+                if (addToList)
+                {
+                    _activeTargetList.Add(target);
+                }
+                else
+                {
+                    _activeTargetList.Remove(target);
+                }
+
+                ManageActiveTarget(target);
             }
         }
+
+        protected virtual void ManageActiveTarget(GameObject target)
+        {
+            if (_activeTarget != null && _activeTarget != target)
+            {
+                return;
+            }
+
+            SetActiveTarget();
+        }
+
+        protected virtual void SetActiveTarget()
+        {
+            if (_activeTargetList.Any(t => ReturnTargetLineOfSight(t.transform.position)))
+            {
+                _activeTarget = _activeTargetList.Where(t => ReturnTargetLineOfSight(t.transform.position))
+                    .OrderBy(t => Vector3.Distance(t.transform.position, transform.position)).FirstOrDefault();
+
+                OnCheckForRotationTarget(_activeTarget);
+            }
+            else
+            {
+                _activeTarget = null;
+                _rotationTarget = null;
+            }
+        }
+
+        protected virtual bool ReturnTargetLineOfSight(Vector3 targetPos)
+        {
+            var targetVector = targetPos - this.transform.position;
+
+            var dotAngle = Vector3.Dot(targetVector.normalized, transform.forward);
+
+            return dotAngle > 0 ? true : false; // change for missile / full rotation = return true
+            // also check with edge towers
+        }
+        //
+
+
+
 
         protected abstract void AssignNewTarget(GameObject activeTarget, int reward);
 

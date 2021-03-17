@@ -7,7 +7,7 @@ namespace Mercier.Scripts.Classes
 {
     public class Mech1 : Enemy
     {
-        [SerializeField]
+        [Space, SerializeField]
         private ParentConstraint _parentConstraint;
     }
 }
