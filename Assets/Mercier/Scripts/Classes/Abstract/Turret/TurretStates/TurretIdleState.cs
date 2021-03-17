@@ -6,12 +6,12 @@ namespace Mercier.Scripts.Classes.Abstract.Turret.TurretStates
 {
     public class TurretIdleState : TurretBaseState
     {
-        public override void EnterState(Turret turret)
+        public override void EnterState(BaseTurret turret)
         {
             
         }
 
-        public override void Update(Turret turret)
+        public override void Update(BaseTurret turret)
         {
             if (turret.ActiveTarget != null)
             {
@@ -19,7 +19,7 @@ namespace Mercier.Scripts.Classes.Abstract.Turret.TurretStates
             }
         }
 
-        public override void LateUpdate(Turret turret)
+        public override void LateUpdate(BaseTurret turret)
         {
             
         }

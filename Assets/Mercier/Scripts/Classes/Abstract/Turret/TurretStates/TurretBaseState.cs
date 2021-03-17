@@ -6,11 +6,11 @@ namespace Mercier.Scripts.Classes.Abstract.Turret.TurretStates
 {
     public abstract class TurretBaseState
     {
-        public abstract void EnterState(Turret turret);
+        public abstract void EnterState(BaseTurret turret);
 
-        public abstract void Update(Turret turret);
+        public abstract void Update(BaseTurret turret);
 
-        public abstract void LateUpdate(Turret turret);
+        public abstract void LateUpdate(BaseTurret turret);
     }
 }
 

@@ -26,7 +26,7 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
         protected float _auxiliaryAngleToStartRotation;
 
-        protected Vector3 _forwardView;
+        //protected Vector3 _forwardView;
         protected Vector3 _directionToLook;
         protected float _lookAngle;
 
@@ -46,7 +46,7 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
             _auxiliaryInitialRotation = _auxiliaryRotationObj.rotation;
 
-            _forwardView = _auxiliaryRotationObj.forward;
+            //_forwardView = _auxiliaryRotationObj.forward;
         }
 
         protected override void AssignNewTarget(GameObject activeTarget, int reward) // also registered to onEnemyDeath

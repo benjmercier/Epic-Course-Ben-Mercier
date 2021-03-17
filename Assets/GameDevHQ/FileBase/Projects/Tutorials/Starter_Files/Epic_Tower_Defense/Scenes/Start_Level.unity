@@ -1298,9 +1298,44 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7409623745503293033, guid: cbf5a24d16c3f8747b19b0caee9def9d,
         type: 3}
+      propertyPath: _armor.max
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409623745503293033, guid: cbf5a24d16c3f8747b19b0caee9def9d,
+        type: 3}
+      propertyPath: _health.max
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409623745503293033, guid: cbf5a24d16c3f8747b19b0caee9def9d,
+        type: 3}
+      propertyPath: _activeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409623745503293033, guid: cbf5a24d16c3f8747b19b0caee9def9d,
+        type: 3}
       propertyPath: _primaryRotationObj
       value: 
       objectReference: {fileID: 1086427617}
+    - target: {fileID: 7409623745503293033, guid: cbf5a24d16c3f8747b19b0caee9def9d,
+        type: 3}
+      propertyPath: _attack.activeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409623745503293033, guid: cbf5a24d16c3f8747b19b0caee9def9d,
+        type: 3}
+      propertyPath: _primaryRotation.speed
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409623745503293033, guid: cbf5a24d16c3f8747b19b0caee9def9d,
+        type: 3}
+      propertyPath: _primaryRotation.objTransform
+      value: 
+      objectReference: {fileID: 1086427617}
+    - target: {fileID: 7409623745503293033, guid: cbf5a24d16c3f8747b19b0caee9def9d,
+        type: 3}
+      propertyPath: _attack.activeTargetList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8130879818932858865, guid: cbf5a24d16c3f8747b19b0caee9def9d,
         type: 3}
       propertyPath: m_Enabled

@@ -102,20 +102,20 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
         protected virtual void Update()
         {
-            _currentTurretState.Update(this);
+            //_currentTurretState.Update(this);
 
             //Debug.Log("Current State: " + _currentTurretState.ToString());
         }
 
         protected virtual void LateUpdate()
         {
-            _currentTurretState.LateUpdate(this);
+            //_currentTurretState.LateUpdate(this);
         }
 
         public void TransitionToState(TurretBaseState state)
         {
             _currentTurretState = state;
-            _currentTurretState.EnterState(this);
+            //_currentTurretState.EnterState(this);
         }
 
         // registered to AttackRadius OnTriggerEnter/Exit
@@ -249,11 +249,6 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         protected virtual void OnTurretAttack()
         {
             onTurretAttack?.Invoke(_activeTarget, _attackStrength);
-        }
-
-        protected virtual void OnMouseDown()
-        {
-            Debug.Log("You clicked me!");
         }
     }
 }

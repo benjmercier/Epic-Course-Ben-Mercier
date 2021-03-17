@@ -186,9 +186,11 @@ namespace Mercier.Scripts.Classes
                 if (ReturnTargetInLineOfSight(targetPos))
                 {
                     _primaryRotation.CalculateMovement();
+                    //_primaryRotation.movement = _primaryRotation.speed * Time.deltaTime;
 
                     _primaryRotation.CalculateDirection(targetPos);
-
+                    //_primaryRotation.targetDirection = targetPos - _primaryRotation.objTransform.position;
+                    
                     _primaryRotation.lookRotation = Quaternion.LookRotation(_primaryRotation.targetDirection);
 
                     _primaryRotation.objTransform.rotation = Quaternion.Slerp(_primaryRotation.objTransform.rotation,

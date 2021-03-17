@@ -72,6 +72,7 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
             {
                 ActivateTurret(true);
             }
+            /*
 
             _primaryMovement = _primaryRotationSpeed * Time.deltaTime;
 
@@ -87,25 +88,14 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
             _yClamped = Mathf.Clamp(_yAngleCheck, _minRotationAngle.y, _maxRotationAngle.y);
 
             _primaryRotationObj.localRotation = Quaternion.Euler(_xClamped, _yClamped, _primaryRotationObj.localEulerAngles.z);
-
-            /*
-            _targetDirection = target - _primaryRotationObj.position;
+            */
 
             _primaryMovement = _primaryRotationSpeed * Time.deltaTime;
 
-            _primaryRotateTowards = Vector3.RotateTowards(_primaryRotationObj.forward, _targetDirection, _primaryMovement, 0f);
-            _primaryLookRotation = Quaternion.LookRotation(_primaryRotateTowards);
+            _primaryTargetDirection = target - _primaryRotationObj.position;
+            _primaryLookRotation = Quaternion.LookRotation(_primaryTargetDirection);
 
-            _primaryRotationObj.rotation = _primaryLookRotation;
-
-            _xAngleCheck = ReturnLocalEulerAngleCheck(_primaryRotationObj.localEulerAngles.x);
-            _yAngleCheck = ReturnLocalEulerAngleCheck(_primaryRotationObj.localEulerAngles.y);
-
-            _xClamped = Mathf.Clamp(_xAngleCheck, _minRotationAngle.x, _maxRotationAngle.x);
-            _yClamped = Mathf.Clamp(_yAngleCheck, _minRotationAngle.y, _maxRotationAngle.y);
-
-            _primaryRotationObj.localRotation = Quaternion.Euler(_xClamped, _yClamped, _primaryRotationObj.localEulerAngles.z);
-            */
+            _primaryRotationObj.rotation = Quaternion.Slerp(_primaryRotationObj.rotation, _primaryLookRotation, _primaryMovement);
         }
 
         public override void RotateToStart()
