@@ -22,9 +22,16 @@ namespace Mercier.Scripts.Managers
             Color.white // destroyed
         };
 
+        [SerializeField]
+        private TextMeshProUGUI _startTimerTMP;
+
+        [SerializeField]
+        private Image[] _armoryTurretImages;
 
 
-
+        public static event Action<int> onTurretSelectedFromArmory;
+        public static event Func<int, Sprite> onRequestSprietFromDatabase;
+        public static event Func<int, int> onRequestCostFromDatabase;
 
 
 
@@ -74,7 +81,7 @@ namespace Mercier.Scripts.Managers
         private Ray _ray;
         private RaycastHit _rayHit;
 
-        public int DecoyToActivate { set { ActivateDecoyFromTowerManager(value); } }
+        public int DecoyToActivate { set { OnTurretSelectedFromArmory(value); } }
 
         public static event Action<GameObject> onDisableTurret;
 
@@ -83,32 +90,77 @@ namespace Mercier.Scripts.Managers
         /// base UI blue color = 85, 198, 244, 255
         /// </summary>
 
+        private void Start()
+        {
+            _startTimerTMP.text = "00:00";
+        }
+
         private void OnEnable()
         {
+            GameManager.onUpdateCountdownTimer += UpdateStartTimer;
             GameManager.onUpdatePlayerStatus += UpdateOverlayColor;
             GameManager.onUpdateWarFunds += UpdateWarFunds;
         }
 
         private void OnDisable()
         {
+            GameManager.onUpdateCountdownTimer -= UpdateStartTimer;
             GameManager.onUpdatePlayerStatus -= UpdateOverlayColor;
             GameManager.onUpdateWarFunds -= UpdateWarFunds;
         }
 
-        public void UpdateWarFunds(int warFunds)
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                PopulateArmoryButtons();
+            }
+        }
+
+        private void UpdateStartTimer(float min, float sec)
+        {
+            _startTimerTMP.text = min.ToString("00") + ":" + sec.ToString("00");
+        }
+
+        private void UpdateWarFunds(int warFunds)
         {
             _warFundsAmount.text = warFunds.ToString();
         }
 
-        public void UpdateOverlayColor(int playerStatus)
+        private void UpdateOverlayColor(int playerStatus)
         {
             _uIImageOverlay.ForEach(img => img.color = _uIStatusColors[playerStatus]);
         }
 
+        private void OnTurretSelectedFromArmory(int index)
+        {
+            // disable buttons if not enough funds
+            // if there are, activate OnDecoyTurretSelected from TowerManager
 
+        }
 
+        private void PopulateArmoryButtons()
+        {
+            // check with Database
+            // foreach element in Database
+            // populate button picture
+            
+            for (int i = 0; i < _armoryTurretImages.Length; i++)
+            {
+                _armoryTurretImages[i].sprite = OnRequestSprietFromDatabase(i);
+                _armoryTurretImages[i].GetComponentInChildren<TextMeshProUGUI>().text = "$" + OnRequestCostFromDatabase(i).ToString();
+            }
+        }
 
+        private Sprite OnRequestSprietFromDatabase(int index)
+        {
+            return onRequestSprietFromDatabase?.Invoke(index);
+        }
 
+        private int OnRequestCostFromDatabase(int index)
+        {
+            return (int)onRequestCostFromDatabase?.Invoke(index);
+        }
 
 
 

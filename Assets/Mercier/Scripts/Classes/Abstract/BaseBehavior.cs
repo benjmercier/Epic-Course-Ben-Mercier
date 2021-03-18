@@ -66,7 +66,7 @@ namespace Mercier.Scripts.Classes.Abstract
             }
             else
             {
-                Debug.LogError("SharedBehavior::Awake()::_primaryRotation is NULL.");
+                Debug.LogError("BaseBehavior::Awake()::_primaryRotation is NULL on " + gameObject.name + ".");
             }
 
             if (_auxiliaryRotation.objTransform != null)
@@ -75,7 +75,7 @@ namespace Mercier.Scripts.Classes.Abstract
             }
             else
             {
-                Debug.Log("SharedBehavior::Awake()::_auxiliaryRotation is NULL and will not be calculated");
+                Debug.Log("BaseBehavior::Awake()::_auxiliaryRotation is NULL on " + gameObject.name + " and will not be calculated");
             }
         }
 

@@ -89,6 +89,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2974582972463478835}
+  - component: {fileID: 5674141436617233266}
   - component: {fileID: 1070914041426402304}
   - component: {fileID: 2731085058442061815}
   m_Layer: 8
@@ -114,7 +115,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1070914041426402304
+--- !u!114 &5674141436617233266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,6 +123,73 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2976905752199410027}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f7e004a8dfcf614081e8bc709707e37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _primaryRotation:
+    objTransform: {fileID: 2974367684673146335}
+    speed: 2.5
+    maxAngle: {x: 90, y: 90}
+    minAngle: {x: -90, y: -90}
+    maxIdleOffset: 1
+    maxLookOffset: 0.95
+    angleToIdle: 0
+    targetDirection: {x: 0, y: 0, z: 0}
+    movement: 0
+    idleRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotateTowards: {x: 0, y: 0, z: 0}
+    lookRotation: {x: 0, y: 0, z: 0, w: 0}
+    xAxisCheck: 0
+    yAxisCheck: 0
+    xAxisClamp: 0
+    yAxisClamp: 0
+  _auxiliaryRotation:
+    objTransform: {fileID: 2979278607841352053}
+    speed: 2.5
+    maxAngle: {x: 90, y: 90}
+    minAngle: {x: -90, y: -90}
+    maxIdleOffset: 1
+    maxLookOffset: 0.95
+    angleToIdle: 0
+    targetDirection: {x: 0, y: 0, z: 0}
+    movement: 0
+    idleRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotateTowards: {x: 0, y: 0, z: 0}
+    lookRotation: {x: 0, y: 0, z: 0, w: 0}
+    xAxisCheck: 0
+    yAxisCheck: 0
+    xAxisClamp: 0
+    yAxisClamp: 0
+  _targeting:
+    targetList: []
+    activeTarget: {fileID: 0}
+    rotationTarget: {fileID: 0}
+    maxDotAngleOffset: 0
+    targetVector: {x: 0, y: 0, z: 0}
+    dotAngle: 0
+    targetAngle: 0
+  _renderersInChildren: []
+  _turretStats:
+    iD: 3
+    maxHealth: 100
+    currentHealth: 0
+    maxArmor: 100
+    currentArmor: 0
+    attackStrength: 50
+    fireRate: 0.5
+    cost: 700
+    destroyedPenalty: 0
+    currentSprite: {fileID: 21300000, guid: 613bf375b8d72574983f4a3fab426514, type: 3}
+    upgradeSprite: {fileID: 0}
+--- !u!114 &1070914041426402304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2976905752199410027}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22440509da91c604cb78baef5581354e, type: 3}
   m_Name: 

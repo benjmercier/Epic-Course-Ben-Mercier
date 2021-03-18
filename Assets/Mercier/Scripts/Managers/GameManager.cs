@@ -10,6 +10,17 @@ namespace Mercier.Scripts.Managers
 {
     public class GameManager : MonoSingleton<GameManager>, IEventable
     {
+        public enum GameState
+        {
+            Waiting,
+            Playing,
+            Paused,
+            FastForward,
+            Finished
+        }
+
+        public GameState currentGameState;
+        
         [SerializeField]
         private int _maxPlayerHealth = 100;
         [ReadOnly, SerializeField]
@@ -41,6 +52,8 @@ namespace Mercier.Scripts.Managers
         private float _timeToStart = 10f;
         [ReadOnly, SerializeField]
         private float _countdown;
+        private float _countdownMinutes;
+        private float _countdownSeconds;
         private bool _gameStarted = false;
 
 
@@ -50,6 +63,7 @@ namespace Mercier.Scripts.Managers
 
         public static event Action<int> onUpdatePlayerStatus;
         public static event Action<int> onUpdateWarFunds;
+        public static event Action<float, float> onUpdateCountdownTimer;
 
         // change to struct
         #region Tags
@@ -98,7 +112,7 @@ namespace Mercier.Scripts.Managers
             Time.timeScale = _timescale;
 
             //OnUpdatePlayerStatus((int)currentPlayerStatus);
-
+            /*
             if (Input.GetKeyDown(KeyCode.B))
             {
                 ItemPurchased(2000);
@@ -107,7 +121,7 @@ namespace Mercier.Scripts.Managers
             if (Input.GetKeyDown(KeyCode.S) && !_gameStarted)
             {
                 StartCoroutine(StartGameRoutine());
-            }
+            }*/
         }
 
         public void OnEnable()
@@ -125,10 +139,29 @@ namespace Mercier.Scripts.Managers
         private IEnumerator StartGameRoutine(Action onComplete = null)
         {
             _countdown = _timeToStart;
+            _countdownMinutes = Mathf.Floor(_countdown / 60);
+            _countdownSeconds = Mathf.Floor(_countdown % 60);
+
+            OnUpdateCountdownTimer(_countdownMinutes, _countdownSeconds);
+
+            yield return new WaitForSeconds(1f);
 
             while (_countdown > 0)
             {
                 _countdown -= Time.deltaTime;
+
+                if (_countdown > 0)
+                {
+                    _countdownMinutes = Mathf.Floor(_countdown / 60);
+                    _countdownSeconds = Mathf.Floor(_countdown % 60);
+                }
+                else
+                {
+                    _countdownMinutes = 0f;
+                    _countdownSeconds = 0f;
+                }
+
+                OnUpdateCountdownTimer(_countdownMinutes, _countdownSeconds);
 
                 yield return null;
             }
@@ -136,6 +169,11 @@ namespace Mercier.Scripts.Managers
             _gameStarted = true;
 
             onComplete?.Invoke();
+        }
+
+        private void OnUpdateCountdownTimer(float min, float sec)
+        {
+            onUpdateCountdownTimer?.Invoke(min, sec);
         }
 
         public void ItemPurchased(int cost)

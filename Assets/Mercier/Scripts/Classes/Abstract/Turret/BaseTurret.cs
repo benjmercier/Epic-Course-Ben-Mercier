@@ -19,6 +19,7 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
         [Space, SerializeField]
         protected TurretStats _turretStats;
+        public TurretStats TurretStats { get { return _turretStats; } }
 
         protected bool _canFire;
         protected bool _hasFired;
