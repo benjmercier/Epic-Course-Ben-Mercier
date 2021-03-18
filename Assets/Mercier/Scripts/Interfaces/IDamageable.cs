@@ -6,10 +6,7 @@ namespace Mercier.Scripts.Interfaces
 {
     public interface IDamageable<T>
     {
-        T Health { get; set; }
-        T Armor { get; set; }
-
-        void OnDamage(T health, T armor, T damageAmount, out T curHealth, out T curArmor);
+        void OnDamageReceived(T health, T armor, T damageAmount, out T curHealth, out T curArmor);
     }
 }
 

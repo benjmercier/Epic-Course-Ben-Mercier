@@ -10,6 +10,16 @@ namespace Mercier.Scripts.Classes.Enemies
     {
         [Space, SerializeField]
         private ParentConstraint _parentConstraint;
+
+        protected override void ReceiveDamage(GameObject damagedObj, float damageAmount)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnDamageReceived(float health, float armor, float damageAmount, out float curHealth, out float curArmor)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
 

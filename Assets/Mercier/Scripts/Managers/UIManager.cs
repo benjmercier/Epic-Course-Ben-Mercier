@@ -12,6 +12,28 @@ namespace Mercier.Scripts.Managers
     public class UIManager : MonoSingleton<UIManager>
     {
         [SerializeField]
+        private List<Image> _uIImageOverlay = new List<Image>();
+        [SerializeField]
+        private Color[] _uIStatusColors =
+        {
+            new Color32(85, 198, 244, 255), // good
+            new Color32(244, 231, 85, 255), // fair
+            new Color32(244, 87, 85, 255), // danger
+            Color.white // destroyed
+        };
+
+
+
+
+
+
+
+
+
+
+
+
+        [SerializeField]
         private GameObject _turretToModify;
         private Turret _currentTurret;
         [SerializeField]
@@ -20,8 +42,7 @@ namespace Mercier.Scripts.Managers
         [SerializeField]
         private GameObject _modifyTurretMenu;
 
-        [SerializeField]
-        private List<Button> _armoryButtons = new List<Button>();
+        
 
         [SerializeField]
         private List<Sprite> _turretSprites = new List<Sprite>();
@@ -57,10 +78,41 @@ namespace Mercier.Scripts.Managers
 
         public static event Action<GameObject> onDisableTurret;
 
-        private void Start()
+
+        /// <summary>
+        /// base UI blue color = 85, 198, 244, 255
+        /// </summary>
+
+        private void OnEnable()
         {
-            _warFundsAmount.text = GameManager.Instance.WarFundsAvailable.ToString();
+            GameManager.onUpdatePlayerStatus += UpdateOverlayColor;
+            GameManager.onUpdateWarFunds += UpdateWarFunds;
         }
+
+        private void OnDisable()
+        {
+            GameManager.onUpdatePlayerStatus -= UpdateOverlayColor;
+            GameManager.onUpdateWarFunds -= UpdateWarFunds;
+        }
+
+        public void UpdateWarFunds(int warFunds)
+        {
+            _warFundsAmount.text = warFunds.ToString();
+        }
+
+        public void UpdateOverlayColor(int playerStatus)
+        {
+            _uIImageOverlay.ForEach(img => img.color = _uIStatusColors[playerStatus]);
+        }
+
+
+
+
+
+
+
+
+
 
         private void FixedUpdate()
         {
@@ -70,10 +122,8 @@ namespace Mercier.Scripts.Managers
             }
         }
 
-        public void UpdateWarFunds()
-        {
-            _warFundsAmount.text = GameManager.Instance.WarFundsAvailable.ToString();
-        }
+
+
 
         private void ActivateDecoyFromTowerManager(int index)
         {

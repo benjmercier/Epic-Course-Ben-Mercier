@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mercier.Scripts.Classes.Abstract.Turret.TurretStates;
+using Mercier.Scripts.Interfaces;
+using Mercier.Scripts.Classes.Custom;
 
 namespace Mercier.Scripts.Classes.Abstract.Turret
 {
@@ -15,10 +17,8 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         public readonly TurretAttackingState turretAttackingState = new TurretAttackingState();
         public readonly TurretDestroyedState turretDestroyedState = new TurretDestroyedState();
 
-        [SerializeField]
-        protected readonly int _turretID;
-        [SerializeField]
-        protected readonly int _turretCost;
+        [Space, SerializeField]
+        protected TurretStats _turretStats;
 
         protected bool _canFire;
         protected bool _hasFired;
@@ -28,6 +28,9 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
         public override void OnEnable()
         {
             base.OnEnable();
+
+            _turretStats.currentHealth = _turretStats.maxHealth;
+            _turretStats.currentArmor = _turretStats.maxArmor;
 
             TransitionToState(turretIdleState);
 
@@ -75,7 +78,54 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
         protected virtual void OnTurretAttack()
         {
-            onTurretAttack?.Invoke(_targeting.activeTarget,  _attackStrength);
+            onTurretAttack?.Invoke(_targeting.activeTarget,  _turretStats.attackStrength);
+        }
+
+        protected override void ReceiveDamage(GameObject damagedObj, float damageAmount)
+        {
+            if (this.gameObject == damagedObj)
+            {
+                OnDamageReceived(_turretStats.currentHealth, _turretStats.currentArmor, damageAmount, out _turretStats.currentHealth, out _turretStats.currentArmor);
+            }
+        }
+
+        public override void OnDamageReceived(float health, float armor, float damageAmount, out float curHealth, out float curArmor)
+        {
+            if (armor > _zero)
+            {
+                armor -= damageAmount;
+
+                _delta = health - armor;
+
+                if (armor < _zero)
+                {
+                    armor = _zero;
+                }
+
+                curArmor = armor;
+            }
+            else
+            {
+                if (armor != _zero)
+                {
+                    armor = _zero;
+                }
+
+                curArmor = armor;
+
+                _delta = _turretStats.maxHealth;
+            }
+
+            health -= (_delta / _turretStats.maxHealth) * damageAmount;
+
+            curHealth = health;
+
+            if (curHealth <= 0)
+            {
+                curHealth = 0;
+
+                OnObjDestroyed(this.gameObject, _turretStats.destroyedPenalty);
+            }
         }
     }
 }

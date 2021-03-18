@@ -30,11 +30,11 @@ namespace Mercier.Scripts.Classes
 
         [Header("Enemy Stats")]
         [SerializeField]
-        protected Stats _health;
-        public float Health { get { return _health.current; } set { _health.current = value; } }
+        protected TurretStats _health;
+        //public float Health { get { return _health.current; } set { _health.current = value; } }
         [SerializeField]
-        protected Stats _armor;
-        public float Armor { get { return _armor.current; } set { _armor.current = value; } }
+        protected TurretStats _armor;
+        //public float Armor { get { return _armor.current; } set { _armor.current = value; } }
 
         private float _delta;
         private float _zero = 0f;
@@ -84,8 +84,8 @@ namespace Mercier.Scripts.Classes
             
             _enemyAnim.SetBool(AnimationManager.Instance.IsDestroyedParam, false);
 
-            Health = _health.max;
-            Armor = _armor.max;
+            //Health = _health.max;
+            //Armor = _armor.max;
 
             _navMeshAgent.enabled = true;
             _navTarget = SpawnManager.Instance.AssignTargetPos();
@@ -223,11 +223,11 @@ namespace Mercier.Scripts.Classes
         {
             if (this.gameObject == target)
             {
-                OnDamage(Health, Armor, damageAmount, out _health.current, out _armor.current);
+                //OnDamage(Health, Armor, damageAmount, out _health.current, out _armor.current);
             }
         }
         
-        public virtual void OnDamage(float health, float armor, float damageAmount, out float curHealth, out float curArmor)
+        public virtual void OnDamageReceived(float health, float armor, float damageAmount, out float curHealth, out float curArmor)
         {
             if (armor > _zero)
             {
@@ -251,10 +251,10 @@ namespace Mercier.Scripts.Classes
 
                 curArmor = armor;
 
-                _delta = _health.max;
+                //_delta = _health.max;
             }
 
-            health -= (_delta / _health.max) * damageAmount;
+            //health -= (_delta / _health.max) * damageAmount;
             
             curHealth = health;
 

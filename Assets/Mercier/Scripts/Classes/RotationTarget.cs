@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mercier.Scripts.Interfaces;
+using Mercier.Scripts.Classes.Abstract;
 using Mercier.Scripts.Classes.Abstract.Turret;
 
 namespace Mercier.Scripts.Classes
@@ -22,11 +23,13 @@ namespace Mercier.Scripts.Classes
             }
 
             Turret.onCheckForRotationTarget += VerifyRotationTarget;
+            BaseTurret.onCheckForRotationTarget += VerifyRotationTarget;            
         }
 
         public void OnDisable()
         {
             Turret.onCheckForRotationTarget -= VerifyRotationTarget;
+            BaseTurret.onCheckForRotationTarget -= VerifyRotationTarget;
         }
 
         private void VerifyRotationTarget(GameObject parent)

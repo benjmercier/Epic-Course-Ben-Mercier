@@ -12,25 +12,6 @@ namespace Mercier.Scripts.Classes.Abstract
     [SelectionBase]
     public abstract class BaseBehavior<T> : MonoBehaviour, IEventable, IDamageable<float>
     {
-        #region Stats
-        [Header("Stats")]
-        [SerializeField]
-        protected Stats _health;
-        public float Health { get { return _health.current; } set { _health.current = value; } }
-        [SerializeField]
-        protected Stats _armor;
-        public float Armor { get { return _armor.current; } set { _armor.current = value; } }
-
-        [SerializeField]
-        protected float _attackStrength = 10f;
-
-        [SerializeField]
-        protected int _currencyIfDestroyed;
-
-        protected float _delta;
-        protected float _zero = 0f;
-        #endregion
-
         #region Rotation
         [Header("Rotation Settings")]
         [SerializeField]
@@ -67,6 +48,9 @@ namespace Mercier.Scripts.Classes.Abstract
         };
         #endregion
 
+        protected float _delta;
+        protected float _zero = 0f;
+
         protected WaitForSeconds _onDeathWait = new WaitForSeconds(3.5f);
 
         #region Events
@@ -97,9 +81,6 @@ namespace Mercier.Scripts.Classes.Abstract
 
         public virtual void OnEnable()
         {
-            Health = _health.max;
-            Armor = _armor.max;
-
             for (int i = 0; i < _rotationList.Count; i++)
             {
                 _rotationList[i].idleRotation = Quaternion.Euler(new Vector3(
@@ -280,52 +261,9 @@ namespace Mercier.Scripts.Classes.Abstract
             return false;
         }
 
-        protected virtual void ReceiveDamage(GameObject damagedObj, float damageAmount)
-        {
-            if (this.gameObject == damagedObj)
-            {
-                OnDamage(Health, Armor, damageAmount, out _health.current, out _armor.current);
-            }
-        }
+        protected abstract void ReceiveDamage(GameObject damagedObj, float damageAmount);
 
-        public virtual void OnDamage(float health, float armor, float damageAmount, out float curHealth, out float curArmor)
-        {
-            if (armor > _zero)
-            {
-                armor -= damageAmount;
-
-                _delta = health - armor;
-
-                if (armor < _zero)
-                {
-                    armor = _zero;
-                }
-
-                curArmor = armor;
-            }
-            else
-            {
-                if (armor != _zero)
-                {
-                    armor = _zero;
-                }
-
-                curArmor = armor;
-
-                _delta = _health.max;
-            }
-
-            health -= (_delta / _health.max) * damageAmount;
-
-            curHealth = health;
-
-            if (curHealth <= 0)
-            {
-                curHealth = 0;
-
-                OnObjDestroyed(this.gameObject, _currencyIfDestroyed);
-            }
-        }
+        public abstract void OnDamageReceived(float health, float armor, float damageAmount, out float curHealth, out float curArmor);
 
         protected virtual void OnObjDestroyed(GameObject objDestroyed, int currency)
         {

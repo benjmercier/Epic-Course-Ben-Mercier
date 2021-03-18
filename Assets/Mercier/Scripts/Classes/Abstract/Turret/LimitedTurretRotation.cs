@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LimitedTurretRotation : MonoBehaviour
+namespace Mercier.Scripts.Classes.Abstract.Turret
 {
-    // Start is called before the first frame update
-    void Start()
+    public abstract class LimitedTurretRotation : BaseTurret
     {
-        
-    }
+        [SerializeField]
+        protected float _fireRate = 0.5f;
+        protected float _lastFire;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override void TurretAttack()
+        {
+            if (Time.time > _lastFire)
+            {
+                _lastFire = Time.time + _fireRate;
+
+                OnTurretAttack();
+            }
+        }
     }
 }
+
