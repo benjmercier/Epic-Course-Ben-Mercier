@@ -93,7 +93,7 @@ namespace Mercier.Scripts.Classes
             _navMeshAgent.SetDestination(_navTarget);
             _navMeshAgent.speed = UpdateSpeed(_speed);
 
-            _primaryRotation.idleRotation = _primaryRotation.objTransform.localRotation;
+            //_primaryRotation.idleRotation = _primaryRotation.objTransform.localRotation;
 
             Turret.onTurretAttack += ReceiveDamage;
             AttackRadius.onAttackRadiusTriggered += UpdateTargetList;
@@ -209,8 +209,8 @@ namespace Mercier.Scripts.Classes
             {
                 _primaryRotation.CalculateMovement();
 
-                _primaryRotation.objTransform.localRotation = Quaternion.Slerp(_primaryRotation.objTransform.localRotation,
-                    _primaryRotation.idleRotation, _primaryRotation.movement);
+               // _primaryRotation.objTransform.localRotation = Quaternion.Slerp(_primaryRotation.objTransform.localRotation,
+                //    _primaryRotation.idleRotation, _primaryRotation.movement);
             }
         }
 

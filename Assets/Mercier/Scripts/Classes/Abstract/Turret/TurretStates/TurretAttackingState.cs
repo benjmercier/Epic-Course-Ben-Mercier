@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Mercier.Scripts.Classes.Abstract.Turret.TurretStates
 {
-    public class TurretAttackingState : TurretBaseState
+    public class TurretAttackingState : BaseTurretState
     {
         public override void EnterState(BaseTurret turret)
         {

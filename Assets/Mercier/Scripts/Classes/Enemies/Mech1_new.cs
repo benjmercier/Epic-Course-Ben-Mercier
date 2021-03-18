@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using Mercier.Scripts.Classes.Abstract.Enemy;
 
-namespace Mercier.Scripts.Classes
+namespace Mercier.Scripts.Classes.Enemies
 {
-    public class Mech1 : Enemy
+    public class Mech1_new : BaseEnemy
     {
         [Space, SerializeField]
         private ParentConstraint _parentConstraint;

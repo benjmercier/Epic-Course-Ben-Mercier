@@ -6,10 +6,10 @@ using Mercier.Scripts.Classes.Abstract.Turret.TurretStates;
 
 namespace Mercier.Scripts.Classes.Abstract.Turret
 {
-    public abstract class BaseTurret : SharedBehaviors
+    public abstract class BaseTurret : BaseBehavior<BaseTurretState>
     { 
-        private TurretBaseState _currentTurretState;
-        public TurretBaseState CurrentTurretStat { get { return _currentTurretState; } }
+        private BaseTurretState _currentTurretState;
+        public BaseTurretState CurrentTurretState { get { return _currentTurretState; } }
         public readonly TurretIdleState turretIdleState = new TurretIdleState();
         public readonly TurretCoolDownState turretCoolDownState = new TurretCoolDownState();
         public readonly TurretAttackingState turretAttackingState = new TurretAttackingState();
@@ -31,14 +31,14 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
             TransitionToState(turretIdleState);
 
-            Enemy.onEnemyDeath += AssignNewTarget;
+            //Enemy.onEnemyDeath += AssignNewTarget;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
 
-            Enemy.onEnemyDeath -= AssignNewTarget;
+            //Enemy.onEnemyDeath -= AssignNewTarget;
         }
 
         protected override void Update()
@@ -46,12 +46,12 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
             _currentTurretState.Update(this);
         }
 
-        protected virtual void LateUpdate()
+        protected override void LateUpdate()
         {
             _currentTurretState.LateUpdate(this);
         }
 
-        public void TransitionToState(TurretBaseState state)
+        public override void TransitionToState(BaseTurretState state)
         {
             _currentTurretState = state;
             _currentTurretState.EnterState(this);

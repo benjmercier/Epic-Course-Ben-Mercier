@@ -5,15 +5,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mercier.Scripts.Classes.Abstract.Turret.TurretStates;
 using Mercier.Scripts.Interfaces;
-using Mercier.Scripts.Classes;
 
 namespace Mercier.Scripts.Classes.Abstract.Turret
 {
     [SelectionBase]
     public abstract class Turret : MonoBehaviour, IEventable
     {
-        private TurretBaseState _currentTurretState;
-        public TurretBaseState CurrentTurretStat { get { return _currentTurretState; } }
+        private BaseTurretState _currentTurretState;
+        public BaseTurretState CurrentTurretStat { get { return _currentTurretState; } }
         public readonly TurretIdleState turretIdleState = new TurretIdleState();
         public readonly TurretCoolDownState turretCoolDownState = new TurretCoolDownState();
         public readonly TurretAttackingState turretAttackingState = new TurretAttackingState();
@@ -90,14 +89,14 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
             AttackRadius.onAttackRadiusTriggered += UpdateTargetList;
             Classes.RotationTarget.onConfirmRotationTarget += AssignRotationTarget;
-            Enemy.onEnemyDeath += AssignNewTarget;
+            //Enemy.onEnemyDeath += AssignNewTarget;
         }
 
         public virtual void OnDisable()
         {
             AttackRadius.onAttackRadiusTriggered -= UpdateTargetList;
             Classes.RotationTarget.onConfirmRotationTarget -= AssignRotationTarget;
-            Enemy.onEnemyDeath -= AssignNewTarget;
+            //Enemy.onEnemyDeath -= AssignNewTarget;
         }
 
         protected virtual void Update()
@@ -112,7 +111,7 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
             //_currentTurretState.LateUpdate(this);
         }
 
-        public void TransitionToState(TurretBaseState state)
+        public void TransitionToState(BaseTurretState state)
         {
             _currentTurretState = state;
             //_currentTurretState.EnterState(this);

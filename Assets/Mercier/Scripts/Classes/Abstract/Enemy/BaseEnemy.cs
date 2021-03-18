@@ -5,18 +5,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Mercier.Scripts.Managers;
+using Mercier.Scripts.Classes.Abstract.Enemy.EnemyStates;
 
-namespace Mercier.Scripts.Classes.Abstract
+namespace Mercier.Scripts.Classes.Abstract.Enemy
 {
-    public abstract class BaseEnemy : SharedBehaviors
+    public abstract class BaseEnemy : BaseBehavior<BaseEnemyState>
     {
+        private BaseEnemyState _currentEnemyState;
+        public BaseEnemyState CurrentEnemyState { get { return _currentEnemyState; } }
+        public readonly EnemyIdleState enemyIdleState = new EnemyIdleState();
+        public readonly EnemyCoolDownState enemyCoolDownState = new EnemyCoolDownState();
+        public readonly EnemyAttackingState enemyAttackingState = new EnemyAttackingState();
+        public readonly EnemyDestroyedState enemyDestroyedState = new EnemyDestroyedState();
+
         [Header("Enemy Settings")]
         [SerializeField]
         protected NavMeshAgent _navMeshAgent;
         [SerializeField]
         protected Animator _enemyAnim;
+        public Animator EnemyAnim { get { return _enemyAnim; } }
         [SerializeField]
-        protected float _speed;
+        protected float _speed = 2.5f;
         [SerializeField]
         protected int _currencyToReward;
 
@@ -37,13 +46,15 @@ namespace Mercier.Scripts.Classes.Abstract
             {
                 Debug.LogError("Enemy::Awake()::" + gameObject.name + "'s _enemyAnimis NULL.");
             }
-
+            
             _renderersInChildren = GetComponentsInChildren<Renderer>();
         }
 
         public override void OnEnable()
         {
             base.OnEnable();
+
+            TransitionToState(enemyIdleState);
 
             _renderersInChildren.ToList().ForEach(m => m.material.SetFloat("_fillAmount", _defaultDissolveValue));
 
@@ -58,16 +69,19 @@ namespace Mercier.Scripts.Classes.Abstract
 
         protected override void Update()
         {
-            if (_targeting.activeTarget != null)
-            {
-                _enemyAnim.SetBool(AnimationManager.Instance.IsFiringParam, true);
-                RotateToTarget(_targeting.activeTarget.transform.position);
-            }
-            else
-            {
-                _enemyAnim.SetBool(AnimationManager.Instance.IsFiringParam, false);
-                RotateToStart();
-            }
+            _currentEnemyState.Update(this);
+            Debug.Log("CurrentState: " + _currentEnemyState);
+        }
+
+        protected override void LateUpdate()
+        {
+            _currentEnemyState.LateUpdate(this);
+        }
+
+        public override void TransitionToState(BaseEnemyState state)
+        {
+            _currentEnemyState = state;
+            _currentEnemyState.EnterState(this);
         }
 
         protected virtual float AssignSpeed(float speed)

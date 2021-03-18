@@ -1310,7 +1310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1693568624011698191}
-  - component: {fileID: 7409623745503293033}
+  - component: {fileID: 970574320377498027}
   - component: {fileID: 1640634097325754351}
   - component: {fileID: 8130879818932858865}
   - component: {fileID: 9159410364180200067}
@@ -1340,7 +1340,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7409623745503293033
+--- !u!114 &970574320377498027
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1349,21 +1349,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1699286027065544987}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88ee51afdaf50d043917f9a4fb57527b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9eda363e5bff22944b0392b72f7b7144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _navMeshAgent: {fileID: 8130879818932858865}
-  _enemyAnim: {fileID: 1640634097325754351}
-  _speed: 2
-  _currencyToReward: 15
-  _renderersInChildren: []
-  _maxHealth: 50
-  _currentHealth: 0
-  _maxArmor: 25
-  _currentArmor: 0
-  _activeTargetList: []
-  _activeTarget: {fileID: 0}
-  _attackStrength: 0
+  _health:
+    max: 100
+    current: 0
+  _armor:
+    max: 100
+    current: 0
+  _attackStrength: 10
+  _currencyIfDestroyed: 0
   _primaryRotation:
     objTransform: {fileID: 7071859265619136083}
     speed: 2.5
@@ -1381,13 +1377,36 @@ MonoBehaviour:
     yAxisCheck: 0
     xAxisClamp: 0
     yAxisClamp: 0
-  _attack:
-    activeTargetList: []
+  _auxiliaryRotation:
+    objTransform: {fileID: 0}
+    speed: 0
+    maxAngle: {x: 0, y: 0}
+    minAngle: {x: 0, y: 0}
+    maxIdleOffset: 0
+    maxLookOffset: 0
+    angleToIdle: 0
+    targetDirection: {x: 0, y: 0, z: 0}
+    movement: 0
+    idleRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotateTowards: {x: 0, y: 0, z: 0}
+    lookRotation: {x: 0, y: 0, z: 0, w: 0}
+    xAxisCheck: 0
+    yAxisCheck: 0
+    xAxisClamp: 0
+    yAxisClamp: 0
+  _targeting:
+    targetList: []
     activeTarget: {fileID: 0}
     rotationTarget: {fileID: 0}
+    maxDotAngleOffset: 0
     targetVector: {x: 0, y: 0, z: 0}
     dotAngle: 0
     targetAngle: 0
+  _renderersInChildren: []
+  _navMeshAgent: {fileID: 8130879818932858865}
+  _enemyAnim: {fileID: 1640634097325754351}
+  _speed: 2
+  _currencyToReward: 0
   _parentConstraint: {fileID: 8979027096605820155}
 --- !u!95 &1640634097325754351
 Animator:

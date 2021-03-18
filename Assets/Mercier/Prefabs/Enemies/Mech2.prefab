@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3072494028277646331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6478724976352666405}
+  m_Layer: 0
+  m_Name: Constraint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6478724976352666405
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3072494028277646331}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3226687247421151381}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3229082583107961317
 GameObject:
   m_ObjectHideFlags: 0
@@ -953,6 +983,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3231590250286393185}
+  - component: {fileID: 3111295040507697386}
   m_Layer: 0
   m_Name: Body_Upper
   m_TagString: Untagged
@@ -967,7 +998,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3229574274230868351}
-  m_LocalRotation: {x: -0, y: -0.000000059604638, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.000000014901161, z: -0, w: 1}
   m_LocalPosition: {x: -2.6716102e-16, y: 3.4957888, z: -0.32533106}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -975,6 +1006,32 @@ Transform:
   m_Father: {fileID: 3226674121580300115}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1773428102 &3111295040507697386
+ParentConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3229574274230868351}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: 3.4957888, z: -0.32533106}
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_TranslationOffsets:
+  - {x: 0, y: 1.0487367, z: -0.09759932}
+  m_RotationOffsets:
+  - {x: 0, y: 0, z: 0}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 0
+  m_Sources:
+  - sourceTransform: {fileID: 6478724976352666405}
+    weight: 1
 --- !u!1 &3229586187654593011
 GameObject:
   m_ObjectHideFlags: 0
@@ -2889,7 +2946,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3226687247421151381}
-  - component: {fileID: 9215307161986025516}
+  - component: {fileID: 1581277900560469709}
   - component: {fileID: 3279792961363241529}
   - component: {fileID: 8536136369352605483}
   - component: {fileID: 2143485739160046915}
@@ -2915,10 +2972,11 @@ Transform:
   - {fileID: 3231811345096316601}
   - {fileID: 3329630117568158472}
   - {fileID: 6251768729123769773}
+  - {fileID: 6478724976352666405}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9215307161986025516
+--- !u!114 &1581277900560469709
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2927,23 +2985,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 3230445893702710185}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69786046e9a810c4da18dae1fa5ce210, type: 3}
+  m_Script: {fileID: 11500000, guid: 552ef0509f1558d468c79a6c45b81e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _navMeshAgent: {fileID: 8536136369352605483}
-  _enemyAnim: {fileID: 3279792961363241529}
-  _speed: 2
-  _currencyToReward: 25
-  _renderersInChildren: []
-  _maxHealth: 100
-  _currentHealth: 0
-  _maxArmor: 50
-  _currentArmor: 0
-  _activeTargetList: []
-  _activeTarget: {fileID: 0}
-  _attackStrength: 0
+  _health:
+    max: 100
+    current: 0
+  _armor:
+    max: 100
+    current: 0
+  _attackStrength: 10
+  _currencyIfDestroyed: 0
   _primaryRotation:
-    objTransform: {fileID: 3231590250286393185}
+    objTransform: {fileID: 6478724976352666405}
     speed: 2.5
     maxAngle: {x: 90, y: 90}
     minAngle: {x: -90, y: -90}
@@ -2959,13 +3013,36 @@ MonoBehaviour:
     yAxisCheck: 0
     xAxisClamp: 0
     yAxisClamp: 0
-  _attack:
-    activeTargetList: []
+  _auxiliaryRotation:
+    objTransform: {fileID: 0}
+    speed: 2.5
+    maxAngle: {x: 90, y: 90}
+    minAngle: {x: -90, y: -90}
+    maxIdleOffset: 1
+    maxLookOffset: 0.95
+    angleToIdle: 0
+    targetDirection: {x: 0, y: 0, z: 0}
+    movement: 0
+    idleRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotateTowards: {x: 0, y: 0, z: 0}
+    lookRotation: {x: 0, y: 0, z: 0, w: 0}
+    xAxisCheck: 0
+    yAxisCheck: 0
+    xAxisClamp: 0
+    yAxisClamp: 0
+  _targeting:
+    targetList: []
     activeTarget: {fileID: 0}
     rotationTarget: {fileID: 0}
+    maxDotAngleOffset: 0
     targetVector: {x: 0, y: 0, z: 0}
     dotAngle: 0
     targetAngle: 0
+  _renderersInChildren: []
+  _navMeshAgent: {fileID: 8536136369352605483}
+  _enemyAnim: {fileID: 3279792961363241529}
+  _speed: 2
+  _currencyToReward: 0
 --- !u!95 &3279792961363241529
 Animator:
   serializedVersion: 3
@@ -3015,7 +3092,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3230445893702710185}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 6.2, y: 5.35, z: 5.5}

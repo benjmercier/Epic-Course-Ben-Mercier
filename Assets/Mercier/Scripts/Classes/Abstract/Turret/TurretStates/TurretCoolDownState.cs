@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Mercier.Scripts.Classes.Abstract.Turret.TurretStates
 {
-    public class TurretCoolDownState : TurretBaseState
+    public class TurretCoolDownState : BaseTurretState
     {
         public override void EnterState(BaseTurret turret)
         {
