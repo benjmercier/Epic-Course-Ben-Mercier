@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using Mercier.Scripts.Classes.Abstract.Turret;
 
 namespace Mercier.Scripts.Classes.Turrets
 {
-    public class MissileLauncher_FSM : FullTurretRotation
+    public class MissileLauncher_FSM_old : TurretFullRotation
     {
         public enum MissileType
         {
@@ -72,6 +73,39 @@ namespace Mercier.Scripts.Classes.Turrets
             MissileOld.onTargetEnemyHit -= OnMissileHitTarget;
         }
 
+        protected override void Update()
+        {
+            base.Update();
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                StartCoroutine(MissileLaunchRoutine());
+            }            
+        }
+
+        protected override void EngageTarget()
+        {
+
+        }
+
+        protected override void DisengageTarget()
+        {
+
+        }
+
+        public override void TurretAttack()
+        {
+            if (IsFacingTarget())
+            {
+                if (_launched == false)
+                {
+                    _launched = true;
+
+                    StartCoroutine(MissileLaunchRoutine());
+                }
+            }
+        }
+
         private IEnumerator MissileLaunchRoutine()
         {
             Debug.Log("Started MissileLaunchRoutine()");
@@ -84,7 +118,7 @@ namespace Mercier.Scripts.Classes.Turrets
                 for (int i = _missileLaunchIndex; i < _missilePositions.Length; i++)
                 {
                     Debug.Log("second check " + _missileLaunchIndex);
-                    if (_targeting.activeTarget == null)
+                    if (_activeTarget == null)
                     {
                         StartCoroutine(MissileReloadRoutine());
 
@@ -100,8 +134,8 @@ namespace Mercier.Scripts.Classes.Turrets
                     _currentMissileSalvo.Add(_missileToLaunch);
 
                     // change to event
-                    _missileToLaunch.GetComponent<Missile>().AssignMissileRules
-                        (_missileType, _targeting.activeTarget.transform, _launchSpeed, _power, _fuseDelay, _destroyTime);
+                    //_missileToLaunch.GetComponent<Missile>().AssignMissileRules
+                        //(_missileType, _activeTarget.transform, _launchSpeed, _power, _fuseDelay, _destroyTime);
 
                     _missilePositions[i].SetActive(false);
 
@@ -142,7 +176,7 @@ namespace Mercier.Scripts.Classes.Turrets
                     {
                         _missileLaunchIndex = 0;
                     }
-                }
+                }                
             }
 
             _launched = false;
@@ -155,36 +189,6 @@ namespace Mercier.Scripts.Classes.Turrets
                 //Debug.Log("MISSILE HIT!");
                 OnTurretAttack();
             }
-        }
-
-        protected override void EngageTarget()
-        {
-            
-        }
-
-        protected override void DisengageTarget()
-        {
-            
-        }
-
-        public override void TurretAttack()
-        {
-            Debug.Log("TurretAttack()");
-            if (IsLookingAtTarget())
-            {
-                Debug.Log("IsLookingAtTarget()");
-                if (_launched == false)
-                {
-                    _launched = true;
-
-                    StartCoroutine(MissileLaunchRoutine());
-                }
-            }
-        }
-
-        protected override IEnumerator DestroyedRoutine()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

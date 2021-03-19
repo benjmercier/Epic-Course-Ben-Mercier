@@ -90,7 +90,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2974582972463478835}
   - component: {fileID: 5674141436617233266}
-  - component: {fileID: 1070914041426402304}
   - component: {fileID: 2731085058442061815}
   m_Layer: 8
   m_Name: DualMissileLauncher
@@ -125,16 +124,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2976905752199410027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f7e004a8dfcf614081e8bc709707e37, type: 3}
+  m_Script: {fileID: 11500000, guid: 710ad3bd4e7f367488301f7a27c65553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationConstraint:
+  _rotation:
     objTransform: {fileID: 9036930902504006678}
     speed: 2.5
     maxAngle: {x: 90, y: 90}
     minAngle: {x: -90, y: -90}
     maxIdleOffset: 1
-    maxLookOffset: 0.95
+    maxLookOffset: 10
     angleToIdle: 0
     targetDirection: {x: 0, y: 0, z: 0}
     movement: 0
@@ -160,38 +159,12 @@ MonoBehaviour:
     currentHealth: 0
     maxArmor: 100
     currentArmor: 0
-    attackStrength: 50
+    attackStrength: 75
     fireRate: 0.5
     cost: 700
     destroyedPenalty: 0
     currentSprite: {fileID: 21300000, guid: 613bf375b8d72574983f4a3fab426514, type: 3}
     upgradeSprite: {fileID: 0}
---- !u!114 &1070914041426402304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2976905752199410027}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22440509da91c604cb78baef5581354e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turretCost: 700
-  turretID: 3
-  _activeTargetList: []
-  _activeTarget: {fileID: 0}
-  _rotationTarget: {fileID: 0}
-  _attackStrength: 10
-  _primaryRotationObj: {fileID: 2974367684673146335}
-  _primaryRotationSpeed: 2.5
-  _maxRotationAngle: {x: 45, y: 65}
-  _minRotationAngle: {x: -45, y: -65}
-  _minAngleToStartRotation: 1
-  _auxiliaryRotationObj: {fileID: 2979278607841352053}
-  _auxiliaryRotationSpeed: 2.5
-  _minLookVariance: 0.95
   _missileType: 1
   _missilePrefab: {fileID: 3943512348999178177, guid: bc00669e4de25484e98399506163cc45,
     type: 3}

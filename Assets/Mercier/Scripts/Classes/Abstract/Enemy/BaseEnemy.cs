@@ -7,6 +7,7 @@ using UnityEngine.AI;
 using Mercier.Scripts.Managers;
 using Mercier.Scripts.Classes.Abstract.Enemy.EnemyStates;
 using Mercier.Scripts.Classes.Custom;
+using Mercier.Scripts.Classes.Abstract.Turret;
 
 namespace Mercier.Scripts.Classes.Abstract.Enemy
 {
@@ -69,6 +70,15 @@ namespace Mercier.Scripts.Classes.Abstract.Enemy
 
             _navMeshAgent.SetDestination(_navTarget);
             _navMeshAgent.speed = AssignSpeed(_enemyStats.speed);
+
+            BaseTurret.onTurretAttack += ReceiveDamage;
+        }
+
+        public override void OnDisable()
+        {
+            base.OnDisable();
+
+            BaseTurret.onTurretAttack -= ReceiveDamage;
         }
 
         protected override void Update()
@@ -93,12 +103,59 @@ namespace Mercier.Scripts.Classes.Abstract.Enemy
             return speed;
         }
 
+        protected override void ReceiveDamage(GameObject damagedObj, float damageAmount)
+        {
+            if (this.gameObject == damagedObj)
+            {
+                OnDamageReceived(_enemyStats.currentHealth, _enemyStats.currentArmor, damageAmount, out _enemyStats.currentHealth, out _enemyStats.currentArmor);
+            }
+        }
+
+        public override void OnDamageReceived(float health, float armor, float damageAmount, out float curHealth, out float curArmor)
+        {
+            if (armor > _zero)
+            {
+                armor -= damageAmount;
+
+                _delta = health - armor;
+
+                if (armor < _zero)
+                {
+                    armor = _zero;
+                }
+
+                curArmor = armor;
+            }
+            else
+            {
+                if (armor != _zero)
+                {
+                    armor = _zero;
+                }
+
+                curArmor = armor;
+
+                _delta = _enemyStats.maxHealth;
+            }
+
+            health -= (_delta / _enemyStats.maxHealth) * damageAmount;
+
+            curHealth = health;
+
+            if (curHealth <= 0)
+            {
+                curHealth = 0;
+
+                OnObjDestroyed(this.gameObject, _enemyStats.reward);
+            }
+        }
+
         protected override void OnObjDestroyed(GameObject objDestroyed, int currency)
         {
             // add reward to player currency
 
             base.OnObjDestroyed(objDestroyed, currency);
-            //onEnemyDeath?.Invoke(objDestroyed, currency);
+            onEnemyDeath?.Invoke(objDestroyed, currency);
 
             _navMeshAgent.isStopped = true;
             _navMeshAgent.enabled = false;

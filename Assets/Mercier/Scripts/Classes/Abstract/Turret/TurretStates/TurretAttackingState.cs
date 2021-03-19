@@ -14,9 +14,10 @@ namespace Mercier.Scripts.Classes.Abstract.Turret.TurretStates
         {
             if (turret.RotationTarget == null)
             {
+                turret.ActivateTurret(false);
                 turret.TransitionToState(turret.turretCoolDownState);
             }
-
+            turret.ActivateTurret(true);
             turret.TurretAttack();
         }
 

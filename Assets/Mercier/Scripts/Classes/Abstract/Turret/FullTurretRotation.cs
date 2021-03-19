@@ -6,9 +6,9 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 {
     public abstract class FullTurretRotation : BaseTurret
     {
-        public override void RotateToTarget(Vector3 targetPos)
+        protected override bool ReturnTargetInLineOfSight(Vector3 targetPos)
         {
-            base.RotateToTarget(targetPos);
+            return true;
         }
     }
 }

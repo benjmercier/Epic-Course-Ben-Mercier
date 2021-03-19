@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +6,8 @@ using Mercier.Scripts.Classes.Abstract.Turret;
 
 namespace Mercier.Scripts.Classes.Turrets
 {
-    public class GatlingGun_FSM_new : LimitedTurretRotation
+    [RequireComponent(typeof(AudioSource))]
+    public class GatlingGun_FSM_old : TurretLimitedRotation
     {
         [Header("Gatling Gun Settings")]
         [SerializeField]
@@ -53,7 +53,7 @@ namespace Mercier.Scripts.Classes.Turrets
             }
         }
 
-        private void Start()
+        void Start()
         {
             _muzzleFlash.ToList().ForEach(i => i.SetActive(false));
             _audioSource.playOnAwake = false;
@@ -95,11 +95,5 @@ namespace Mercier.Scripts.Classes.Turrets
         {
             _gunBarrel.ToList().ForEach(i => i.transform.Rotate(Vector3.forward * Time.deltaTime * -500.0f));
         }
-
-        protected override IEnumerator DestroyedRoutine()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
-

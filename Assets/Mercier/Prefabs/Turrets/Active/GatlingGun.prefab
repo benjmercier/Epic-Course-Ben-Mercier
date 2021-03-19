@@ -229,7 +229,6 @@ GameObject:
   m_Component:
   - component: {fileID: 397581552539978015}
   - component: {fileID: 6283910349431408707}
-  - component: {fileID: 305894131700144043}
   - component: {fileID: 338414913596262393}
   - component: {fileID: 8614139583791843165}
   m_Layer: 8
@@ -269,13 +268,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffabd10ebc021834396e3d86bc9204f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationConstraint:
+  _rotation:
     objTransform: {fileID: 525883178094239442}
     speed: 2.5
     maxAngle: {x: 90, y: 90}
     minAngle: {x: -90, y: -90}
     maxIdleOffset: 1
-    maxLookOffset: 0.95
+    maxLookOffset: 10
     angleToIdle: 0
     targetDirection: {x: 0, y: 0, z: 0}
     movement: 0
@@ -307,39 +306,6 @@ MonoBehaviour:
     destroyedPenalty: 0
     currentSprite: {fileID: 21300000, guid: d2c0ee698ff28b04b8897f2c2d69a58c, type: 3}
     upgradeSprite: {fileID: 21300000, guid: 637aefae09f411947920be2f8df5e77d, type: 3}
-  _fireRate: 0.5
-  _gunBarrel:
-  - {fileID: 397743574581918417}
-  _muzzleFlash:
-  - {fileID: 401611261718918445}
-  _bulletCasings:
-  - {fileID: 528119166555997487}
-  _fireSound: {fileID: 8300000, guid: b0c8ae94507161d4c8d9058e6e1108f4, type: 3}
-  _audioSource: {fileID: 338414913596262393}
---- !u!114 &305894131700144043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 401132117131954635}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 825ab7420f585214396d7887cd304540, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turretCost: 250
-  turretID: 0
-  _activeTargetList: []
-  _activeTarget: {fileID: 0}
-  _rotationTarget: {fileID: 0}
-  _attackStrength: 10
-  _primaryRotationObj: {fileID: 404169035213483447}
-  _primaryRotationSpeed: 2.5
-  _maxRotationAngle: {x: 45, y: 65}
-  _minRotationAngle: {x: -45, y: -65}
-  _minAngleToStartRotation: 1
-  _fireRate: 0.5
   _gunBarrel:
   - {fileID: 397743574581918417}
   _muzzleFlash:

@@ -1437,7 +1437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eda363e5bff22944b0392b72f7b7144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationConstraint:
+  _rotation:
     objTransform: {fileID: 7071859265619136083}
     speed: 2.5
     maxAngle: {x: 90, y: 90}
@@ -1973,7 +1973,7 @@ ParentConstraint:
   m_TranslationAtRest: {x: -0.17732842, y: 0.011147618, z: -1.0242807}
   m_RotationAtRest: {x: 2.6903968, y: 0.00020230614, z: -0.00011310255}
   m_TranslationOffsets:
-  - {x: -0.0029106922, y: 1.2175528, z: 0.035320144}
+  - {x: -0.0029106922, y: -0.03244722, z: 0.035320144}
   m_RotationOffsets:
   - {x: 89.333824, y: -87.26053, z: -176.97923}
   m_AffectTranslationX: 0
@@ -2598,7 +2598,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4131649579608117839}
   m_LocalRotation: {x: 6.617444e-24, y: -0.000000014901161, z: 4.4408916e-16, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1693568624011698191}

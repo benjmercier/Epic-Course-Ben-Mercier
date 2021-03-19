@@ -14,8 +14,8 @@ namespace Mercier.Scripts.Classes.Custom
         public Vector2 minAngle = new Vector2(-90f, -90f);
         [Range(0f, 2f)]
         public float maxIdleOffset = 1f;
-        [Range(0f, 1f)]
-        public float maxLookOffset = 0.95f;
+        [Range(0f, 15f)]
+        public float maxLookOffset = 10f;
 
         [HideInInspector]
         public float angleToIdle;

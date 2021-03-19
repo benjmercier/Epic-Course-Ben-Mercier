@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mercier.Scripts.Classes.Abstract.Turret.TurretStates;
-using Mercier.Scripts.Interfaces;
 using Mercier.Scripts.Classes.Custom;
+using Mercier.Scripts.Classes.Abstract.Enemy;
 
 namespace Mercier.Scripts.Classes.Abstract.Turret
 {
@@ -23,6 +23,7 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
         protected bool _canFire;
         protected bool _hasFired;
+        protected float _lastFire;
 
         public static event Action<GameObject, float> onTurretAttack;
 
@@ -35,14 +36,14 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
             TransitionToState(turretIdleState);
 
-            //Enemy.onEnemyDeath += AssignNewTarget;
+            BaseEnemy.onEnemyDeath += AssignNewTarget;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
 
-            //Enemy.onEnemyDeath -= AssignNewTarget;
+            BaseEnemy.onEnemyDeath -= AssignNewTarget;
         }
 
         protected override void Update()
@@ -61,11 +62,15 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
             _currentTurretState.EnterState(this);
         }
 
-        protected virtual void ActivateTurret(bool activate)
+        public virtual void ActivateTurret(bool activate)
         {
             _canFire = activate;
 
-            if (!activate)
+            if (activate)
+            {
+                EngageTarget();
+            }
+            else
             {
                 DisengageTarget();
             }

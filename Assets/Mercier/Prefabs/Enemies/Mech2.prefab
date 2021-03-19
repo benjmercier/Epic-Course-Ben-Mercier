@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3072494028277646331}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3226687247421151381}
@@ -464,7 +464,7 @@ ParentConstraint:
   m_TranslationAtRest: {x: 1.6822734, y: 1.677288, z: -1.6287507}
   m_RotationAtRest: {x: 0, y: 0, z: 0}
   m_TranslationOffsets:
-  - {x: 0.50468206, y: 1.551923, z: -0.5862245}
+  - {x: 0.50468206, y: 0.30192304, z: -0.5862245}
   m_RotationOffsets:
   - {x: 0, y: 0, z: 0}
   m_AffectTranslationX: 0
@@ -1045,7 +1045,7 @@ ParentConstraint:
   m_TranslationAtRest: {x: 0, y: 3.4957888, z: -0.32533106}
   m_RotationAtRest: {x: 0, y: 0, z: 0}
   m_TranslationOffsets:
-  - {x: 0, y: 1.0487367, z: -0.09759932}
+  - {x: 0, y: -0.20126331, z: -0.09759932}
   m_RotationOffsets:
   - {x: 0, y: 0, z: 0}
   m_AffectTranslationX: 0
@@ -1517,7 +1517,7 @@ ParentConstraint:
   m_TranslationAtRest: {x: 2.4039543, y: 1.045575, z: -0.30312657}
   m_RotationAtRest: {x: 0, y: 0, z: 0}
   m_TranslationOffsets:
-  - {x: 0.7211863, y: 1.3624091, z: -0.18853727}
+  - {x: 0.7211863, y: 0.112409115, z: -0.18853727}
   m_RotationOffsets:
   - {x: 0, y: 0, z: 0}
   m_AffectTranslationX: 0
@@ -2681,7 +2681,7 @@ ParentConstraint:
   m_TranslationAtRest: {x: -1.6822734, y: 1.6836834, z: -1.6287507}
   m_RotationAtRest: {x: 0, y: 0, z: 0}
   m_TranslationOffsets:
-  - {x: -0.504682, y: 1.5538417, z: -0.5862246}
+  - {x: -0.504682, y: 0.3038417, z: -0.5862246}
   m_RotationOffsets:
   - {x: 0, y: 0, z: 0}
   m_AffectTranslationX: 0
@@ -3069,7 +3069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 552ef0509f1558d468c79a6c45b81e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationConstraint:
+  _rotation:
     objTransform: {fileID: 6478724976352666405}
     speed: 2.5
     maxAngle: {x: 90, y: 90}
@@ -3538,7 +3538,7 @@ ParentConstraint:
   m_TranslationAtRest: {x: -2.415292, y: 1.045575, z: -0.2203597}
   m_RotationAtRest: {x: 0, y: 0, z: 0}
   m_TranslationOffsets:
-  - {x: -0.7245876, y: 1.3624091, z: -0.16370726}
+  - {x: -0.7245876, y: 0.112409115, z: -0.16370726}
   m_RotationOffsets:
   - {x: 0, y: 0, z: 0}
   m_AffectTranslationX: 0
