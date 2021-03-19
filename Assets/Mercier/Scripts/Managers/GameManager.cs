@@ -109,19 +109,7 @@ namespace Mercier.Scripts.Managers
 
         private void Update()
         {
-            Time.timeScale = _timescale;
 
-            //OnUpdatePlayerStatus((int)currentPlayerStatus);
-            /*
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                ItemPurchased(2000);
-            }
-
-            if (Input.GetKeyDown(KeyCode.S) && !_gameStarted)
-            {
-                StartCoroutine(StartGameRoutine());
-            }*/
         }
 
         public void OnEnable()

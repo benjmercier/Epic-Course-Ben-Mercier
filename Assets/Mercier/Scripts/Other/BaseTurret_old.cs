@@ -6,7 +6,7 @@ using Mercier.Scripts.Interfaces;
 
 namespace Mercier.Scripts.Classes
 {
-    public abstract class BaseTurret : MonoBehaviour, IEventable
+    public abstract class BaseTurret_old : MonoBehaviour, IEventable
     {
         public enum TurretState
         {

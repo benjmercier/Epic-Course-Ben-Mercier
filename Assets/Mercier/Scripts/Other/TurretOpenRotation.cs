@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Mercier.Scripts.Classes
 {
-    public abstract class TurretOpenRotation : BaseTurret
+    public abstract class TurretOpenRotation : BaseTurret_old
     {
         [Header("Auxiliary Rotation")]
         [SerializeField]

@@ -23,19 +23,24 @@ namespace Mercier.Scripts.Managers
             UIManager.onRequestCostFromDatabase -= ReturnTurretCost;
         }
 
-        private void List()
-        {
-            var cost = databases[1].databaseList[0].prefab.GetComponent<BaseTurret>().TurretStats.cost;
-        }
-
         private Sprite ReturnTurretSprite(int index)
         {
-            return databases[1].databaseList[index].prefab.GetComponent<BaseTurret>().TurretStats.currentSprite;
+            if (databases[1].databaseList[index].prefab.TryGetComponent(out BaseTurret baseTurret))
+            {
+                return baseTurret.TurretStats.currentSprite;
+            }
+
+            return null;
         }
 
         private int ReturnTurretCost(int index)
         {
-            return databases[1].databaseList[index].prefab.GetComponent<BaseTurret>().TurretStats.cost;
+            if (databases[1].databaseList[index].prefab.TryGetComponent(out BaseTurret baseTurret))
+            {
+                return baseTurret.TurretStats.cost;
+            }
+
+            return 0;
         }
     }
 }

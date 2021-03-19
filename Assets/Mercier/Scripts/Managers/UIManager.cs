@@ -28,7 +28,6 @@ namespace Mercier.Scripts.Managers
         [SerializeField]
         private Image[] _armoryTurretImages;
 
-
         public static event Action<int> onTurretSelectedFromArmory;
         public static event Func<int, Sprite> onRequestSprietFromDatabase;
         public static event Func<int, int> onRequestCostFromDatabase;

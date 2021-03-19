@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Mercier.Scripts.Classes
 {
-    public abstract class TurretLimitedRotationOld : BaseTurret
+    public abstract class TurretLimitedRotationOld : BaseTurret_old
     {
         [SerializeField]
         protected float _fireRate = 0.5f;

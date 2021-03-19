@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Mercier.Scripts.Managers;
 using Mercier.Scripts.Classes.Abstract.Enemy.EnemyStates;
+using Mercier.Scripts.Classes.Custom;
 
 namespace Mercier.Scripts.Classes.Abstract.Enemy
 {
@@ -18,16 +19,16 @@ namespace Mercier.Scripts.Classes.Abstract.Enemy
         public readonly EnemyAttackingState enemyAttackingState = new EnemyAttackingState();
         public readonly EnemyDestroyedState enemyDestroyedState = new EnemyDestroyedState();
 
-        [Header("Enemy Settings")]
+        [Space, SerializeField]
+        protected EnemyStats _enemyStats;
+        public EnemyStats EnemyStats { get { return _enemyStats; } }
+
+        [Header("Enemy Components")]
         [SerializeField]
         protected NavMeshAgent _navMeshAgent;
         [SerializeField]
         protected Animator _enemyAnim;
         public Animator EnemyAnim { get { return _enemyAnim; } }
-        [SerializeField]
-        protected float _speed = 2.5f;
-        [SerializeField]
-        protected int _currencyToReward;
 
         protected Vector3 _navTarget;
 
@@ -54,6 +55,9 @@ namespace Mercier.Scripts.Classes.Abstract.Enemy
         {
             base.OnEnable();
 
+            _enemyStats.currentHealth = _enemyStats.maxHealth;
+            _enemyStats.currentArmor = _enemyStats.maxArmor;
+
             TransitionToState(enemyIdleState);
 
             _renderersInChildren.ToList().ForEach(m => m.material.SetFloat("_fillAmount", _defaultDissolveValue));
@@ -64,7 +68,7 @@ namespace Mercier.Scripts.Classes.Abstract.Enemy
             _navTarget = SpawnManager.Instance.AssignTargetPos();
 
             _navMeshAgent.SetDestination(_navTarget);
-            _navMeshAgent.speed = AssignSpeed(_speed);
+            _navMeshAgent.speed = AssignSpeed(_enemyStats.speed);
         }
 
         protected override void Update()

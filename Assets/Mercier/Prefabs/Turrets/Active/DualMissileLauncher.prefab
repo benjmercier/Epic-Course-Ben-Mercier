@@ -112,6 +112,7 @@ Transform:
   m_Children:
   - {fileID: 2974625063195037871}
   - {fileID: 8161540714011662277}
+  - {fileID: 9036930902504006678}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -127,25 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f7e004a8dfcf614081e8bc709707e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _primaryRotation:
-    objTransform: {fileID: 2974367684673146335}
-    speed: 2.5
-    maxAngle: {x: 90, y: 90}
-    minAngle: {x: -90, y: -90}
-    maxIdleOffset: 1
-    maxLookOffset: 0.95
-    angleToIdle: 0
-    targetDirection: {x: 0, y: 0, z: 0}
-    movement: 0
-    idleRotation: {x: 0, y: 0, z: 0, w: 0}
-    rotateTowards: {x: 0, y: 0, z: 0}
-    lookRotation: {x: 0, y: 0, z: 0, w: 0}
-    xAxisCheck: 0
-    yAxisCheck: 0
-    xAxisClamp: 0
-    yAxisClamp: 0
-  _auxiliaryRotation:
-    objTransform: {fileID: 2979278607841352053}
+  _rotationConstraint:
+    objTransform: {fileID: 9036930902504006678}
     speed: 2.5
     maxAngle: {x: 90, y: 90}
     minAngle: {x: -90, y: -90}
@@ -331,6 +315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2974367684673146335}
+  - component: {fileID: 631593835796758068}
   m_Layer: 0
   m_Name: RotX
   m_TagString: Untagged
@@ -353,6 +338,32 @@ Transform:
   m_Father: {fileID: 2974625063195037871}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1773428102 &631593835796758068
+ParentConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2976973554110230111}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: -0.0011445975, z: 0}
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_TranslationOffsets:
+  - {x: 0, y: -1, z: 0}
+  m_RotationOffsets:
+  - {x: 0, y: 0, z: 0}
+  m_AffectTranslationX: 0
+  m_AffectTranslationY: 0
+  m_AffectTranslationZ: 0
+  m_AffectRotationX: 0
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 0
+  m_IsContraintActive: 1
+  m_IsLocked: 0
+  m_Sources:
+  - sourceTransform: {fileID: 9036930902504006678}
+    weight: 1
 --- !u!1 &2977112026167388393
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,6 +1334,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2979278607841352053}
+  - component: {fileID: 6557212230676763822}
   m_Layer: 0
   m_Name: RotY
   m_TagString: Untagged
@@ -1346,6 +1358,32 @@ Transform:
   m_Father: {fileID: 2979618930337799237}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1773428102 &6557212230676763822
+ParentConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978002299534875135}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: -0.018601157, z: -0.009020032}
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_TranslationOffsets:
+  - {x: 0, y: 0.030090451, z: -0.014166861}
+  m_RotationOffsets:
+  - {x: 0, y: 0, z: 0}
+  m_AffectTranslationX: 0
+  m_AffectTranslationY: 0
+  m_AffectTranslationZ: 0
+  m_AffectRotationX: 1
+  m_AffectRotationY: 0
+  m_AffectRotationZ: 0
+  m_IsContraintActive: 1
+  m_IsLocked: 0
+  m_Sources:
+  - sourceTransform: {fileID: 9036930902504006678}
+    weight: 1
 --- !u!1 &2978481205010536497
 GameObject:
   m_ObjectHideFlags: 0
@@ -1628,3 +1666,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &9221575710157891987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9036930902504006678}
+  m_Layer: 8
+  m_Name: ParentConstraint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9036930902504006678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9221575710157891987}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2974582972463478835}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

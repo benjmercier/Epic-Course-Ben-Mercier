@@ -13,13 +13,8 @@ namespace Mercier.Scripts.Classes.Abstract
     public abstract class BaseBehavior<T> : MonoBehaviour, IEventable, IDamageable<float>
     {
         #region Rotation
-        [Header("Rotation Settings")]
         [SerializeField]
-        protected Rotation _primaryRotation;
-        [SerializeField]
-        protected Rotation _auxiliaryRotation;
-        
-        protected List<Rotation> _rotationList = new List<Rotation>();
+        protected Rotation _rotationConstraint;
         #endregion
 
         #region Targeting
@@ -60,34 +55,18 @@ namespace Mercier.Scripts.Classes.Abstract
 
         protected virtual void Awake()
         {
-            if (_primaryRotation.objTransform != null)
+            if (_rotationConstraint == null)
             {
-                _rotationList.Add(_primaryRotation);
-            }
-            else
-            {
-                Debug.LogError("BaseBehavior::Awake()::_primaryRotation is NULL on " + gameObject.name + ".");
-            }
-
-            if (_auxiliaryRotation.objTransform != null)
-            {
-                _rotationList.Add(_auxiliaryRotation);
-            }
-            else
-            {
-                Debug.Log("BaseBehavior::Awake()::_auxiliaryRotation is NULL on " + gameObject.name + " and will not be calculated");
+                Debug.LogError("BaseBehavior::Awake()::_rotationConstraint is NULL on " + gameObject.name);
             }
         }
 
         public virtual void OnEnable()
         {
-            for (int i = 0; i < _rotationList.Count; i++)
-            {
-                _rotationList[i].idleRotation = Quaternion.Euler(new Vector3(
-                    _rotationList[i].objTransform.localRotation.eulerAngles.x,
-                    _rotationList[i].objTransform.localRotation.eulerAngles.y,
-                    _rotationList[i].objTransform.localRotation.eulerAngles.z));
-            }
+            _rotationConstraint.idleRotation = Quaternion.Euler(new Vector3(
+                _rotationConstraint.objTransform.localRotation.eulerAngles.x,
+                _rotationConstraint.objTransform.localRotation.eulerAngles.y,
+                _rotationConstraint.objTransform.localRotation.eulerAngles.z));
 
             AttackRadius.onAttackRadiusTriggered += UpdateTargetList;
             Classes.RotationTarget.onConfirmRotationTarget += AssignRotationTarget;
@@ -170,11 +149,11 @@ namespace Mercier.Scripts.Classes.Abstract
 
         protected virtual bool ReturnTargetInLineOfSight(Vector3 targetPos)
         {
-            _targeting.targetVector = targetPos - _primaryRotation.objTransform.position;
+            _targeting.targetVector = targetPos - transform.position; // - _primaryRotation.objTransform.position;
 
             _targeting.dotAngle = Vector3.Dot(_targeting.targetVector.normalized, transform.forward);
-            
-            return _targeting.dotAngle > _targeting.maxDotAngleOffset ? true : false; 
+
+            return _targeting.dotAngle > _targeting.maxDotAngleOffset ? true : false;
             // change for missile / full rotation = return true
             // also check with edge towers
         }
@@ -201,6 +180,14 @@ namespace Mercier.Scripts.Classes.Abstract
             {
                 if (ReturnTargetInLineOfSight(targetPos))
                 {
+                    _rotationConstraint.movement = _rotationConstraint.speed * Time.deltaTime;
+                    _rotationConstraint.targetDirection = targetPos - _rotationConstraint.objTransform.position;
+                    _rotationConstraint.lookRotation = Quaternion.LookRotation(_rotationConstraint.targetDirection);
+
+                    _rotationConstraint.objTransform.rotation = Quaternion.Slerp(_rotationConstraint.objTransform.rotation,
+                        _rotationConstraint.lookRotation, _rotationConstraint.movement);
+
+                    /* Working
                     _primaryRotation.movement = _primaryRotation.speed * Time.deltaTime;
                     _primaryRotation.targetDirection = targetPos - _primaryRotation.objTransform.position;
 
@@ -208,8 +195,7 @@ namespace Mercier.Scripts.Classes.Abstract
 
                     _primaryRotation.objTransform.rotation = Quaternion.Slerp(_primaryRotation.objTransform.rotation,
                         _primaryRotation.lookRotation, _primaryRotation.movement);
-
-                    //_primaryRotation.objTransform.rotation = Quaternion.LookRotation(_primaryRotation.targetDirection);
+                    */                    
                 }
                 else
                 {
@@ -223,18 +209,26 @@ namespace Mercier.Scripts.Classes.Abstract
             // from Enemy
             if (_targeting.activeTarget == null)
             {
+                _rotationConstraint.CalculateMovement();
+
+                _rotationConstraint.objTransform.localRotation = Quaternion.Slerp(_rotationConstraint.objTransform.localRotation,
+                    _rotationConstraint.idleRotation, _rotationConstraint.movement);
+
+                /* Working
                 _primaryRotation.CalculateMovement();
 
                 _primaryRotation.objTransform.localRotation = Quaternion.Slerp(_primaryRotation.objTransform.localRotation,
                     _primaryRotation.idleRotation, _primaryRotation.movement);
+                */
             }
         }
 
         public virtual bool IsAtStart()
         {
-            //Debug.Log(_primaryRotation.angleToIdle = Quaternion.Angle(_primaryRotation.objTransform.localRotation, _primaryRotation.idleRotation));
+            _rotationConstraint.angleToIdle = Quaternion.Angle(_rotationConstraint.objTransform.localRotation,
+                _rotationConstraint.idleRotation);
 
-            return _rotationList.All(r => (r.angleToIdle = Quaternion.Angle(r.objTransform.localRotation, r.idleRotation)) < r.maxIdleOffset);
+            return _rotationConstraint.angleToIdle < _rotationConstraint.maxIdleOffset;
         }
 
         protected float ReturnLocalEulerAngleCheck(float localEulerAngle)
