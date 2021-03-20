@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 6283910349431408707}
   - component: {fileID: 338414913596262393}
   - component: {fileID: 8614139583791843165}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GatlingGun
   m_TagString: Turret
   m_Icon: {fileID: 0}
@@ -418,7 +418,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401132117131954635}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
@@ -15043,7 +15043,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 525883178094239442}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: ParentConstraint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15078,7 +15078,7 @@ GameObject:
   - component: {fileID: 5762679649153927489}
   - component: {fileID: 5762679649153927488}
   - component: {fileID: 6269932193970823554}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AttackRadius
   m_TagString: Untagged
   m_Icon: {fileID: 0}

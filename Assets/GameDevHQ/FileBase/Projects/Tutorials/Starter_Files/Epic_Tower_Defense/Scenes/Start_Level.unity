@@ -5467,7 +5467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &592720669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5578,27 +5578,25 @@ MonoBehaviour:
   - {r: 0.95686275, g: 0.90588236, b: 0.33333334, a: 1}
   - {r: 0.95686275, g: 0.34117648, b: 0.33333334, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
+  _armoryUI:
+    baseMenu: {fileID: 352817612}
+    turretImages:
+    - {fileID: 1824459923}
+    - {fileID: 1032743592}
+    - {fileID: 753033351}
+    - {fileID: 1306468424}
+    currentSprite: {fileID: 0}
+    upgradeButton: {fileID: 1051315812}
+    upgradeImage: {fileID: 960749444}
+    upgradeAmountTMP: {fileID: 328582483}
+    upgradeSprite: {fileID: 0}
+    upgradeAmount: 0
+    sellButton: {fileID: 1744017047}
+    sellImage: {fileID: 1433779202}
+    sellAmountTMP: {fileID: 1933146921}
+    sellAmount: 0
   _startTimerTMP: {fileID: 1140658152}
-  _armoryTurretImages:
-  - {fileID: 1824459923}
-  - {fileID: 1032743592}
-  - {fileID: 753033351}
-  - {fileID: 1306468424}
-  _turretToModify: {fileID: 0}
-  _towerPosition: {fileID: 0}
-  _modifyTurretMenu: {fileID: 352817612}
-  _turretSprites:
-  - {fileID: 21300000, guid: d2c0ee698ff28b04b8897f2c2d69a58c, type: 3}
-  - {fileID: 21300000, guid: 637aefae09f411947920be2f8df5e77d, type: 3}
-  - {fileID: 21300000, guid: 6d94b5ecd03ee4446b58f2620155b34a, type: 3}
-  - {fileID: 21300000, guid: 613bf375b8d72574983f4a3fab426514, type: 3}
   _warFundsAmount: {fileID: 2109062355}
-  _upgradeButton: {fileID: 1051315812}
-  _availableUpgrade: {fileID: 960749444}
-  _amountToUpgrade: {fileID: 328582483}
-  _sellButton: {fileID: 1744017047}
-  _availableToSell: {fileID: 1433779202}
-  _amountToSell: {fileID: 1933146921}
 --- !u!1001 &595690249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6745,7 +6743,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 6d94b5ecd03ee4446b58f2620155b34a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -8162,7 +8160,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &909662580
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9476,7 +9474,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 637aefae09f411947920be2f8df5e77d, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -11618,7 +11616,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 613bf375b8d72574983f4a3fab426514, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -16837,7 +16835,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d2c0ee698ff28b04b8897f2c2d69a58c, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -18984,7 +18982,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 592720673}
-        m_MethodName: UpgradeTurret
+        m_MethodName: OnUpgradeSelectedTurret
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -4,6 +4,8 @@ using UnityEngine;
 using System;
 using Mercier.Scripts.Interfaces;
 using Mercier.Scripts.Classes;
+using Mercier.Scripts.Classes.Abstract.Turret;
+using Mercier.Scripts.Classes.Custom;
 
 namespace Mercier.Scripts.Managers
 {
@@ -14,7 +16,7 @@ namespace Mercier.Scripts.Managers
         public List<GameObject> ActiveTurretList { get { return _activeTurretList; } }
         
         private GameObject _activeDecoy;
-        private int _activeDecoyIndex = 0;
+        private int _activeIndex = 0;
         private Vector3 _activeDecoyPos;
         private Quaternion _activeDecoyRot;
         [SerializeField]
@@ -36,6 +38,13 @@ namespace Mercier.Scripts.Managers
         private Color32 _disablePlacementColor = new Color32(255, 35, 0, 20); // red
 
         public static event Action<int> onTurretEnabled;
+        public static event Action<BaseTurret> onSelectActiveTurret;
+        private bool _canSelectTurret = false;
+
+        // turret upgrade/sell
+        private GameObject _activeTurretSelected;
+
+
 
         private int _availableFunds;
         private int _turretCost;
@@ -45,17 +54,30 @@ namespace Mercier.Scripts.Managers
         {
             TowerPosition.onTowerAvailable += CanActivateTurret;
             TowerPosition.onEnableTurret += EnableTurret;
+
+            UIManager.onDecoyTurretSelectedFromArmory += DecoyTurretSelectedFromArmory;
+            UIManager.onUpgradeSelectedTurret += UpgradeSelectedTurret;
         }
 
         public void OnDisable()
         {
             TowerPosition.onTowerAvailable -= CanActivateTurret;
             TowerPosition.onEnableTurret -= EnableTurret;
+
+            UIManager.onDecoyTurretSelectedFromArmory -= DecoyTurretSelectedFromArmory;
+            UIManager.onUpgradeSelectedTurret -= UpgradeSelectedTurret;
         }
 
         void Update()
         {
+            // Test
             CheckSelectionInput();
+            //
+
+            if (Input.GetMouseButtonDown(0) && _canSelectTurret)
+            {
+                SelectActiveTurret();
+            }
 
             if (_isDecoySelected)
             {
@@ -69,36 +91,41 @@ namespace Mercier.Scripts.Managers
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
-                    OnDecoyTurretSelected(true, 0);
+                    DecoyTurretSelectedFromArmory(true, 0);
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha2))
                 {
-                    OnDecoyTurretSelected(true, 1);
+                    DecoyTurretSelectedFromArmory(true, 1);
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha3))
                 {
-                    OnDecoyTurretSelected(true, 2);
+                    DecoyTurretSelectedFromArmory(true, 2);
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha4))
                 {
-                    OnDecoyTurretSelected(true, 3);
+                    DecoyTurretSelectedFromArmory(true, 3);
                 }
             }
             else
             {
                 if (Input.GetMouseButton(1))
                 {
-                    OnDecoyTurretSelected(false, _activeDecoyIndex);
+                    DecoyTurretSelectedFromArmory(false, _activeIndex);
                 }
             }
         }
 
-        public void OnDecoyTurretSelected(bool isSelected, int selectedIndex)
+        private void DecoyTurretSelectedFromArmory(bool isSelected, int selectedIndex)
         {
             if (CalculateFundsAvailable(selectedIndex))
             {
-                _activeDecoyIndex = selectedIndex;
+                _activeIndex = selectedIndex;
                 _isDecoySelected = isSelected;
+
+                if (_canSelectTurret)
+                {
+                    _canSelectTurret = false;
+                }
 
                 if (onDecoyTurretSelected != null)
                 {
@@ -113,6 +140,44 @@ namespace Mercier.Scripts.Managers
                 }
             }
         }
+
+        private void SelectActiveTurret()
+        {
+            _rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(_rayOrigin, out _rayHit))
+            {
+                Debug.Log("Ray Hit: " + _rayHit.transform.name);
+                if (_activeTurretList.Contains(_rayHit.transform.gameObject))
+                {
+                    _activeTurretSelected = _rayHit.transform.gameObject;
+
+                    if (_activeTurretSelected.TryGetComponent(out BaseTurret baseTurret))
+                    {
+                        _activeIndex = baseTurret.TurretStats.iD + 1; // add upgrade id to TurretStats
+
+                        OnSelectActiveTurret(baseTurret);
+                    }
+                }
+            }
+        }
+
+        private void OnSelectActiveTurret(BaseTurret selectedTurret)
+        {
+            onSelectActiveTurret?.Invoke(selectedTurret);
+        }
+
+        private void UpgradeSelectedTurret()
+        {
+            _activeTurretList.Remove(_activeTurretSelected);
+
+            var pos = _activeTurretSelected.transform;
+
+            _activeTurretSelected.SetActive(false);
+
+            EnableTurret(pos);
+        }
+
 
         private bool CalculateFundsAvailable(int selectedIndex)
         {
@@ -187,18 +252,30 @@ namespace Mercier.Scripts.Managers
             onTurretPlacementColor?.Invoke(color);
         }
 
-        private void EnableTurret()
+        private void EnableTurret(Transform objTransform)
         {
-            _newTurret = PoolManager.Instance.ReturnPrefabFromPool(false, 1, _activeDecoyIndex);
-            _newTurret.transform.position = _activeDecoyPos;
-            _newTurret.transform.rotation = _activeDecoyRot;
+            _newTurret = PoolManager.Instance.ReturnPrefabFromPool(false, 1, _activeIndex);
+            _newTurret.transform.position = objTransform.position; //_activeDecoyPos;
+            _newTurret.transform.rotation = objTransform.rotation; //_activeDecoyRot;
 
             _activeTurretList.Add(_newTurret);
 
-            OnDecoyTurretSelected(false, _activeDecoyIndex);
+            if (_activeDecoy != null)
+            {
+                DecoyTurretSelectedFromArmory(false, _activeIndex);
+            }
+            
+            StartCoroutine(CanSelectTurretRoutine());
             _newTurret.SetActive(true);
 
             onTurretEnabled?.Invoke(_turretCost);
+        }
+
+        private IEnumerator CanSelectTurretRoutine()
+        {
+            yield return new WaitForSeconds(1.5f);
+
+            _canSelectTurret = true;
         }
     }
 }

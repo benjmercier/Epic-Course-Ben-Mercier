@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 2974582972463478835}
   - component: {fileID: 5674141436617233266}
   - component: {fileID: 2731085058442061815}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: DualMissileLauncher
   m_TagString: Turret
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2976905752199410027}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3.5, y: 3, z: 1.5}
@@ -1648,7 +1648,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9036930902504006678}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: ParentConstraint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

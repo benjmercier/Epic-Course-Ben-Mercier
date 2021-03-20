@@ -13,13 +13,13 @@ namespace Mercier.Scripts.Managers
 
         private void OnEnable()
         {
-            UIManager.onRequestSprietFromDatabase += ReturnTurretSprite;
+            UIManager.onRequestSpriteFromDatabase += ReturnTurretSprite;
             UIManager.onRequestCostFromDatabase += ReturnTurretCost;
         }
 
         private void OnDisable()
         {
-            UIManager.onRequestSprietFromDatabase -= ReturnTurretSprite;
+            UIManager.onRequestSpriteFromDatabase -= ReturnTurretSprite;
             UIManager.onRequestCostFromDatabase -= ReturnTurretCost;
         }
 

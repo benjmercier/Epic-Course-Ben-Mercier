@@ -20,7 +20,7 @@ namespace Mercier.Scripts.Classes
         private bool _isPosAvailable = false;
 
         public static event Action<bool> onTowerAvailable;
-        public static event Action onEnableTurret;
+        public static event Action<Transform> onEnableTurret;
         
 
         public void OnEnable()
@@ -75,7 +75,7 @@ namespace Mercier.Scripts.Classes
         {
             if (_isSearchingForPos && _isPosAvailable)
             {
-                OnEnableTurret();
+                OnEnableTurret(this.transform);
             }
         }
 
@@ -89,11 +89,11 @@ namespace Mercier.Scripts.Classes
             onTowerAvailable?.Invoke(isAvailable);
         }
 
-        private void OnEnableTurret()
-        {            
-            if (onEnableTurret != null)
+        private void OnEnableTurret(Transform transform)
+        {
+            if (onEnableTurret != null) // how to use with Invoke()?
             {
-                onEnableTurret();
+                onEnableTurret(transform);
                 TurretEnabled(true);
             }
         }

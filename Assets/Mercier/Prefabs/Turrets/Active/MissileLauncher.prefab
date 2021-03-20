@@ -528,7 +528,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7598276918190739137}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: ParentConstraint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -637,7 +637,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9198456469720185299}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Missile_Launcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -670,7 +670,7 @@ GameObject:
   - component: {fileID: 9203498876289626397}
   - component: {fileID: 9205648146490389879}
   - component: {fileID: 9215104018209563725}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -750,7 +750,7 @@ GameObject:
   - component: {fileID: 9198475674593758705}
   - component: {fileID: 3280793939485563267}
   - component: {fileID: 6085155677834321864}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: MissileLauncher
   m_TagString: Turret
   m_Icon: {fileID: 0}
@@ -848,7 +848,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9201399544196024905}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.5, y: 2.75, z: 1.5}
@@ -862,7 +862,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9203444727900796989}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: RotX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -897,7 +897,7 @@ GameObject:
   - component: {fileID: 9206012457551136857}
   - component: {fileID: 9215710295836406531}
   - component: {fileID: 5561958104530001397}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Missile_Support
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1002,7 +1002,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9203658387981394183}
   - component: {fileID: 2965275449456072337}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: RotY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1061,7 +1061,7 @@ GameObject:
   - component: {fileID: 9198507020495012957}
   - component: {fileID: 9206000313189756831}
   - component: {fileID: 9216123639099197791}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Turret_Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1140,7 +1140,7 @@ GameObject:
   - component: {fileID: 9198515048205950857}
   - component: {fileID: 9205557164428410207}
   - component: {fileID: 9215313011923498361}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Missile_Launcher_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

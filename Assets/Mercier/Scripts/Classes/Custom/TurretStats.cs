@@ -12,7 +12,7 @@ namespace Mercier.Scripts.Classes.Custom
         public int iD;
 
         public float maxHealth = 100f;
-        [ReadOnly]
+        //[ReadOnly]
         public float currentHealth;
 
         public float maxArmor = 100f;
@@ -23,11 +23,17 @@ namespace Mercier.Scripts.Classes.Custom
         public float fireRate = 0.5f;
 
         public int cost;
+        public int UpgradeCost { get { return CalculateUpgradeCost(); } }
         public int SellAmount { get { return CalculateSellAmount(); } }
         public int destroyedPenalty;
 
         public Sprite currentSprite;
         public Sprite upgradeSprite;
+
+        private int CalculateUpgradeCost()
+        {
+            return Mathf.RoundToInt((cost - SellAmount) + cost);
+        }
 
         private int CalculateSellAmount()
         {
