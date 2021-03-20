@@ -35,6 +35,8 @@ namespace Mercier.Scripts.Managers
         public static event Func<int, int> onRequestCostFromDatabase;
         public static event Action<bool, int> onDecoyTurretSelectedFromArmory;
         public static event Action onUpgradeSelectedTurret;
+        public static event Action onSellSelectedTurret;
+        public static event Action<bool> onModifyTurretMenuDisabled;
 
         private void Start()
         {
@@ -98,23 +100,24 @@ namespace Mercier.Scripts.Managers
 
         private void OnDecoyTurretSelectedFromArmory(int index)
         {
-            // disable buttons if not enough funds
-            // if there are, activate OnDecoyTurretSelected from TowerManager
-            // TowerManager.Instance.OnDecoyTurretSelected(true, index);
-
             onDecoyTurretSelectedFromArmory?.Invoke(true, index);
+        }
+
+        public void OnModifyTurretMenuDisabled()
+        {
+            onModifyTurretMenuDisabled?.Invoke(true);
         }
 
         private void ActiveTurretSelected(BaseTurret selectedTurret)
         {
-            if (selectedTurret.TurretStats.upgradeSprite == null)
+            if (!selectedTurret.TurretStats.isUpgradeable)
             {
                 _armoryUI.upgradeButton.interactable = false;
             }
             else
             {
                 _armoryUI.upgradeButton.interactable = true;
-                _armoryUI.upgradeSprite = selectedTurret.TurretStats.upgradeSprite;
+                _armoryUI.upgradeSprite = selectedTurret.TurretStats.upgradeTo.TurretStats.currentSprite; // selectedTurret.TurretStats.upgradeSprite;
                 _armoryUI.upgradeAmount = selectedTurret.TurretStats.UpgradeCost;
             }
 
@@ -139,6 +142,11 @@ namespace Mercier.Scripts.Managers
             _armoryUI.SetSellInfo();
         }
 
+        public void OnSellSelectedTurret()
+        {
+            onSellSelectedTurret?.Invoke();
+        }
+
 
 
         //*******************************************************************************************************
@@ -154,7 +162,7 @@ namespace Mercier.Scripts.Managers
 
         
 
-        public static event Action<GameObject> onDisableTurret;
+        
 
 
 
@@ -180,10 +188,7 @@ namespace Mercier.Scripts.Managers
             //_warFundsAmount.text = GameManager.Instance.WarFundsAvailable.ToString();
         }
 
-        private void OnDisableTurret(GameObject turret)
-        {
-            onDisableTurret?.Invoke(turret);
-        }
+        
     }
 }
 

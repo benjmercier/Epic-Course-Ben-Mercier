@@ -115,12 +115,16 @@ namespace Mercier.Scripts.Managers
         public void OnEnable()
         {
             TowerManager.onTurretEnabled += ItemPurchased;
+            TowerManager.onTurretSold += ItemSold;
+
             TargetDestination.onEnemyReachedTarget += UpdatePlayerHealth;
         }
 
         public void OnDisable()
         {
             TowerManager.onTurretEnabled -= ItemPurchased;
+            TowerManager.onTurretSold -= ItemSold;
+
             TargetDestination.onEnemyReachedTarget += UpdatePlayerHealth;
         }
 
@@ -170,6 +174,13 @@ namespace Mercier.Scripts.Managers
             {
                 _warFundsAvailable -= cost;
             }
+
+            OnUpdateWarFunds();
+        }
+
+        public void ItemSold(int cost)
+        {
+            _warFundsAvailable += cost;
 
             OnUpdateWarFunds();
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Mercier.Scripts.PropertyAttributes;
+using Mercier.Scripts.Classes.Abstract.Turret;
 
 namespace Mercier.Scripts.Classes.Custom
 {
@@ -28,11 +29,20 @@ namespace Mercier.Scripts.Classes.Custom
         public int destroyedPenalty;
 
         public Sprite currentSprite;
+        public bool isUpgradeable = false;
+        public BaseTurret upgradeTo;
         public Sprite upgradeSprite;
 
         private int CalculateUpgradeCost()
         {
-            return Mathf.RoundToInt((cost - SellAmount) + cost);
+            // upgradeTo.TurretStats.cost = total upgrade cost
+            // find
+            if (isUpgradeable)
+            {
+                return Mathf.RoundToInt(-((currentHealth / maxHealth) * cost) + upgradeTo.TurretStats.cost);  //(cost - SellAmount) + cost);
+            }
+
+            return 0;
         }
 
         private int CalculateSellAmount()

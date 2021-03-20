@@ -823,6 +823,9 @@ MonoBehaviour:
     cost: 350
     destroyedPenalty: 0
     currentSprite: {fileID: 21300000, guid: 6d94b5ecd03ee4446b58f2620155b34a, type: 3}
+    isUpgradeable: 1
+    upgradeTo: {fileID: 5674141436617233266, guid: 21c121dc6ec34104b80d2feffc1cf1e1,
+      type: 3}
     upgradeSprite: {fileID: 21300000, guid: 613bf375b8d72574983f4a3fab426514, type: 3}
   _missileType: 1
   _missilePrefab: {fileID: 3943512348999178177, guid: bc00669e4de25484e98399506163cc45,

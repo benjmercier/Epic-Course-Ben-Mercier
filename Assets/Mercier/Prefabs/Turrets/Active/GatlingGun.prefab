@@ -305,6 +305,9 @@ MonoBehaviour:
     cost: 250
     destroyedPenalty: 0
     currentSprite: {fileID: 21300000, guid: d2c0ee698ff28b04b8897f2c2d69a58c, type: 3}
+    isUpgradeable: 1
+    upgradeTo: {fileID: 2483707527605157104, guid: df1878049e20bae44ace0c74e52b6747,
+      type: 3}
     upgradeSprite: {fileID: 21300000, guid: 637aefae09f411947920be2f8df5e77d, type: 3}
   _gunBarrel:
   - {fileID: 397743574581918417}

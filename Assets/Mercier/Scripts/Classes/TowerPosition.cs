@@ -26,13 +26,13 @@ namespace Mercier.Scripts.Classes
         public void OnEnable()
         {
             TowerManager.onDecoyTurretSelected += CheckTowerAvailability;
-            UIManager.onDisableTurret += TurretDisabled;
+            TowerManager.onDisableTurret += TurretDisabled;
         }
 
         public void OnDisable()
         {
             TowerManager.onDecoyTurretSelected -= CheckTowerAvailability;
-            UIManager.onDisableTurret -= TurretDisabled;
+            TowerManager.onDisableTurret -= TurretDisabled;
         }
 
         private void Start()
