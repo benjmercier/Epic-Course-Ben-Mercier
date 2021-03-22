@@ -1150,11 +1150,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 970574320377498027, guid: cbf5a24d16c3f8747b19b0caee9def9d,
+    - target: {fileID: 216059366378807196, guid: cbf5a24d16c3f8747b19b0caee9def9d,
         type: 3}
-      propertyPath: _speed
-      value: 10
-      objectReference: {fileID: 0}
+      propertyPath: _targetTransform
+      value: 
+      objectReference: {fileID: 534669905}
     - target: {fileID: 1693568624011698191, guid: cbf5a24d16c3f8747b19b0caee9def9d,
         type: 3}
       propertyPath: m_RootOrder
@@ -1215,10 +1215,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mech1
       objectReference: {fileID: 0}
-    - target: {fileID: 1699286027065544987, guid: cbf5a24d16c3f8747b19b0caee9def9d,
+    - target: {fileID: 8979027096605820155, guid: cbf5a24d16c3f8747b19b0caee9def9d,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_TranslationOffsets.Array.data[0].x
+      value: -0.002910614
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbf5a24d16c3f8747b19b0caee9def9d, type: 3}
@@ -5585,6 +5585,11 @@ MonoBehaviour:
     - {fileID: 1032743592}
     - {fileID: 753033351}
     - {fileID: 1306468424}
+    turretButtons:
+    - {fileID: 631096880}
+    - {fileID: 760567662}
+    - {fileID: 1928989151}
+    - {fileID: 870461416}
     currentSprite: {fileID: 0}
     upgradeButton: {fileID: 1051315812}
     upgradeImage: {fileID: 960749444}
@@ -8346,7 +8351,7 @@ MonoBehaviour:
   _minGoodStatus: 60
   _minFairStatus: 20
   _minDangerStatus: 0
-  _startingWarFunds: 5000
+  _startingWarFunds: 1000
   _warFundsAvailable: 0
   _timeToStart: 10
   _countdown: 0
@@ -17226,10 +17231,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activeTurretList: []
   _yPosOffset: 0.5
-  _turretIndex: 0
-  _isDecoySelected: 0
-  _canActivateTurret: 0
   _enableSelectActiveTurret: 0
+  _isUpgrading: 0
   _activeTurretSelected: {fileID: 0}
 --- !u!1001 &1886142276
 PrefabInstance:

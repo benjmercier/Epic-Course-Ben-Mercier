@@ -5,7 +5,6 @@ using System;
 using Mercier.Scripts.Interfaces;
 using Mercier.Scripts.Classes;
 using Mercier.Scripts.Classes.Abstract.Turret;
-using Mercier.Scripts.Classes.Custom;
 
 namespace Mercier.Scripts.Managers
 {
@@ -24,35 +23,32 @@ namespace Mercier.Scripts.Managers
         private Ray _rayOrigin;
         private RaycastHit _rayHit;
 
-        [SerializeField]
         private int _turretIndex = 0;
         private GameObject _newTurret;
         private int _newTurretCost;
 
-        [SerializeField]
         private bool _isDecoySelected = false;
-        [SerializeField]
         private bool _canActivateTurret = false;
 
         private Color32 _enablePlacementColor = new Color32(35, 255, 0, 20); // green
         private Color32 _disablePlacementColor = new Color32(255, 35, 0, 20); // red
+
+        private WaitForSeconds _waitToSelect = new WaitForSeconds(0.5f);
+        [SerializeField]
+        private bool _enableSelectActiveTurret = false;
+        [SerializeField]
+        private bool _isUpgrading;
+        [SerializeField]
+        private GameObject _activeTurretSelected;
+        private Transform _upgradeTransform;
+        private BaseTurret _turretToModify;
 
         public static event Action<bool, int> onDecoyTurretSelected;
         public static event Action<Color32> onTurretPlacementColor;
         public static event Action<BaseTurret> onSelectActiveTurret;
         public static event Action<int> onTurretEnabled;
         public static event Action<int> onTurretSold;
-        public static event Action<GameObject> onDisableTurret;
-
-
-        // turret upgrade/sell
-        [SerializeField]
-        private bool _enableSelectActiveTurret = false;
-        private bool _isUpgrading;
-        [SerializeField]
-        private GameObject _activeTurretSelected;
-        private Transform _upgradeTransform;
-        private BaseTurret _turretToModify;
+        public static event Action<Renderer> onDisableTurret;
 
         public void OnEnable()
         {
@@ -246,7 +242,7 @@ namespace Mercier.Scripts.Managers
 
             _turretIndex = _turretToModify.TurretStats.upgradeTo.TurretStats.iD;
 
-            EnableTurret(_upgradeTransform);
+            EnableTurret(_upgradeTransform, null);
         }
         #endregion
 
@@ -254,10 +250,13 @@ namespace Mercier.Scripts.Managers
         private void SellSelectedTurret()
         {
             _activeTurretList.Remove(_activeTurretSelected);
-            //OnDisableTurret(get tower position);
+            OnDisableTurret(_turretToModify.TurretStats.attachedTowerRenderer);
+            
             _activeTurretSelected.SetActive(false);
 
             TurretSold(_turretToModify.TurretStats.SellAmount);
+
+            CanSelectActiveTurret(true);
         }
 
         private void TurretSold(int sellAmount)
@@ -265,17 +264,17 @@ namespace Mercier.Scripts.Managers
             onTurretSold?.Invoke(sellAmount);
         }
 
-        private void OnDisableTurret(GameObject turret)
+        private void OnDisableTurret(Renderer towerRenderer)
         {
-            onDisableTurret?.Invoke(turret);
+            onDisableTurret?.Invoke(towerRenderer);
         }
         #endregion
 
-        private void EnableTurret(Transform objTransform)
+        private void EnableTurret(Transform objTransform, Renderer towerRenderer)
         {
             _newTurret = PoolManager.Instance.ReturnPrefabFromPool(false, 1, _turretIndex);
-            _newTurret.transform.position = objTransform.position; //_activeDecoyPos;
-            _newTurret.transform.rotation = objTransform.rotation; //_activeDecoyRot;
+            _newTurret.transform.position = objTransform.position;
+            _newTurret.transform.rotation = objTransform.rotation;
 
             _activeTurretList.Add(_newTurret);
 
@@ -295,6 +294,7 @@ namespace Mercier.Scripts.Managers
                 if (_newTurret.TryGetComponent(out BaseTurret baseTurret))
                 {
                     _newTurretCost = baseTurret.TurretStats.cost;
+                    baseTurret.TurretStats.attachedTowerRenderer = towerRenderer;
                 }
             }
 
@@ -305,7 +305,7 @@ namespace Mercier.Scripts.Managers
 
         private IEnumerator EnableSelectActiveTurretRoutine()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return _waitToSelect;
 
             _isUpgrading = false;
             _enableSelectActiveTurret = true;

@@ -12,6 +12,7 @@ namespace Mercier.Scripts.Classes.Custom.UI
     {
         public GameObject baseMenu;
         public Image[] turretImages;
+        public Button[] turretButtons;
 
         [ReadOnly]
         public Sprite currentSprite;

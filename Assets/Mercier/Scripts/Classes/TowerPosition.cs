@@ -20,8 +20,7 @@ namespace Mercier.Scripts.Classes
         private bool _isPosAvailable = false;
 
         public static event Action<bool> onTowerAvailable;
-        public static event Action<Transform> onEnableTurret;
-        
+        public static event Action<Transform, Renderer> onEnableTurret;
 
         public void OnEnable()
         {
@@ -75,7 +74,7 @@ namespace Mercier.Scripts.Classes
         {
             if (_isSearchingForPos && _isPosAvailable)
             {
-                OnEnableTurret(this.transform);
+                OnEnableTurret(this.transform, _towerRenderer);
             }
         }
 
@@ -89,11 +88,11 @@ namespace Mercier.Scripts.Classes
             onTowerAvailable?.Invoke(isAvailable);
         }
 
-        private void OnEnableTurret(Transform transform)
+        private void OnEnableTurret(Transform transform, Renderer towerRenderer)
         {
             if (onEnableTurret != null) // how to use with Invoke()?
             {
-                onEnableTurret(transform);
+                onEnableTurret(transform, towerRenderer);
                 TurretEnabled(true);
             }
         }
@@ -105,9 +104,9 @@ namespace Mercier.Scripts.Classes
             _towerRenderer.enabled = enable;
         }
 
-        private void TurretDisabled(GameObject turret)
+        private void TurretDisabled(Renderer towerRenderer)
         {
-            if (gameObject == turret)
+            if (_towerRenderer == towerRenderer)
             {
                 TurretEnabled(false);
             }

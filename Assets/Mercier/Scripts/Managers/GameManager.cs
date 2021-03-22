@@ -5,6 +5,7 @@ using UnityEngine;
 using Mercier.Scripts.ScriptableObjects;
 using Mercier.Scripts.Interfaces;
 using Mercier.Scripts.PropertyAttributes;
+using Mercier.Scripts.Classes.Abstract.Enemy;
 
 namespace Mercier.Scripts.Managers
 {
@@ -114,18 +115,22 @@ namespace Mercier.Scripts.Managers
 
         public void OnEnable()
         {
-            TowerManager.onTurretEnabled += ItemPurchased;
-            TowerManager.onTurretSold += ItemSold;
+            TowerManager.onTurretEnabled += DecreaseWarFunds;
+            TowerManager.onTurretSold += IncreaseWarFunds;
 
             TargetDestination.onEnemyReachedTarget += UpdatePlayerHealth;
+
+            BaseEnemy.onEnemyDeath += EnemyDestroyed;
         }
 
         public void OnDisable()
         {
-            TowerManager.onTurretEnabled -= ItemPurchased;
-            TowerManager.onTurretSold -= ItemSold;
+            TowerManager.onTurretEnabled -= DecreaseWarFunds;
+            TowerManager.onTurretSold -= IncreaseWarFunds;
 
             TargetDestination.onEnemyReachedTarget += UpdatePlayerHealth;
+
+            BaseEnemy.onEnemyDeath -= EnemyDestroyed;
         }
 
         private IEnumerator StartGameRoutine(Action onComplete = null)
@@ -168,7 +173,17 @@ namespace Mercier.Scripts.Managers
             onUpdateCountdownTimer?.Invoke(min, sec);
         }
 
-        public void ItemPurchased(int cost)
+        public bool EnoughWarFundsAvailable(int cost)
+        {
+            if (cost > _warFundsAvailable)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void DecreaseWarFunds(int cost)
         {
             if (_warFundsAvailable - cost >= 0)
             {
@@ -178,7 +193,12 @@ namespace Mercier.Scripts.Managers
             OnUpdateWarFunds();
         }
 
-        public void ItemSold(int cost)
+        private void EnemyDestroyed(GameObject objDestroyed, int currency)
+        {
+            IncreaseWarFunds(currency);
+        }
+
+        public void IncreaseWarFunds(int cost)
         {
             _warFundsAvailable += cost;
 

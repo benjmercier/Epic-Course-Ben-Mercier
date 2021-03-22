@@ -33,6 +33,7 @@ namespace Mercier.Scripts.Classes.Abstract.Enemy
 
         protected Vector3 _navTarget;
 
+        public static event Action onDamage;
         public static event Action<GameObject, int> onEnemyDeath;
 
         protected override void Awake()

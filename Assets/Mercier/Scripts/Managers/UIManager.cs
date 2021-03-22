@@ -41,8 +41,6 @@ namespace Mercier.Scripts.Managers
         private void Start()
         {
             _startTimerTMP.text = "00:00";
-
-            //PopulateArmoryButtons();
         }
 
         private void OnEnable()
@@ -71,6 +69,8 @@ namespace Mercier.Scripts.Managers
         private void UpdateWarFunds(int warFunds)
         {
             _warFundsAmount.text = warFunds.ToString();
+
+            EnableArmoryButtons();
         }
 
         private void UpdateOverlayColor(int playerStatus)
@@ -78,13 +78,17 @@ namespace Mercier.Scripts.Managers
             _uIImageOverlay.ForEach(img => img.color = _uIStatusColors[playerStatus]);
         }
 
-        private void PopulateArmoryButtons()
+        private void EnableArmoryButtons()
         {
-            for (int i = 0; i < _armoryUI.turretImages.Length; i++)
+            for (int i = 0; i < _armoryUI.turretButtons.Length; i++)
             {
+                _armoryUI.turretButtons[i].interactable = GameManager.Instance.EnoughWarFundsAvailable(
+                    OnRequestCostFromDatabase(i));
+
+
                 //_armoryTurretImages[i].sprite = OnRequestSpriteFromDatabase(i);
                 // how to use TryGetComponent on a child?
-                _armoryUI.turretImages[i].GetComponentInChildren<TextMeshProUGUI>().text = "$" + OnRequestCostFromDatabase(i).ToString();
+                //_armoryUI.turretImages[i].GetComponentInChildren<TextMeshProUGUI>().text = "$" + OnRequestCostFromDatabase(i).ToString();
             }
         }
 
@@ -116,9 +120,16 @@ namespace Mercier.Scripts.Managers
             }
             else
             {
-                _armoryUI.upgradeButton.interactable = true;
-                _armoryUI.upgradeSprite = selectedTurret.TurretStats.upgradeTo.TurretStats.currentSprite; // selectedTurret.TurretStats.upgradeSprite;
-                _armoryUI.upgradeAmount = selectedTurret.TurretStats.UpgradeCost;
+                if (!GameManager.Instance.EnoughWarFundsAvailable(selectedTurret.TurretStats.UpgradeCost))
+                {
+                    _armoryUI.upgradeButton.interactable = false;
+                }
+                else
+                {
+                    _armoryUI.upgradeButton.interactable = true;
+                    _armoryUI.upgradeSprite = selectedTurret.TurretStats.upgradeTo.TurretStats.currentSprite;
+                    _armoryUI.upgradeAmount = selectedTurret.TurretStats.UpgradeCost;
+                }
             }
 
             _armoryUI.currentSprite = selectedTurret.TurretStats.currentSprite;
@@ -156,39 +167,6 @@ namespace Mercier.Scripts.Managers
         [Header("War Funds")]
         [SerializeField]
         private Text _warFundsAmount;
-
-        private Ray _ray;
-        private RaycastHit _rayHit;
-
-        
-
-        
-
-
-
-
-        // click on active tower in scene
-        //  once turret selected, show upgrade and selling options
-        //      if turret not able to be upgraded, have button greyed out and can't click
-        //  if sold, increase war funds by 50% of cost
-        //  if upgraded
-        //      need reference to possition turret is currently at
-
-        
-
-        public void SellTurret()
-        {
-            //TowerManager.Instance.ActiveTurretList.Remove(_turretToModify);
-
-            //_turretToModify.SetActive(false);
-
-            //OnDisableTurret(_towerPosition);
-
-            //GameManager.Instance.WarFundsAvailable += _sellAmount;
-            //_warFundsAmount.text = GameManager.Instance.WarFundsAvailable.ToString();
-        }
-
-        
     }
 }
 

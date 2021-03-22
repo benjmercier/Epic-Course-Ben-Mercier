@@ -33,6 +33,9 @@ namespace Mercier.Scripts.Classes.Custom
         public BaseTurret upgradeTo;
         public Sprite upgradeSprite;
 
+        [ReadOnly]
+        public Renderer attachedTowerRenderer;
+
         private int CalculateUpgradeCost()
         {
             // upgradeTo.TurretStats.cost = total upgrade cost
