@@ -4,9 +4,12 @@ using UnityEngine;
 
 namespace Mercier.Scripts.Classes
 {
-    public class Mech2 : Enemy
+    public class Explosion : MonoBehaviour
     {
-        
+        private void Start()
+        {
+            Destroy(this.gameObject, 3f);
+        }
     }
 }
 

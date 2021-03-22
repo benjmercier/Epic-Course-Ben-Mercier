@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mercier.Scripts.Interfaces;
-using Mercier.Scripts.Classes.Abstract;
+using Mercier.Scripts.Classes.Abstract.Enemy;
 using Mercier.Scripts.Classes.Abstract.Turret;
 
 namespace Mercier.Scripts.Classes
@@ -22,14 +22,14 @@ namespace Mercier.Scripts.Classes
                 Debug.LogError("AttackTarget::OnEnable()::targetParent is null on " + gameObject.transform.parent.name);
             }
 
-            Turret.onCheckForRotationTarget += VerifyRotationTarget;
-            BaseTurret.onCheckForRotationTarget += VerifyRotationTarget;            
+            BaseTurret.onCheckForRotationTarget += VerifyRotationTarget;
+            BaseTurret.onTurretAttack += NotifyParentOfDamage;
         }
 
         public void OnDisable()
         {
-            Turret.onCheckForRotationTarget -= VerifyRotationTarget;
             BaseTurret.onCheckForRotationTarget -= VerifyRotationTarget;
+            BaseTurret.onTurretAttack -= NotifyParentOfDamage;
         }
 
         private void VerifyRotationTarget(GameObject parent)
@@ -43,6 +43,20 @@ namespace Mercier.Scripts.Classes
         private void OnConfirmRotationTarget(GameObject parent, GameObject rotationTarget)
         {
             onConfirmRotationTarget?.Invoke(parent, rotationTarget);
+        }
+
+
+        protected void NotifyParentOfDamage(GameObject damagedObj, float damageAmount)
+        {
+            if (this.gameObject == damagedObj)
+            {
+                //OnDamageReceived(_enemyStats.currentHealth, _enemyStats.currentArmor, damageAmount, out _enemyStats.currentHealth, out _enemyStats.currentArmor);
+
+                if (_targetParent.TryGetComponent(out BaseEnemy parent))
+                {
+                    parent.ReceiveDamage(_targetParent, damageAmount);
+                }
+            }
         }
     }
 }

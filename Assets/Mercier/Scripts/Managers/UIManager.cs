@@ -29,6 +29,10 @@ namespace Mercier.Scripts.Managers
         [SerializeField]
         private TextMeshProUGUI _startTimerTMP;
 
+        [Header("War Funds")]
+        [SerializeField]
+        private Text _warFundsAmount;
+
         public int DecoyToActivate { set { OnDecoyTurretSelectedFromArmory(value); } }
         
         public static event Func<int, Sprite> onRequestSpriteFromDatabase;
@@ -84,17 +88,7 @@ namespace Mercier.Scripts.Managers
             {
                 _armoryUI.turretButtons[i].interactable = GameManager.Instance.EnoughWarFundsAvailable(
                     OnRequestCostFromDatabase(i));
-
-
-                //_armoryTurretImages[i].sprite = OnRequestSpriteFromDatabase(i);
-                // how to use TryGetComponent on a child?
-                //_armoryUI.turretImages[i].GetComponentInChildren<TextMeshProUGUI>().text = "$" + OnRequestCostFromDatabase(i).ToString();
             }
-        }
-
-        private Sprite OnRequestSpriteFromDatabase(int index)
-        {
-            return onRequestSpriteFromDatabase?.Invoke(index);
         }
 
         private int OnRequestCostFromDatabase(int index)
@@ -158,15 +152,20 @@ namespace Mercier.Scripts.Managers
             onSellSelectedTurret?.Invoke();
         }
 
+        public void Play()
+        {
+            GameManager.Instance.TransitionToState(GameManager.GameState.Playing);
+        }
 
+        public void Pause()
+        {
+            GameManager.Instance.TransitionToState(GameManager.GameState.Paused);
+        }
 
-        //*******************************************************************************************************
-        
-
-
-        [Header("War Funds")]
-        [SerializeField]
-        private Text _warFundsAmount;
+        public void FastForward()
+        {
+            GameManager.Instance.TransitionToState(GameManager.GameState.FastForward);
+        }
     }
 }
 

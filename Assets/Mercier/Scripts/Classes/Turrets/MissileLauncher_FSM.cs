@@ -38,7 +38,6 @@ namespace Mercier.Scripts.Classes.Turrets
 
         private int _missileLaunchIndex = 0;
         private GameObject _missileToLaunch;
-        private Vector3 _missileLaunchRotation = new Vector3(-90f, 0f, 0f);
 
         private Queue<GameObject> _openPositionQueue = new Queue<GameObject>();
         private List<GameObject> _currentMissileSalvo = new List<GameObject>();
@@ -62,28 +61,24 @@ namespace Mercier.Scripts.Classes.Turrets
         {
             base.OnEnable();
 
-            MissileOld.onTargetEnemyHit += OnMissileHitTarget;
+            Missile.onTargetEnemyHit += OnMissileHitTarget;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
 
-            MissileOld.onTargetEnemyHit -= OnMissileHitTarget;
+            Missile.onTargetEnemyHit -= OnMissileHitTarget;
         }
 
         private IEnumerator MissileLaunchRoutine()
         {
-            Debug.Log("Started MissileLaunchRoutine()");
-            Debug.Log("MissilePositions: " + _missilePositions.Length);
             if (_missileLaunchIndex < _missilePositions.Length)
             {
-                Debug.Log("first check");
                 _currentMissileSalvo.Clear();
 
                 for (int i = _missileLaunchIndex; i < _missilePositions.Length; i++)
                 {
-                    Debug.Log("second check " + _missileLaunchIndex);
                     if (_targeting.activeTarget == null)
                     {
                         StartCoroutine(MissileReloadRoutine());

@@ -818,7 +818,7 @@ MonoBehaviour:
     currentHealth: 0
     maxArmor: 100
     currentArmor: 0
-    attackStrength: 15
+    attackStrength: 35
     fireRate: 0.5
     cost: 350
     destroyedPenalty: 0
@@ -827,6 +827,7 @@ MonoBehaviour:
     upgradeTo: {fileID: 5674141436617233266, guid: 21c121dc6ec34104b80d2feffc1cf1e1,
       type: 3}
     upgradeSprite: {fileID: 21300000, guid: 613bf375b8d72574983f4a3fab426514, type: 3}
+    attachedTowerRenderer: {fileID: 0}
   _missileType: 1
   _missilePrefab: {fileID: 3943512348999178177, guid: bc00669e4de25484e98399506163cc45,
     type: 3}
@@ -838,8 +839,8 @@ MonoBehaviour:
   - {fileID: 3913203199938732086}
   - {fileID: 7653931666434708985}
   _fireDelay: 2
-  _launchSpeed: 10
-  _power: 20
+  _launchSpeed: 5
+  _power: 5
   _fuseDelay: 0
   _reloadTime: 0.25
   _destroyTime: 10

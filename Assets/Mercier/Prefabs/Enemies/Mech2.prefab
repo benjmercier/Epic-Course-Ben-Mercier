@@ -3027,13 +3027,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3226687247421151381}
-  - component: {fileID: 1581277900560469709}
+  - component: {fileID: 5681739510066726765}
   - component: {fileID: 3279792961363241529}
   - component: {fileID: 8536136369352605483}
   - component: {fileID: 2143485739160046915}
   m_Layer: 0
   m_Name: Mech2
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3057,7 +3057,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1581277900560469709
+--- !u!114 &5681739510066726765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3066,7 +3066,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3230445893702710185}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 552ef0509f1558d468c79a6c45b81e13, type: 3}
+  m_Script: {fileID: 11500000, guid: 9eda363e5bff22944b0392b72f7b7144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rotation:
@@ -3075,7 +3075,7 @@ MonoBehaviour:
     maxAngle: {x: 90, y: 90}
     minAngle: {x: -90, y: -90}
     maxIdleOffset: 1
-    maxLookOffset: 0.95
+    maxLookOffset: 10
     angleToIdle: 0
     targetDirection: {x: 0, y: 0, z: 0}
     movement: 0
@@ -3156,7 +3156,7 @@ BoxCollider:
   m_GameObject: {fileID: 3230445893702710185}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
@@ -3686,9 +3686,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3329630117568158472}
   - component: {fileID: 487133759933579782}
+  - component: {fileID: 1450593620642154297}
   m_Layer: 0
   m_Name: RotationTarget
-  m_TagString: RotationTarget
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3720,3 +3721,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetParent: {fileID: 3230445893702710185}
+--- !u!65 &1450593620642154297
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8894433543538567492}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

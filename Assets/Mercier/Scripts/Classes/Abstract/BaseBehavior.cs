@@ -136,8 +136,8 @@ namespace Mercier.Scripts.Classes.Abstract
             {
                 _targeting.activeTarget = _targeting.targetList.Where(t => ReturnTargetInLineOfSight(t.transform.position)).
                     OrderBy(t => Vector3.Distance(t.transform.position, transform.position)).FirstOrDefault();
-
-                OnCheckForRotationTarget(_targeting.activeTarget);
+                _targeting.rotationTarget = _targeting.activeTarget;
+                //OnCheckForRotationTarget(_targeting.activeTarget);
             }
             else
             {
@@ -233,7 +233,7 @@ namespace Mercier.Scripts.Classes.Abstract
             return false;
         }
 
-        protected abstract void ReceiveDamage(GameObject damagedObj, float damageAmount);
+        public abstract void ReceiveDamage(GameObject damagedObj, float damageAmount);
 
         public abstract void OnDamageReceived(float health, float armor, float damageAmount, out float curHealth, out float curArmor);
 

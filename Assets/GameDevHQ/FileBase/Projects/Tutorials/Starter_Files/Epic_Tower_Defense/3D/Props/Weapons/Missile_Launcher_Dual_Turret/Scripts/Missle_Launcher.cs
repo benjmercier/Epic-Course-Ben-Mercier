@@ -6,7 +6,7 @@ using Mercier.Scripts.Classes;
 
 namespace GameDevHQ.FileBase.Missle_Launcher_Dual_Turret
 {
-    public class Missle_Launcher : TurretOpenRotation
+    public class Missle_Launcher : MonoBehaviour
     {
         [SerializeField]
         private GameObject _missilePrefab; //holds the missle gameobject to clone
@@ -73,21 +73,6 @@ namespace GameDevHQ.FileBase.Missle_Launcher_Dual_Turret
             }
 
             _launched = false; //set launch bool to false
-        }
-
-        protected override void EngageTarget()
-        {
-            
-        }
-
-        protected override void DisengageTarget()
-        {
-            
-        }
-
-        protected override void TurretAttack(GameObject activeTarget, float damageAmount)
-        {
-            
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mercier.Scripts.Managers;
 
 namespace Mercier.Scripts.Classes.Turrets
 {
@@ -126,7 +127,7 @@ namespace Mercier.Scripts.Classes.Turrets
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.CompareTag("Enemy"))
+            if (other.gameObject.CompareTag(GameManager.Instance.EnemyTag))
             {
                 //Destroy(other.gameObject); //destroy collided object
 
@@ -136,7 +137,7 @@ namespace Mercier.Scripts.Classes.Turrets
                     Instantiate(_explosionPrefab, transform.position, Quaternion.identity); //instantiate explosion
             }
 
-            //Debug.Log("Hit: " + other.gameObject.name);
+            Debug.Log("Hit: " + other.gameObject.name);
 
             Destroy(this.gameObject); //destroy the rocket (this)
         }

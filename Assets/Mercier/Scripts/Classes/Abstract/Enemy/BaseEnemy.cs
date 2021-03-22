@@ -72,14 +72,14 @@ namespace Mercier.Scripts.Classes.Abstract.Enemy
             _navMeshAgent.SetDestination(_navTarget);
             _navMeshAgent.speed = AssignSpeed(_enemyStats.speed);
 
-            BaseTurret.onTurretAttack += ReceiveDamage;
+            //BaseTurret.onTurretAttack += ReceiveDamage;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
 
-            BaseTurret.onTurretAttack -= ReceiveDamage;
+            //BaseTurret.onTurretAttack -= ReceiveDamage;
         }
 
         protected override void Update()
@@ -104,7 +104,7 @@ namespace Mercier.Scripts.Classes.Abstract.Enemy
             return speed;
         }
 
-        protected override void ReceiveDamage(GameObject damagedObj, float damageAmount)
+        public override void ReceiveDamage(GameObject damagedObj, float damageAmount)
         {
             if (this.gameObject == damagedObj)
             {

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3927062894045239289}
   - component: {fileID: 3258974263193446245}
   m_Layer: 0
-  m_Name: Missile_1
+  m_Name: Missile1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,7 +51,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _particle: {fileID: 3782240273616771497}
-  _explosionPrefab: {fileID: 0}
+  _explosionPrefab: {fileID: 1567341239667122, guid: c0767db9ecbb98448afc66bb36fb4bae,
+    type: 3}
   _launchSpeed: 1
   _power: 10
   _fuseDelay: 0.25

@@ -13,14 +13,16 @@ namespace Mercier.Scripts.Managers
     {
         public enum GameState
         {
-            Waiting,
+            Idle,
             Playing,
             Paused,
             FastForward,
-            Finished
+            Over
         }
 
-        public GameState currentGameState;
+        [ReadOnly]
+        private GameState currentGameState;
+        public GameState CurrentGameState { get { return currentGameState; } private set { currentGameState = value; } }
         
         [SerializeField]
         private int _maxPlayerHealth = 100;
@@ -108,11 +110,6 @@ namespace Mercier.Scripts.Managers
             OnUpdateWarFunds();
         }
 
-        private void Update()
-        {
-
-        }
-
         public void OnEnable()
         {
             TowerManager.onTurretEnabled += DecreaseWarFunds;
@@ -131,6 +128,30 @@ namespace Mercier.Scripts.Managers
             TargetDestination.onEnemyReachedTarget += UpdatePlayerHealth;
 
             BaseEnemy.onEnemyDeath -= EnemyDestroyed;
+        }
+
+        public void TransitionToState(GameState gameState)
+        {
+            this.currentGameState = gameState;
+
+            switch(gameState)
+            {
+                case GameState.Idle:
+                    break;
+                case GameState.Playing:
+                    _timescale = 1f;
+                    break;
+                case GameState.Paused:
+                    _timescale = 0f;
+                    break;
+                case GameState.FastForward:
+                    _timescale = 2f;
+                    break;
+                case GameState.Over:
+                    break;
+            }
+
+            Time.timeScale = _timescale;
         }
 
         private IEnumerator StartGameRoutine(Action onComplete = null)

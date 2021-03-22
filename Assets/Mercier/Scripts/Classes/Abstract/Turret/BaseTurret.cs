@@ -84,10 +84,11 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
         protected virtual void OnTurretAttack()
         {
-            onTurretAttack?.Invoke(_targeting.activeTarget,  _turretStats.attackStrength);
+            //onTurretAttack?.Invoke(_targeting.activeTarget,  _turretStats.attackStrength);
+            onTurretAttack?.Invoke(_targeting.rotationTarget, _turretStats.attackStrength);
         }
 
-        protected override void ReceiveDamage(GameObject damagedObj, float damageAmount)
+        public override void ReceiveDamage(GameObject damagedObj, float damageAmount)
         {
             if (this.gameObject == damagedObj)
             {
