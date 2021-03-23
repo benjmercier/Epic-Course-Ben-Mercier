@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &12562995
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8567,7 +8567,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &909662580
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8746,29 +8746,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6681b458a5552dc4ab7060b58e47981f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxPlayerHealth: 100
-  _currentPlayerHealth: 0
-  currentPlayerStatus: 0
-  _minGoodStatus: 60
-  _minFairStatus: 20
-  _minDangerStatus: 0
-  _startingWarFunds: 1000
-  _warFundsAvailable: 0
-  _timeToStart: 10
-  _countdown: 0
-  _timescale: 1
+  _playerStats:
+    maxLives: 10
+    currentLives: 0
+    maxHealth: 100
+    currentHealth: 0
+    currentStatus: 0
+    minGoodStatus: 60
+    minFairStatus: 20
+    minDangerStatus: 0
+    startingWarFunds: 1500
+    currentWarFunds: 0
+  _currentWave: 0
+  _startCountdown: 10
+  _currentCountdown: 0
+  _maxTimeScale: 5
+  _timeScale: 1
   _enemyTag: Enemy
   _turretTag: Turret
-  _rotationTargetTag: RotationTarget
-  _enemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  _turretLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  _turretPosLayer:
-    serializedVersion: 2
-    m_Bits: 1024
 --- !u!1001 &922941816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14665,7 +14660,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1520013277
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16906,7 +16901,7 @@ GameObject:
   - component: {fileID: 1742290009}
   m_Layer: 0
   m_Name: TargetPos
-  m_TagString: Target
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

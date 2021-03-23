@@ -136,6 +136,7 @@ namespace Mercier.Scripts.Classes.Abstract
             {
                 _targeting.activeTarget = _targeting.targetList.Where(t => ReturnTargetInLineOfSight(t.transform.position)).
                     OrderBy(t => Vector3.Distance(t.transform.position, transform.position)).FirstOrDefault();
+
                 _targeting.rotationTarget = _targeting.activeTarget;
                 //OnCheckForRotationTarget(_targeting.activeTarget);
             }

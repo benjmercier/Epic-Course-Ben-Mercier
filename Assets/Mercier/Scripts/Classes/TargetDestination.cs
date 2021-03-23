@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mercier.Scripts.Managers;
-using Mercier.Scripts.Classes.Abstract.Turret;
-using Mercier.Scripts.Classes.Custom;
+using Mercier.Scripts.Classes.Abstract.Enemy;
 
 namespace Mercier.Scripts
 {
@@ -19,14 +18,13 @@ namespace Mercier.Scripts
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("Enemy"))
+            if (other.gameObject.CompareTag(GameManager.Instance.EnemyTag)) // RotationTarget tagged as Enemy
             {
                 SpawnManager.Instance.EnemyDestroyed();
 
+                OnEnemyReachedTarget(20);
 
-                OnEnemyReachedTarget(30);
-
-                other.gameObject.SetActive(false); // change to event
+                other.transform.parent.gameObject.SetActive(false);
             }
         }
     }

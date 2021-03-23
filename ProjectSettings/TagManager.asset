@@ -4,11 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Target
   - Enemy
   - RotationTarget
   - Turret
-  - AttackTarget
   layers:
   - Default
   - TransparentFX
@@ -18,10 +16,10 @@ TagManager:
   - UI
   - 
   - 
-  - Turret
-  - Enemy
-  - Turret Position
-  - HealthBar
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

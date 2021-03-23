@@ -111,6 +111,8 @@ namespace Mercier.Scripts.Managers
         {
             _currentWave = _waves[_waveIndex];
 
+            GameManager.Instance.UpdateCurrentWave(_waveIndex);
+
             return _currentWave;
         }
 

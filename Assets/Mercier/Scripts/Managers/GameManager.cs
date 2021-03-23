@@ -5,70 +5,37 @@ using UnityEngine;
 using Mercier.Scripts.Interfaces;
 using Mercier.Scripts.PropertyAttributes;
 using Mercier.Scripts.Classes.Abstract.Enemy;
+using Mercier.Scripts.Classes.Custom.Stats;
 
 namespace Mercier.Scripts.Managers
 {
     public class GameManager : MonoSingleton<GameManager>, IEventable
     {
-        public enum GameState
-        {
-            Idle,
-            Playing,
-            Paused,
-            FastForward,
-            Over
-        }
-
+        public enum GameState { Idle, Playing, Paused, FastForward, Over }
         [ReadOnly]
         private GameState currentGameState;
-        public GameState CurrentGameState { get { return currentGameState; } private set { currentGameState = value; } }
-        
-        [SerializeField]
-        private int _maxPlayerHealth = 100;
-        [ReadOnly, SerializeField]
-        private int _currentPlayerHealth;
 
-        public enum PlayerStatus
-        {
-            Good,
-            Fair,
-            Danger,
-            Destroyed
-        }
-
-        [ReadOnly]
-        public PlayerStatus currentPlayerStatus;
-
-        [SerializeField]
-        private int _minGoodStatus = 60,
-            _minFairStatus = 20,
-            _minDangerStatus = 0;
-
-        [SerializeField]
-        private int _startingWarFunds = 5000;
-        [SerializeField]
-        private int _warFundsAvailable;
-        public int WarFundsAvailable { get { return _warFundsAvailable; } set { _warFundsAvailable = value; } }
-
-        [SerializeField]
-        private float _timeToStart = 10f;
-        [ReadOnly, SerializeField]
-        private float _countdown;
-        private float _countdownMinutes;
-        private float _countdownSeconds;
         private bool _gameStarted = false;
 
-
-        [Range(0f, 5f)]
         [SerializeField]
-        private float _timescale = 1f;
+        private PlayerStats _playerStats;
+        [SerializeField]
+        private int _currentWave;
 
-        public static event Action<int> onUpdatePlayerStatus;
-        public static event Action<int> onUpdateWarFunds;
-        public static event Action<float, float> onUpdateCountdownTimer;
+        #region Time Settings
+        [Header("Time Settings")]
+        [SerializeField]
+        private float _startCountdown = 10f;
+        [ReadOnly, SerializeField]
+        private float _currentCountdown;
+        private float _countdownMinutes, _countdownSeconds;
+        [SerializeField]
+        private float _maxTimeScale = 5f;
+        [ReadOnly, SerializeField]
+        private float _timeScale = 1f;
+        #endregion
 
-        // change to struct
-        #region Tags
+        #region Game Tags // change to struct?
         [Header("Game Tags")]
         [SerializeField]
         private string _enemyTag = "Enemy";
@@ -76,30 +43,26 @@ namespace Mercier.Scripts.Managers
 
         [SerializeField]
         private string _turretTag = "Turret";
-        public string TurretTag { get { return _turretTag; } }   
-
-        [SerializeField]
-        private string _rotationTargetTag = "RotationTarget";
-        public string RotationTargetTag { get { return _rotationTargetTag; } }
+        public string TurretTag { get { return _turretTag; } } 
         #endregion
+
+        public static event Action<int> onUpdatePlayerStatus;
+        public static event Action<int> onUpdateWarFunds;
+        public static event Action<float, float> onUpdateCountdownTimer;
+        public static event Action onGameOver;
 
         private void Start()
         {
-            _currentPlayerHealth = _maxPlayerHealth;
-            currentPlayerStatus = PlayerStatus.Good;
-            _warFundsAvailable = _startingWarFunds;
+            
 
-            OnUpdatePlayerStatus((int)currentPlayerStatus);
-            OnUpdateWarFunds();
+            TransitionToState(GameState.Idle);
         }
 
         public void OnEnable()
         {
             TowerManager.onTurretEnabled += DecreaseWarFunds;
             TowerManager.onTurretSold += IncreaseWarFunds;
-
             TargetDestination.onEnemyReachedTarget += UpdatePlayerHealth;
-
             BaseEnemy.onEnemyDestroyed += EnemyDestroyed;
         }
 
@@ -107,9 +70,7 @@ namespace Mercier.Scripts.Managers
         {
             TowerManager.onTurretEnabled -= DecreaseWarFunds;
             TowerManager.onTurretSold -= IncreaseWarFunds;
-
             TargetDestination.onEnemyReachedTarget += UpdatePlayerHealth;
-
             BaseEnemy.onEnemyDestroyed -= EnemyDestroyed;
         }
 
@@ -120,41 +81,92 @@ namespace Mercier.Scripts.Managers
             switch(gameState)
             {
                 case GameState.Idle:
+                    _playerStats.SetCurrentValues();
+                    OnUpdatePlayerStatus((int)_playerStats.currentStatus);
+
+                    OnUpdateWarFunds();
+
+                    StartCoroutine(IdleStateRoutine());
                     break;
+
                 case GameState.Playing:
-                    _timescale = 1f;
+                    PlayingState();
                     break;
+
                 case GameState.Paused:
-                    _timescale = 0f;
+                    PausedState();
                     break;
+
                 case GameState.FastForward:
-                    _timescale = 2f;
+                    FastForwardState();
                     break;
+
                 case GameState.Over:
+                    GameOverState();
                     break;
             }
 
-            Time.timeScale = _timescale;
+            Time.timeScale = _timeScale;
+        }
+
+        private IEnumerator IdleStateRoutine()
+        {
+            while (currentGameState == GameState.Idle)
+            {
+                if (Input.GetKeyDown(KeyCode.S))
+                {
+                    _gameStarted = true;
+
+                    StartCoroutine(StartGameRoutine(() => TransitionToState(GameState.Playing)));
+                }
+
+                yield return null;
+            }
+        }
+
+        private void PlayingState()
+        {
+            _timeScale = 1f;
+        }
+
+        private void PausedState()
+        {
+            _timeScale = 0f;
+        }
+
+        private void FastForwardState()
+        {
+            if (_timeScale < _maxTimeScale)
+            {
+                _timeScale++;
+            }
+        }
+
+        private void GameOverState()
+        {
+            _gameStarted = false;
+
+            onGameOver?.Invoke();
         }
 
         private IEnumerator StartGameRoutine(Action onComplete = null)
         {
-            _countdown = _timeToStart;
-            _countdownMinutes = Mathf.Floor(_countdown / 60);
-            _countdownSeconds = Mathf.Floor(_countdown % 60);
+            _currentCountdown = _startCountdown;
+            _countdownMinutes = Mathf.Floor(_currentCountdown / 60);
+            _countdownSeconds = Mathf.Floor(_currentCountdown % 60);
 
             OnUpdateCountdownTimer(_countdownMinutes, _countdownSeconds);
 
             yield return new WaitForSeconds(1f);
 
-            while (_countdown > 0)
+            while (_currentCountdown > 0)
             {
-                _countdown -= Time.deltaTime;
+                _currentCountdown -= Time.deltaTime;
 
-                if (_countdown > 0)
+                if (_currentCountdown > 0)
                 {
-                    _countdownMinutes = Mathf.Floor(_countdown / 60);
-                    _countdownSeconds = Mathf.Floor(_countdown % 60);
+                    _countdownMinutes = Mathf.Floor(_currentCountdown / 60);
+                    _countdownSeconds = Mathf.Floor(_currentCountdown % 60);
                 }
                 else
                 {
@@ -179,7 +191,7 @@ namespace Mercier.Scripts.Managers
 
         public bool EnoughWarFundsAvailable(int cost)
         {
-            if (cost > _warFundsAvailable)
+            if (cost > _playerStats.currentWarFunds)
             {
                 return false;
             }
@@ -189,9 +201,9 @@ namespace Mercier.Scripts.Managers
 
         public void DecreaseWarFunds(int cost)
         {
-            if (_warFundsAvailable - cost >= 0)
+            if (_playerStats.currentWarFunds - cost >= 0)
             {
-                _warFundsAvailable -= cost;
+                _playerStats.currentWarFunds -= cost;
             }
 
             OnUpdateWarFunds();
@@ -204,50 +216,49 @@ namespace Mercier.Scripts.Managers
 
         public void IncreaseWarFunds(int cost)
         {
-            _warFundsAvailable += cost;
+            _playerStats.currentWarFunds += cost;
 
             OnUpdateWarFunds();
         }
 
         private void OnUpdateWarFunds()
         {
-            onUpdateWarFunds?.Invoke(_warFundsAvailable);
+            onUpdateWarFunds?.Invoke(_playerStats.currentWarFunds);
+        }
+
+        public void UpdateCurrentWave(int currentWaveIndex)
+        {
+            _currentWave = currentWaveIndex;
         }
 
         private void UpdatePlayerHealth(int amount)
         {
-            _currentPlayerHealth -= amount;
-            // optimize by not calling OnUpdatePlayerStatus if status is the same as last time
-            if (CheckHealthBetween(_maxPlayerHealth, _minGoodStatus))
+            _playerStats.currentHealth -= amount;
+
+            _playerStats.UpdateStatus();
+
+            if (_playerStats.currentStatus == PlayerStats.PlayerStatus.Destroyed)
             {
-                currentPlayerStatus = PlayerStatus.Good;
-            }
-            else if (CheckHealthBetween(_minGoodStatus, _minFairStatus))
-            {
-                currentPlayerStatus = PlayerStatus.Fair;
-            }
-            else if (CheckHealthBetween(_minFairStatus, _minDangerStatus))
-            {
-                currentPlayerStatus = PlayerStatus.Danger;
-            }
-            else
-            {
-                currentPlayerStatus = PlayerStatus.Destroyed;
+                if (_playerStats.currentLives > 1)
+                {
+                    _playerStats.currentLives--;
+                    // restart wave
+                }
+                else
+                {
+                    _playerStats.currentLives = 0;
+
+                    TransitionToState(GameState.Over);
+                    // restart game
+                }
             }
 
-            OnUpdatePlayerStatus((int)currentPlayerStatus);
-        }
-
-        private bool CheckHealthBetween(int max, int min)
-        {
-            return _currentPlayerHealth < max && _currentPlayerHealth > min;
+            OnUpdatePlayerStatus((int)_playerStats.currentStatus);
         }
 
         private void OnUpdatePlayerStatus(int playerStatus)
         {
             onUpdatePlayerStatus?.Invoke(playerStatus);
         }
-
-        
     }
 }
