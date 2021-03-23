@@ -12,11 +12,14 @@ namespace Mercier.Scripts.Managers
     {
         [SerializeField]
         private List<Wave> _waves = new List<Wave>();
+        public List<Wave> Waves { get { return _waves; } }
         private Wave _currentWave;
 
         private int _waveIndex = 0;
 
         private WaitForSeconds _spawnWait;
+
+        public static event Action<int> onUpdateCurrentWave;
 
         public void StartWave(Wave wave)
         {
@@ -111,12 +114,17 @@ namespace Mercier.Scripts.Managers
         {
             _currentWave = _waves[_waveIndex];
 
-            GameManager.Instance.UpdateCurrentWave(_waveIndex);
+            OnUpdateCurrentWave(_waveIndex);
 
             return _currentWave;
         }
 
-        public List<Wave> WaveList()
+        public void OnUpdateCurrentWave(int waveIndex)
+        {
+            onUpdateCurrentWave?.Invoke(waveIndex);
+        }
+
+        public List<Wave> ReturnWaveList()
         {
             var waveList = _waves;
 

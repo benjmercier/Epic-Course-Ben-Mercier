@@ -46,15 +46,13 @@ namespace Mercier.Scripts.Managers
         public string TurretTag { get { return _turretTag; } } 
         #endregion
 
-        public static event Action<int> onUpdatePlayerStatus;
+        public static event Action<int, int> onUpdatePlayerStatus;
         public static event Action<int> onUpdateWarFunds;
         public static event Action<float, float> onUpdateCountdownTimer;
         public static event Action onGameOver;
 
         private void Start()
         {
-            
-
             TransitionToState(GameState.Idle);
         }
 
@@ -64,6 +62,7 @@ namespace Mercier.Scripts.Managers
             TowerManager.onTurretSold += IncreaseWarFunds;
             TargetDestination.onEnemyReachedTarget += UpdatePlayerHealth;
             BaseEnemy.onEnemyDestroyed += EnemyDestroyed;
+            WaveManager.onUpdateCurrentWave += UpdateCurrentWave;
         }
 
         public void OnDisable()
@@ -72,6 +71,7 @@ namespace Mercier.Scripts.Managers
             TowerManager.onTurretSold -= IncreaseWarFunds;
             TargetDestination.onEnemyReachedTarget += UpdatePlayerHealth;
             BaseEnemy.onEnemyDestroyed -= EnemyDestroyed;
+            WaveManager.onUpdateCurrentWave -= UpdateCurrentWave;
         }
 
         public void TransitionToState(GameState gameState)
@@ -82,7 +82,7 @@ namespace Mercier.Scripts.Managers
             {
                 case GameState.Idle:
                     _playerStats.SetCurrentValues();
-                    OnUpdatePlayerStatus((int)_playerStats.currentStatus);
+                    OnUpdatePlayerStatus((int)_playerStats.currentStatus, _playerStats.currentLives);
 
                     OnUpdateWarFunds();
 
@@ -226,7 +226,7 @@ namespace Mercier.Scripts.Managers
             onUpdateWarFunds?.Invoke(_playerStats.currentWarFunds);
         }
 
-        public void UpdateCurrentWave(int currentWaveIndex)
+        private void UpdateCurrentWave(int currentWaveIndex)
         {
             _currentWave = currentWaveIndex;
         }
@@ -253,12 +253,12 @@ namespace Mercier.Scripts.Managers
                 }
             }
 
-            OnUpdatePlayerStatus((int)_playerStats.currentStatus);
+            OnUpdatePlayerStatus((int)_playerStats.currentStatus, _playerStats.currentLives);
         }
 
-        private void OnUpdatePlayerStatus(int playerStatus)
+        private void OnUpdatePlayerStatus(int playerStatus, int currentLives)
         {
-            onUpdatePlayerStatus?.Invoke(playerStatus);
+            onUpdatePlayerStatus?.Invoke(playerStatus, currentLives);
         }
     }
 }

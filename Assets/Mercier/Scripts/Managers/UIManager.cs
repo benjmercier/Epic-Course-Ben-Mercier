@@ -23,15 +23,15 @@ namespace Mercier.Scripts.Managers
             Color.white // destroyed
         };
 
+        [Header("UI Sections")]
         [SerializeField]
         private ArmoryUI _armoryUI;
-
         [SerializeField]
-        private TextMeshProUGUI _startTimerTMP;
-
-        [Header("War Funds")]
+        private LevelStatusUI _levelStatusUI;
         [SerializeField]
-        private Text _warFundsAmount;
+        private ProgressionUI _progressionUI;
+        [SerializeField]
+        private CurrencyUI _currencyUI;
 
         public int DecoyToActivate { set { OnDecoyTurretSelectedFromArmory(value); } }
         
@@ -44,42 +44,51 @@ namespace Mercier.Scripts.Managers
 
         private void Start()
         {
-            _startTimerTMP.text = "00:00";
+            _levelStatusUI.startTimerTMP.text = "00:00";
         }
 
         private void OnEnable()
         {
             GameManager.onUpdateCountdownTimer += UpdateStartTimer;
-            GameManager.onUpdatePlayerStatus += UpdateOverlayColor;
+            GameManager.onUpdatePlayerStatus += UpdatePlayerStats;
             GameManager.onUpdateWarFunds += UpdateWarFunds;
-
+            WaveManager.onUpdateCurrentWave += UpdateCurrentWave;
             TowerManager.onSelectActiveTurret += ActiveTurretSelected;
         }
 
         private void OnDisable()
         {
             GameManager.onUpdateCountdownTimer -= UpdateStartTimer;
-            GameManager.onUpdatePlayerStatus -= UpdateOverlayColor;
+            GameManager.onUpdatePlayerStatus -= UpdatePlayerStats;
             GameManager.onUpdateWarFunds -= UpdateWarFunds;
-
+            WaveManager.onUpdateCurrentWave -= UpdateCurrentWave;
             TowerManager.onSelectActiveTurret -= ActiveTurretSelected;
         }
 
         private void UpdateStartTimer(float min, float sec)
         {
-            _startTimerTMP.text = min.ToString("00") + ":" + sec.ToString("00");
+            _levelStatusUI.startTimerTMP.text = min.ToString("00") + ":" + sec.ToString("00");
+        }
+
+        private void UpdateCurrentWave(int wave)
+        {
+            wave++;
+
+            _progressionUI.waveCountTMP.text = wave + " / " + WaveManager.Instance.Waves.Count;
         }
 
         private void UpdateWarFunds(int warFunds)
         {
-            _warFundsAmount.text = warFunds.ToString();
+            _currencyUI.currentWarFunds.text = warFunds.ToString();
 
             EnableArmoryButtons();
         }
 
-        private void UpdateOverlayColor(int playerStatus)
+        private void UpdatePlayerStats(int playerStatus, int currentLives)
         {
             _uIImageOverlay.ForEach(img => img.color = _uIStatusColors[playerStatus]);
+
+            _progressionUI.livesCountTMP.text = currentLives.ToString();
         }
 
         private void EnableArmoryButtons()
