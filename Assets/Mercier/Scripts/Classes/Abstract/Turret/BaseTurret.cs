@@ -36,14 +36,14 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
             TransitionToState(turretIdleState);
 
-            BaseEnemy.onEnemyDeath += AssignNewTarget;
+            BaseEnemy.onEnemyDestroyed += AssignNewTarget;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
 
-            BaseEnemy.onEnemyDeath -= AssignNewTarget;
+            BaseEnemy.onEnemyDestroyed -= AssignNewTarget;
         }
 
         protected override void Update()
@@ -133,6 +133,11 @@ namespace Mercier.Scripts.Classes.Abstract.Turret
 
                 OnObjDestroyed(this.gameObject, _turretStats.destroyedPenalty);
             }
+        }
+
+        protected override void OnObjDestroyed(GameObject objDestroyed, int currency)
+        {
+            
         }
     }
 }

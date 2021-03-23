@@ -164,7 +164,10 @@ MonoBehaviour:
     cost: 700
     destroyedPenalty: 0
     currentSprite: {fileID: 21300000, guid: 613bf375b8d72574983f4a3fab426514, type: 3}
+    isUpgradeable: 0
+    upgradeTo: {fileID: 0}
     upgradeSprite: {fileID: 0}
+    attachedTowerRenderer: {fileID: 0}
   _missileType: 1
   _missilePrefab: {fileID: 3943512348999178177, guid: bc00669e4de25484e98399506163cc45,
     type: 3}
@@ -182,8 +185,8 @@ MonoBehaviour:
   - {fileID: 2977895565801608969}
   - {fileID: 2976917701999053815}
   _fireDelay: 2
-  _launchSpeed: 10
-  _power: 20
+  _launchSpeed: 5
+  _power: 5
   _fuseDelay: 0
   _reloadTime: 0.25
   _destroyTime: 10

@@ -45,7 +45,6 @@ namespace Mercier.Scripts.Classes
             onConfirmRotationTarget?.Invoke(parent, rotationTarget);
         }
 
-
         protected void NotifyParentOfDamage(GameObject damagedObj, float damageAmount)
         {
             if (this.gameObject == damagedObj)

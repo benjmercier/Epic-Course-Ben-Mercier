@@ -50,7 +50,7 @@ namespace Mercier.Scripts.Classes.Abstract
 
         #region Events
         public static event Action<GameObject> onCheckForRotationTarget;
-        public static event Action<GameObject, int> onObjDestroyed;
+        //public static event Action<GameObject, int> onObjDestroyed;
         #endregion
 
         protected virtual void Awake()
@@ -112,7 +112,7 @@ namespace Mercier.Scripts.Classes.Abstract
             SetActiveTarget();
         }
 
-        // register to onDestroyed event
+        // register to onEnemyDestroyed event
         protected virtual void AssignNewTarget(GameObject activeTarget, int currency)
         {
             if (_targeting.activeTarget == activeTarget)
@@ -237,10 +237,7 @@ namespace Mercier.Scripts.Classes.Abstract
 
         public abstract void OnDamageReceived(float health, float armor, float damageAmount, out float curHealth, out float curArmor);
 
-        protected virtual void OnObjDestroyed(GameObject objDestroyed, int currency)
-        {
-            onObjDestroyed?.Invoke(objDestroyed, currency);
-        }
+        protected abstract void OnObjDestroyed(GameObject objDestroyed, int currency);
 
         protected abstract IEnumerator DestroyedRoutine();
 

@@ -30,11 +30,13 @@ namespace Mercier.Scripts.Classes.Abstract.Enemy
         [SerializeField]
         protected Animator _enemyAnim;
         public Animator EnemyAnim { get { return _enemyAnim; } }
+        [SerializeField]
+        protected GameObject _rotationTarget;
 
         protected Vector3 _navTarget;
 
         public static event Action onDamage;
-        public static event Action<GameObject, int> onEnemyDeath;
+        public static event Action<GameObject, int> onEnemyDestroyed;
 
         protected override void Awake()
         {
@@ -147,19 +149,16 @@ namespace Mercier.Scripts.Classes.Abstract.Enemy
             {
                 curHealth = 0;
 
-                OnObjDestroyed(this.gameObject, _enemyStats.reward);
+                OnObjDestroyed(_rotationTarget, _enemyStats.reward);
             }
         }
 
         protected override void OnObjDestroyed(GameObject objDestroyed, int currency)
         {
-            // add reward to player currency
-
-            base.OnObjDestroyed(objDestroyed, currency);
-            onEnemyDeath?.Invoke(objDestroyed, currency);
+            onEnemyDestroyed?.Invoke(objDestroyed, currency);
 
             _navMeshAgent.isStopped = true;
-            _navMeshAgent.enabled = false;
+            //_navMeshAgent.enabled = false;
             _enemyAnim.SetBool(AnimationManager.Instance.IsFiringParam, false);
             _enemyAnim.SetBool(AnimationManager.Instance.IsDestroyedParam, true);
 

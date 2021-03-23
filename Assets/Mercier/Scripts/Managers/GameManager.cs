@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mercier.Scripts.ScriptableObjects;
 using Mercier.Scripts.Interfaces;
 using Mercier.Scripts.PropertyAttributes;
 using Mercier.Scripts.Classes.Abstract.Enemy;
@@ -84,22 +83,6 @@ namespace Mercier.Scripts.Managers
         public string RotationTargetTag { get { return _rotationTargetTag; } }
         #endregion
 
-        // change to struct
-        #region Layers
-        [Header("Game Layers")]
-        [SerializeField]
-        private LayerMask _enemyLayer;
-        public LayerMask EnemyLayer { get { return _enemyLayer.value; } }
-
-        [SerializeField]
-        private LayerMask _turretLayer;
-        public LayerMask TurretLayer { get { return _turretLayer.value; } }
-
-        [SerializeField]
-        private LayerMask _turretPosLayer;
-        public LayerMask TurretPosLayer { get { return _turretPosLayer; } }
-        #endregion
-
         private void Start()
         {
             _currentPlayerHealth = _maxPlayerHealth;
@@ -117,7 +100,7 @@ namespace Mercier.Scripts.Managers
 
             TargetDestination.onEnemyReachedTarget += UpdatePlayerHealth;
 
-            BaseEnemy.onEnemyDeath += EnemyDestroyed;
+            BaseEnemy.onEnemyDestroyed += EnemyDestroyed;
         }
 
         public void OnDisable()
@@ -127,7 +110,7 @@ namespace Mercier.Scripts.Managers
 
             TargetDestination.onEnemyReachedTarget += UpdatePlayerHealth;
 
-            BaseEnemy.onEnemyDeath -= EnemyDestroyed;
+            BaseEnemy.onEnemyDestroyed -= EnemyDestroyed;
         }
 
         public void TransitionToState(GameState gameState)

@@ -1584,6 +1584,7 @@ MonoBehaviour:
     reward: 20
   _navMeshAgent: {fileID: 8130879818932858865}
   _enemyAnim: {fileID: 1640634097325754351}
+  _rotationTarget: {fileID: 7875646288612046316}
 --- !u!95 &1640634097325754351
 Animator:
   serializedVersion: 3
