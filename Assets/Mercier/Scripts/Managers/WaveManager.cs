@@ -93,12 +93,37 @@ namespace Mercier.Scripts.Managers
         {
             if (_waveIndex < _waves.Count - 1)
             {
-                StartNextWave();
+                //StartNextWave();
+                StartCoroutine(WaveWaitRoutine(() =>
+                {
+                    // call IEnumerator on GameManager to wait for input
+                    // on input, coutdown to start of next wave
+                    // start next wave
+                    GameManager.Instance._startNextWave = true;
+                    GameManager.Instance.TransitionToState(GameManager.GameState.Idle);
+                }));
             }
             else
             {
                 Debug.Log("WaveManager::RandomWaveSequenceRoutine()::Waves Complete");
+
+                StartCoroutine(WaveWaitRoutine(() =>
+                {
+                    // once no more enemies && if player still alive
+                    // call game over
+                    // display level complete
+                }));
             }
+        }
+
+        private IEnumerator WaveWaitRoutine(Action onComplete = null)
+        {
+            while (SpawnManager.Instance.ActiveEnemiesInScene())
+            {
+                yield return null;
+            }
+            
+            onComplete?.Invoke();
         }
 
         public void StartNextWave()

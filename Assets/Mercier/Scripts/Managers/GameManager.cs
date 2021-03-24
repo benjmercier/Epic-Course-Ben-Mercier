@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Mercier.Scripts.Interfaces;
 using Mercier.Scripts.PropertyAttributes;
 using Mercier.Scripts.Classes.Abstract.Enemy;
@@ -15,12 +16,15 @@ namespace Mercier.Scripts.Managers
         [ReadOnly]
         private GameState currentGameState;
 
-        private bool _gameStarted = false;
+        private bool _isGameRunning = false;
+        public bool _startNextWave = false;
 
         [SerializeField]
         private PlayerStats _playerStats;
         [SerializeField]
         private int _currentWave;
+
+        private int _currentSceneIndex;
 
         #region Time Settings
         [Header("Time Settings")]
@@ -53,6 +57,11 @@ namespace Mercier.Scripts.Managers
 
         private void Start()
         {
+            _playerStats.SetCurrentValues();
+            OnUpdatePlayerStatus((int)_playerStats.currentStatus, _playerStats.currentLives);
+
+            OnUpdateWarFunds();
+
             TransitionToState(GameState.Idle);
         }
 
@@ -63,6 +72,7 @@ namespace Mercier.Scripts.Managers
             TargetDestination.onEnemyReachedTarget += UpdatePlayerHealth;
             BaseEnemy.onEnemyDestroyed += EnemyDestroyed;
             WaveManager.onUpdateCurrentWave += UpdateCurrentWave;
+            UIManager.onReloadCurrentLevel += ReloadCurrentLevel;
         }
 
         public void OnDisable()
@@ -72,6 +82,7 @@ namespace Mercier.Scripts.Managers
             TargetDestination.onEnemyReachedTarget += UpdatePlayerHealth;
             BaseEnemy.onEnemyDestroyed -= EnemyDestroyed;
             WaveManager.onUpdateCurrentWave -= UpdateCurrentWave;
+            UIManager.onReloadCurrentLevel -= ReloadCurrentLevel;
         }
 
         public void TransitionToState(GameState gameState)
@@ -81,11 +92,6 @@ namespace Mercier.Scripts.Managers
             switch(gameState)
             {
                 case GameState.Idle:
-                    _playerStats.SetCurrentValues();
-                    OnUpdatePlayerStatus((int)_playerStats.currentStatus, _playerStats.currentLives);
-
-                    OnUpdateWarFunds();
-
                     StartCoroutine(IdleStateRoutine());
                     break;
 
@@ -111,13 +117,15 @@ namespace Mercier.Scripts.Managers
 
         private IEnumerator IdleStateRoutine()
         {
+            UIManager.Instance.ToggleLevelComplete(true);
+
             while (currentGameState == GameState.Idle)
             {
-                if (Input.GetKeyDown(KeyCode.S))
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    _gameStarted = true;
-
-                    StartCoroutine(StartGameRoutine(() => TransitionToState(GameState.Playing)));
+                    // activate level status menu
+                    UIManager.Instance.ToggleLevelComplete(false);
+                    StartGame();                    
                 }
 
                 yield return null;
@@ -144,9 +152,31 @@ namespace Mercier.Scripts.Managers
 
         private void GameOverState()
         {
-            _gameStarted = false;
+            _isGameRunning = false;
 
             onGameOver?.Invoke();
+        }
+
+        public void StartGame()
+        {
+            UIManager.Instance.ToggleLevelStatus(true);
+
+            StartCoroutine(StartGameRoutine(() =>
+            {
+                TransitionToState(GameState.Playing);
+                UIManager.Instance.ToggleLevelStatus(false);
+
+                if (_startNextWave == true)
+                {
+                    WaveManager.Instance.StartNextWave();
+                    
+                    _startNextWave = false;
+                }
+                else
+                {
+                    WaveManager.Instance.StartWave(WaveManager.Instance.CurrentWave());
+                }
+            }));
         }
 
         private IEnumerator StartGameRoutine(Action onComplete = null)
@@ -179,7 +209,7 @@ namespace Mercier.Scripts.Managers
                 yield return null;
             }
 
-            _gameStarted = true;
+            _isGameRunning = true;
 
             onComplete?.Invoke();
         }
@@ -259,6 +289,13 @@ namespace Mercier.Scripts.Managers
         private void OnUpdatePlayerStatus(int playerStatus, int currentLives)
         {
             onUpdatePlayerStatus?.Invoke(playerStatus, currentLives);
+        }
+
+        private void ReloadCurrentLevel()
+        {
+            _currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+            SceneManager.LoadScene(_currentSceneIndex);
         }
     }
 }

@@ -32,6 +32,8 @@ namespace Mercier.Scripts.Managers
         private ProgressionUI _progressionUI;
         [SerializeField]
         private CurrencyUI _currencyUI;
+        [SerializeField]
+        private RestartUI _restartUI;
 
         public int DecoyToActivate { set { OnDecoyTurretSelectedFromArmory(value); } }
         
@@ -41,6 +43,7 @@ namespace Mercier.Scripts.Managers
         public static event Action onUpgradeSelectedTurret;
         public static event Action onSellSelectedTurret;
         public static event Action<bool> onModifyTurretMenuDisabled;
+        public static event Action onReloadCurrentLevel;
 
         private void Start()
         {
@@ -52,6 +55,7 @@ namespace Mercier.Scripts.Managers
             GameManager.onUpdateCountdownTimer += UpdateStartTimer;
             GameManager.onUpdatePlayerStatus += UpdatePlayerStats;
             GameManager.onUpdateWarFunds += UpdateWarFunds;
+            GameManager.onGameOver += OnGameOver;
             WaveManager.onUpdateCurrentWave += UpdateCurrentWave;
             TowerManager.onSelectActiveTurret += ActiveTurretSelected;
         }
@@ -61,8 +65,21 @@ namespace Mercier.Scripts.Managers
             GameManager.onUpdateCountdownTimer -= UpdateStartTimer;
             GameManager.onUpdatePlayerStatus -= UpdatePlayerStats;
             GameManager.onUpdateWarFunds -= UpdateWarFunds;
+            GameManager.onGameOver -= OnGameOver;
             WaveManager.onUpdateCurrentWave -= UpdateCurrentWave;
             TowerManager.onSelectActiveTurret -= ActiveTurretSelected;
+        }
+
+        public void ToggleLevelStatus(bool isEnabled)
+        {
+            _levelStatusUI.baseMenu.SetActive(isEnabled);
+            _levelStatusUI.startTMP.gameObject.SetActive(isEnabled);
+        }
+
+        public void ToggleLevelComplete(bool isEnabled)
+        {
+            _levelStatusUI.baseMenu.SetActive(isEnabled);
+            _levelStatusUI.statusTMP.gameObject.SetActive(isEnabled);
         }
 
         private void UpdateStartTimer(float min, float sec)
@@ -174,6 +191,28 @@ namespace Mercier.Scripts.Managers
         public void FastForward()
         {
             GameManager.Instance.TransitionToState(GameManager.GameState.FastForward);
+        }
+
+        private void LevelComplete()
+        {
+            _levelStatusUI.baseMenu.SetActive(true);
+            _levelStatusUI.statusTMP.gameObject.SetActive(true);
+        }
+
+        public void OnReloadCurrentLevel()
+        {
+            onReloadCurrentLevel?.Invoke();
+
+            if (!_restartUI.cancelBTN.interactable)
+            {
+                _restartUI.cancelBTN.interactable = true;
+            }
+        }
+
+        private void OnGameOver()
+        {
+            _restartUI.baseMenu.SetActive(true);
+            _restartUI.cancelBTN.interactable = false;
         }
     }
 }

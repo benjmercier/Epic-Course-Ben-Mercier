@@ -171,6 +171,8 @@ namespace Mercier.Scripts.Classes.Abstract.Enemy
 
             StartCoroutine(MaterialDissolveRoutine(() =>
             {
+                SpawnManager.Instance.EnemyDeactivated(gameObject);
+
                 _enemyAnim.WriteDefaultValues();
                 gameObject.SetActive(false);
             }));

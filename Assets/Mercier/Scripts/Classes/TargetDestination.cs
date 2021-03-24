@@ -20,7 +20,7 @@ namespace Mercier.Scripts
         {
             if (other.gameObject.CompareTag(GameManager.Instance.EnemyTag)) // RotationTarget tagged as Enemy
             {
-                SpawnManager.Instance.EnemyDestroyed();
+                SpawnManager.Instance.EnemyDeactivated(other.transform.parent.gameObject);
 
                 OnEnemyReachedTarget(20);
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Mercier.Scripts.PropertyAttributes;
 
 namespace Mercier.Scripts.Managers
 {
@@ -12,12 +13,15 @@ namespace Mercier.Scripts.Managers
         [SerializeField]
         private Transform _targetPos;
 
-        private GameObject _spawnPrefab;
-        private Vector3 _spawnLookPos;
-        private Quaternion _spawnRotation;
+        [ReadOnly, SerializeField]
+        private List<GameObject> _activatedEnemyPrefabs = new List<GameObject>();
 
         private int _activatedIndex = 0;
         private int _destroyedIndex = 0;
+
+        private GameObject _spawnPrefab;
+        private Vector3 _spawnLookPos;
+        private Quaternion _spawnRotation;
 
         private bool _canSpawn = false;
 
@@ -39,7 +43,7 @@ namespace Mercier.Scripts.Managers
                 {
                     _canSpawn = false;
 
-                    WaveManager.Instance.StartWave(WaveManager.Instance.CurrentWave());
+                    //WaveManager.Instance.StartWave(WaveManager.Instance.CurrentWave());
                 }
             }
         }
@@ -59,7 +63,7 @@ namespace Mercier.Scripts.Managers
 
             _spawnPrefab.SetActive(true);
 
-            EnemyActivated();
+            EnemyActivated(_spawnPrefab);
         }
 
         public Vector3 AssignSpawnPos()
@@ -72,19 +76,27 @@ namespace Mercier.Scripts.Managers
             return _targetPos.position;
         }
 
-        public void EnemyActivated()
+        public void EnemyActivated(GameObject prefab)
         {
             _activatedIndex++;
+
+            _activatedEnemyPrefabs.Add(prefab);
         }
 
         public int CurrentEnemiesActivated()
         {
-            return _activatedIndex;
+            return _activatedEnemyPrefabs.Count;// _activatedIndex;
         }
 
-        public void EnemyDestroyed() // used for testing
+        public void EnemyDeactivated(GameObject prefab) // used for testing
         {
             _destroyedIndex++;
+            _activatedEnemyPrefabs.Remove(prefab);
+        }
+
+        public bool ActiveEnemiesInScene()
+        {
+            return _activatedEnemyPrefabs.Any();
         }
 
         public int CurrentEnemiesDestroyed()
