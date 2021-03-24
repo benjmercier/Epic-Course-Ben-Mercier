@@ -17,7 +17,7 @@ namespace Mercier.Scripts.Managers
         private GameState currentGameState;
 
         private bool _isGameRunning = false;
-        public bool _startNextWave = false;
+        private bool _isIdle = false;
 
         [SerializeField]
         private PlayerStats _playerStats;
@@ -117,15 +117,18 @@ namespace Mercier.Scripts.Managers
 
         private IEnumerator IdleStateRoutine()
         {
-            UIManager.Instance.ToggleLevelComplete(true);
-
+            UIManager.Instance.ToggleInputToStart(true);
+            
             while (currentGameState == GameState.Idle)
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    // activate level status menu
-                    UIManager.Instance.ToggleLevelComplete(false);
-                    StartGame();                    
+                    UIManager.Instance.ToggleInputToStart(false);
+                    UIManager.Instance.ToggleStartTMP(true);
+
+                    TransitionToState(GameState.Playing);
+
+                    StartLevel();
                 }
 
                 yield return null;
@@ -157,29 +160,26 @@ namespace Mercier.Scripts.Managers
             onGameOver?.Invoke();
         }
 
-        public void StartGame()
+        public void StartLevel()
         {
-            UIManager.Instance.ToggleLevelStatus(true);
-
-            StartCoroutine(StartGameRoutine(() =>
+            StartCoroutine(StartRoutine(() =>
             {
-                TransitionToState(GameState.Playing);
-                UIManager.Instance.ToggleLevelStatus(false);
+                UIManager.Instance.ToggleStartTMP(false);
 
-                if (_startNextWave == true)
+                if (!_isGameRunning)
                 {
-                    WaveManager.Instance.StartNextWave();
-                    
-                    _startNextWave = false;
+                    _isGameRunning = true;
+
+                    WaveManager.Instance.StartWave(WaveManager.Instance.CurrentWave());
                 }
                 else
                 {
-                    WaveManager.Instance.StartWave(WaveManager.Instance.CurrentWave());
+                    WaveManager.Instance.StartNextWave();
                 }
             }));
         }
 
-        private IEnumerator StartGameRoutine(Action onComplete = null)
+        private IEnumerator StartRoutine(Action onComplete = null)
         {
             _currentCountdown = _startCountdown;
             _countdownMinutes = Mathf.Floor(_currentCountdown / 60);

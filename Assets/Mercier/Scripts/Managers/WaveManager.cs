@@ -99,7 +99,6 @@ namespace Mercier.Scripts.Managers
                     // call IEnumerator on GameManager to wait for input
                     // on input, coutdown to start of next wave
                     // start next wave
-                    GameManager.Instance._startNextWave = true;
                     GameManager.Instance.TransitionToState(GameManager.GameState.Idle);
                 }));
             }
@@ -122,6 +121,12 @@ namespace Mercier.Scripts.Managers
             {
                 yield return null;
             }
+
+            UIManager.Instance.ToggleLevelCompleteTMP(true);
+
+            yield return new WaitForSeconds(3f);
+
+            UIManager.Instance.ToggleLevelCompleteTMP(false);
             
             onComplete?.Invoke();
         }

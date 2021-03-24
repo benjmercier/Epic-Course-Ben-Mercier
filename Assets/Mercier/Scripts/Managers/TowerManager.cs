@@ -90,7 +90,7 @@ namespace Mercier.Scripts.Managers
             }
             else
             {
-                HotkeySelectDecoyTurret();
+                //HotkeySelectDecoyTurret();
             }
         }
 

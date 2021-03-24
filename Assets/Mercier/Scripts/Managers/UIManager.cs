@@ -34,6 +34,8 @@ namespace Mercier.Scripts.Managers
         private CurrencyUI _currencyUI;
         [SerializeField]
         private RestartUI _restartUI;
+        [SerializeField]
+        private List<Button> _mainButtonList = new List<Button>();
 
         public int DecoyToActivate { set { OnDecoyTurretSelectedFromArmory(value); } }
         
@@ -70,16 +72,25 @@ namespace Mercier.Scripts.Managers
             TowerManager.onSelectActiveTurret -= ActiveTurretSelected;
         }
 
-        public void ToggleLevelStatus(bool isEnabled)
+        public void ToggleInputToStart(bool enable)
         {
-            _levelStatusUI.baseMenu.SetActive(isEnabled);
-            _levelStatusUI.startTMP.gameObject.SetActive(isEnabled);
+            _levelStatusUI.ToggleInputToStart(enable);
         }
 
-        public void ToggleLevelComplete(bool isEnabled)
+        public void ToggleStartTMP(bool enable)
         {
-            _levelStatusUI.baseMenu.SetActive(isEnabled);
-            _levelStatusUI.statusTMP.gameObject.SetActive(isEnabled);
+            _levelStatusUI.ToggleStartTMP(enable);
+        }
+
+        public void ToggleLevelCompleteTMP(bool enable)
+        {
+            _levelStatusUI.completeTMP.gameObject.SetActive(enable);
+        }
+
+        private void ToggleMainUIButtons(bool enable)
+        {
+            Debug.Log("Buttons Toggled");
+            _mainButtonList.ForEach(b => b.interactable = enable);
         }
 
         private void UpdateStartTimer(float min, float sec)
@@ -98,7 +109,7 @@ namespace Mercier.Scripts.Managers
         {
             _currencyUI.currentWarFunds.text = warFunds.ToString();
 
-            EnableArmoryButtons();
+            EnableArmoryButtons();            
         }
 
         private void UpdatePlayerStats(int playerStatus, int currentLives)
@@ -115,6 +126,7 @@ namespace Mercier.Scripts.Managers
                 _armoryUI.turretButtons[i].interactable = GameManager.Instance.EnoughWarFundsAvailable(
                     OnRequestCostFromDatabase(i));
             }
+            Debug.Log("Armory Buttons checked");
         }
 
         private int OnRequestCostFromDatabase(int index)
@@ -196,7 +208,7 @@ namespace Mercier.Scripts.Managers
         private void LevelComplete()
         {
             _levelStatusUI.baseMenu.SetActive(true);
-            _levelStatusUI.statusTMP.gameObject.SetActive(true);
+            _levelStatusUI.completeTMP.gameObject.SetActive(true);
         }
 
         public void OnReloadCurrentLevel()
